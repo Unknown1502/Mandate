@@ -1,0 +1,202 @@
+{
+  "stage": "4 of the PayPal Sandbox E2E: clean delivery and deterministic verification only",
+  "ranAt": "2026-11-09T21:09:55.804Z",
+  "app": {
+    "paypal": "sandbox-live",
+    "gateway": "sandbox-sdk",
+    "sandboxWritesAuthorized": false,
+    "v2": "disabled",
+    "buyerBrain": "rule-based",
+    "challengeWindowSeconds": 3600
+  },
+  "requestsToTheApp": [
+    "POST /api/auth/login",
+    "GET /api/status",
+    "GET /api/deals/{id} (x2)",
+    "POST /api/deals/{id}/delivery {quality: good} (x1)"
+  ],
+  "notCalled": [
+    "accept",
+    "advance",
+    "review",
+    "challenge",
+    "decision",
+    "mock-approval",
+    "any PayPal endpoint (the app's outbound guard also refuses every non-loopback request)"
+  ],
+  "deliveryRoute": {
+    "httpStatus": 200,
+    "delivery": {
+      "status": "DONE",
+      "deliveryId": "cmw9r8p5l0006vfdo0gg3byb4",
+      "idempotent": false
+    },
+    "advance": {
+      "dealId": "cmw9owm800004vfoshymk7yir",
+      "state": "VERIFYING",
+      "status": "WAITING",
+      "reason": "READ_UNKNOWN",
+      "steps": [
+        "VERIFY",
+        "SUBMIT",
+        "SETTLE"
+      ],
+      "nextCheckAt": "2026-11-09T22:09:56.185Z"
+    }
+  },
+  "delivery": {
+    "id": "cmw9r8p5l0006vfdo0gg3byb4",
+    "sizeBytes": 171,
+    "artifactSha256": "347bcfff6d7c3d436e66a316fab20f2645f35d0d8c969ad63eefd02f7f8d8f22",
+    "mediaType": "text/csv",
+    "previewHeader": "id,email,joined",
+    "flags": null
+  },
+  "verification": {
+    "overall": "ALL_REQUIRED_PASSED",
+    "verifierVersion": "p0-iso-1",
+    "verificationId": "9f9a08a33997ce1b279508aab8a1f7c4",
+    "deterministicOnly": true,
+    "modelCallsMade": 0,
+    "modelIsolationReason": "NO_LLM_CRITERIA",
+    "criteriaResults": [
+      {
+        "type": "deterministic",
+        "actual": "all dates valid",
+        "reason": "OK",
+        "source": "deterministic",
+        "status": "PASS",
+        "weight": 30,
+        "expected": "every \"joined\" value is a real calendar date in YYYY-MM-DD",
+        "required": false,
+        "validator": "date_format_valid",
+        "criterionId": "dates",
+        "evidenceRefs": [
+          "csv:347bcfff6d7c#col:joined"
+        ]
+      },
+      {
+        "type": "deterministic",
+        "actual": "5 rows, 0 duplicates",
+        "reason": "OK",
+        "source": "deterministic",
+        "status": "PASS",
+        "weight": 30,
+        "expected": "no duplicate rows",
+        "required": true,
+        "validator": "no_duplicate_rows",
+        "criterionId": "dupes",
+        "evidenceRefs": []
+      },
+      {
+        "type": "deterministic",
+        "actual": "header matches exactly",
+        "reason": "OK",
+        "source": "deterministic",
+        "status": "PASS",
+        "weight": 40,
+        "expected": "header is exactly [id, email, joined] in that order",
+        "required": true,
+        "validator": "csv_schema_matches",
+        "criterionId": "schema",
+        "evidenceRefs": [
+          "csv:347bcfff6d7c#header"
+        ]
+      }
+    ],
+    "unverifiableCriteria": [],
+    "deterministicFailures": [],
+    "deliveryFlags": null,
+    "artifact": {
+      "rowCount": 5,
+      "columnCount": 3,
+      "sizeBytes": 171,
+      "sha256": "347bcfff6d7c3d436e66a316fab20f2645f35d0d8c969ad63eefd02f7f8d8f22",
+      "parser": "csv-strict-1"
+    },
+    "scan": {
+      "aiWithheld": false,
+      "languageScope": "criterion",
+      "opaqueColumns": [],
+      "prescanComplete": true,
+      "languageFindings": 0,
+      "languageRelevant": false,
+      "languageSupported": [
+        "en",
+        "fr",
+        "zh"
+      ]
+    }
+  },
+  "settlementDecision": "none yet: no settlement record exists. The engine could not read the authorization because the app blocks outbound requests; that read happens in the capture stage under an approved request list.",
+  "buyerAcceptance": {
+    "decision": "PENDING",
+    "acceptedByBuyer": false,
+    "acceptRequestMade": false,
+    "challengeWindowEndsAt": "2026-11-09 22:09:56.185"
+  },
+  "paypal": {
+    "orderId": "4YJ97804H20584006",
+    "authorizationId": "19070882T8512554U",
+    "authorizationStatusLastReadFromPayPal": "CREATED",
+    "authorizationStatusSource": "Stage 3 provider read (2026-11-09T21:01Z); NOT re-read in Stage 4",
+    "authorizationExpiresAt": "2026-12-08 21:01:21",
+    "capturedAmount": "none",
+    "captureExists": false,
+    "operations": "CREATE_ORDER:CONFIRMED,AUTHORIZE:CONFIRMED",
+    "paypalWriteEventsInLedger": 2,
+    "payPalRequestsMadeInStage4": 0
+  },
+  "localDeal": {
+    "id": "cmw9owm800004vfoshymk7yir",
+    "state": "VERIFYING",
+    "lockedPrice": "20",
+    "settlements": 0
+  },
+  "ledgerEventTypes": [
+    "DEAL_CREATED",
+    "STATE_TRANSITION",
+    "NEGOTIATION_MESSAGE",
+    "NEGOTIATION_MESSAGE",
+    "STATE_TRANSITION",
+    "STATE_TRANSITION",
+    "ORCHESTRATION_STEP",
+    "BUDGET_RESERVED",
+    "PAYPAL_OPERATION_PLANNED",
+    "PAYPAL_WRITE",
+    "PAYPAL_READ",
+    "STATE_TRANSITION",
+    "STATE_TRANSITION",
+    "ORCHESTRATION_STEP",
+    "PAYPAL_READ",
+    "PAYPAL_WRITE",
+    "PAYPAL_READ",
+    "PAYPAL_READ",
+    "STATE_TRANSITION",
+    "STATE_TRANSITION",
+    "STATE_TRANSITION",
+    "DELIVERY_RECEIVED",
+    "ORCHESTRATION_STEP",
+    "VERIFICATION_RECORDED",
+    "ORCHESTRATION_STEP",
+    "STATE_TRANSITION",
+    "VERIFICATION_SUBMITTED",
+    "ORCHESTRATION_STEP",
+    "PAYPAL_READ_FAILED"
+  ],
+  "outboundGuardInTheApp": {
+    "nonLoopbackRequestsRefused": 1,
+    "refused": [
+      "POST api-m.sandbox.paypal.com/v1/oauth2/token: the engine's pre-decision authorization read, refused locally; nothing left the machine"
+    ],
+    "ledger": {
+      "PAYPAL_READ_FAILED_events": 1,
+      "lastPayload": {
+        "id": "19070882T8512554U",
+        "code": "PAYPAL_UNAVAILABLE",
+        "kind": "authorization",
+        "outcome": "unknown"
+      }
+    }
+  }
+}

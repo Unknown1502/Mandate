@@ -1,0 +1,1007 @@
+{
+  "generatedAt": "2026-11-08T11:11:34.616Z",
+  "suite": "Layer C - P1 forward-compatibility reader guards",
+  "counts": {
+    "defined": 21,
+    "killed": 20,
+    "survived": 1,
+    "invalid": 0,
+    "unreached": 0,
+    "notEvaluated": 0
+  },
+  "srcRestoredByteForByte": true,
+  "srcDigestBefore": "b088a1918c62b8d3678c1ea50440a41f70b6996f39a60d83152d7fd090a41453",
+  "srcDigestAfter": "b088a1918c62b8d3678c1ea50440a41f70b6996f39a60d83152d7fd090a41453",
+  "srcFiles": 58,
+  "rows": [
+    {
+      "id": "P1-C01",
+      "suite": "C",
+      "defence": "a duplicate JSON key is accepted (last value wins again)",
+      "file": "src/lib/strict-json.ts",
+      "mutation": "\"if (seen.has(key)) throw new Fail(\\\"DUPLICATE_KEY\\\");\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "strict-json unit"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the hazard being closed: JSON.parse keeps the LAST of a duplicated key the strict reader rejects it instead of choosing a winner",
+            "the hazard being closed: JSON.parse keeps the LAST of a duplicated key and rejects it whichever value comes first (the later value must not win, the earlier must not win either)",
+            "duplicate keys are rejected wherever and however they are written top level",
+            "duplicate keys are rejected wherever and however they are written nested object",
+            "duplicate keys are rejected wherever and however they are written inside an array of objects",
+            "duplicate keys are rejected wherever and however they are written adjacent",
+            "duplicate keys are rejected wherever and however they are written after escape decoding (a vs \\u0061)",
+            "duplicate keys are rejected wherever and however they are written after escape decoding (slash)"
+          ],
+          "detail": "10/58 tests failed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C02",
+      "suite": "C",
+      "defence": "the __proto__ key is accepted",
+      "file": "src/lib/strict-json.ts",
+      "mutation": "\"if (key === \\\"__proto__\\\") throw new Fail(\\\"FORBIDDEN_KEY\\\");\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "strict-json unit"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "prototype-pollution ambiguity rejects __proto__ as a key at any depth, including as an escape"
+          ],
+          "detail": "1/58 tests failed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C03",
+      "suite": "C",
+      "defence": "trailing text after the JSON document is accepted",
+      "file": "src/lib/strict-json.ts",
+      "mutation": "\"if (i !== text.length) bad();\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "strict-json unit"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "malformed input is rejected, never repaired extra closing brace",
+            "malformed input is rejected, never repaired trailing garbage",
+            "malformed input is rejected, never repaired two documents",
+            "malformed input is rejected, never repaired comment"
+          ],
+          "detail": "4/58 tests failed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C04",
+      "suite": "C",
+      "defence": "an explicit schemaVersion on a mandate is no longer refused as an unsupported version",
+      "file": "src/domain/mandate.ts",
+      "mutation": "\"if (keys.includes(\\\"schemaVersion\\\")) return { ok: false, code: \\\"UNSUPPORTED_SCHEMA_VERSION\\\" };\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "unknown and ambiguous versions fail closed (they are never read as V1) any explicit schemaVersion is unsupported, whatever its value",
+            "old-reader / new-document incompatibility (why the guarded reader must be deployed BEFORE any new document version is written) the pre-P1 opener accepts a validly signed future document and silently drops what it does not understand; the guarded opener refuses it"
+          ],
+          "detail": "2/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C05",
+      "suite": "C",
+      "defence": "unknown mandate fields are tolerated and dropped (explicit check removed AND the strict schemas loosened)",
+      "file": "src/domain/mandate.ts",
+      "mutation": "\"if (keys.some((k) => !known.has(k))) return { ok: false, code: \\\"UNKNOWN_FIELD\\\" };\" -> \"\" ;; \"V1_FULL: z.strictObject(\" -> \"V1_FULL: z.object(\" ;; \"V1_NO_CANCELLATION_FLAG: z.strictObject(\" -> \"V1_NO_CANCELLATION_FLAG: z.object(\" ;; \"V1_BASE: z.strictObject(\" -> \"V1_BASE: z.object(\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "unknown and ambiguous versions fail closed (they are never read as V1) a few new properties do NOT make a document 'V2': without schemaVersion they are simply unknown fields",
+            "unknown and ambiguous versions fail closed (they are never read as V1) an unknown field is refused in every shape, never stripped"
+          ],
+          "detail": "2/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C06",
+      "suite": "C",
+      "defence": "the ambiguous shape (cancellation flag without the partial flag) is guessed to be the base shape",
+      "file": "src/domain/mandate.ts",
+      "mutation": "\": !cancel ? \\\"V1_BASE\\\" : null;\" -> \": \\\"V1_BASE\\\";\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "unknown and ambiguous versions fail closed (they are never read as V1) the cancellation flag without the partial-settlement flag matches NO known shape"
+          ],
+          "detail": "1/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C07",
+      "suite": "C",
+      "defence": "a missing base authorization field is no longer detected by the dispatcher",
+      "file": "src/domain/mandate.ts",
+      "mutation": "\"if (BASE_KEYS.some((k) => !keys.includes(k))) return { ok: false, code: \\\"MISSING_FIELD\\\" };\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "unknown and ambiguous versions fail closed (they are never read as V1) every base field is required, in every shape"
+          ],
+          "detail": "1/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C08",
+      "suite": "C",
+      "defence": "the opener casts JSON.parse output instead of validating (the pre-P1 behaviour)",
+      "file": "src/domain/mandate.ts",
+      "mutation": "\"  return readMandateDocument(s.canonicalJson);\\n}\" -> \"  return { ok: true, doc: JSON.parse(s.canonicalJson) as MandateDocument, shape: \\\"V1_FULL\\\" };\\n}\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the three known V1 mandate shapes keep their established semantics V1_BASE V1 cryptography is unchanged: re-sealing the document reproduces the SAME bytes and the golden digest, and the seal opens",
+            "the three known V1 mandate shapes keep their established semantics V1_NO_CANCELLATION_FLAG V1 cryptography is unchanged: re-sealing the document reproduces the SAME bytes and the golden digest, and the seal opens",
+            "duplicate JSON keys cannot change the effective authorization budget raised by a later duplicate: refused at the reader, and a validly SIGNED copy is refused by the opener",
+            "duplicate JSON keys cannot change the effective authorization budget lowered by a later duplicate (the first value must not win either): refused at the reader, and a validly SIGNED copy is refused by the opener",
+            "duplicate JSON keys cannot change the effective authorization per-deal maximum raised: refused at the reader, and a validly SIGNED copy is refused by the opener",
+            "duplicate JSON keys cannot change the effective authorization human-review threshold removed (null after a value): refused at the reader, and a validly SIGNED copy is refused by the opener",
+            "duplicate JSON keys cannot change the effective authorization pre-delivery cancellation switched on by a duplicate: refused at the reader, and a validly SIGNED copy is refused by the opener",
+            "duplicate JSON keys cannot change the effective authorization partial settlement switched on by a duplicate: refused at the reader, and a validly SIGNED copy is refused by the opener"
+          ],
+          "detail": "17/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C09",
+      "suite": "C",
+      "defence": "the mandate reader uses JSON.parse (duplicate keys accepted) instead of the strict parser",
+      "file": "src/domain/mandate.ts",
+      "mutation": "\"  const parsed = parseStrictJson(text);\\n  if (!parsed.ok) return { ok: false, code: parsed.code };\\n  const  -> \"  let v: unknown;\\n  try {\\n    v = JSON.parse(text as string);\\n  } catch {\\n    return { ok: false, code: \\",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "invalid values and structures are refused (validation happens before anything is trusted) non-objects and malformed text",
+            "duplicate JSON keys cannot change the effective authorization budget raised by a later duplicate: refused at the reader, and a validly SIGNED copy is refused by the opener",
+            "duplicate JSON keys cannot change the effective authorization budget lowered by a later duplicate (the first value must not win either): refused at the reader, and a validly SIGNED copy is refused by the opener",
+            "duplicate JSON keys cannot change the effective authorization per-deal maximum raised: refused at the reader, and a validly SIGNED copy is refused by the opener",
+            "duplicate JSON keys cannot change the effective authorization human-review threshold removed (null after a value): refused at the reader, and a validly SIGNED copy is refused by the opener",
+            "duplicate JSON keys cannot change the effective authorization pre-delivery cancellation switched on by a duplicate: refused at the reader, and a validly SIGNED copy is refused by the opener",
+            "duplicate JSON keys cannot change the effective authorization partial settlement switched on by a duplicate: refused at the reader, and a validly SIGNED copy is refused by the opener",
+            "duplicate JSON keys cannot change the effective authorization counterparty list replaced by a duplicate: refused at the reader, and a validly SIGNED copy is refused by the opener"
+          ],
+          "detail": "14/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C10",
+      "suite": "C",
+      "defence": "an explicit schemaVersion on terms is no longer refused as an unsupported version",
+      "file": "src/domain/terms.ts",
+      "mutation": "\"if (has(raw, \\\"schemaVersion\\\")) return { ok: false, code: \\\"TERMS_VERSION_UNSUPPORTED\\\" };\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "locked terms: V1 keeps its established semantics, everything else is refused an explicit schemaVersion on the terms or on a criterion is an unsupported version (not stripped, not V1)",
+            "policy evaluation refuses unsupported authorization input before anything else is trusted future-version or version-carrying terms: BLOCKED TERMS_VERSION_UNSUPPORTED"
+          ],
+          "detail": "2/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C11",
+      "suite": "C",
+      "defence": "a schemaVersion on a criterion is no longer refused",
+      "file": "src/domain/terms.ts",
+      "mutation": "\"if (Array.isArray(raw.criteria) && raw.criteria.some((c) => isPlainObject(c) && has(c, \\\"schemaVersion\\\"))) r -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "locked terms: V1 keeps its established semantics, everything else is refused an explicit schemaVersion on the terms or on a criterion is an unsupported version (not stripped, not V1)",
+            "policy evaluation refuses unsupported authorization input before anything else is trusted future-version or version-carrying terms: BLOCKED TERMS_VERSION_UNSUPPORTED"
+          ],
+          "detail": "2/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C12",
+      "suite": "C",
+      "defence": "the terms schema silently strips unknown top-level fields again (non-strict)",
+      "file": "src/domain/terms.ts",
+      "mutation": "\"export const termsSchema = z.strictObject({\" -> \"export const termsSchema = z.object({\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "locked terms: V1 keeps its established semantics, everything else is refused a few new properties are not a version: unknown top-level or criterion fields are TERMS_INVALID",
+            "locked terms: V1 keeps its established semantics, everything else is refused an extra authorization field cannot hide behind a valid V1 hash: the hash of the stripped terms no longer locks the document",
+            "locked terms: V1 keeps its established semantics, everything else is refused the writer schema is strict too: lockTerms cannot persist an unknown field",
+            "policy evaluation refuses unsupported authorization input before anything else is trusted terms with an unknown field, missing field or non-object: BLOCKED TERMS_INVALID"
+          ],
+          "detail": "4/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C13",
+      "suite": "C",
+      "defence": "the deterministic criterion schema silently strips unknown criterion fields again",
+      "file": "src/domain/terms.ts",
+      "mutation": "\"  z.strictObject({\\n    ...criterionBase,\\n    type: z.literal(\\\"deterministic\\\"),\" -> \"  z.object({\\n    ...criterionBase,\\n    type: z.literal(\\\"deterministic\\\"),\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "locked terms: V1 keeps its established semantics, everything else is refused a few new properties are not a version: unknown top-level or criterion fields are TERMS_INVALID"
+          ],
+          "detail": "1/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C14",
+      "suite": "C",
+      "defence": "termsMatchLock hashes the raw stored object without the version-dispatching reader",
+      "file": "src/domain/terms.ts",
+      "mutation": "\"  const r = readTerms(storedTermsJson);\\n  return r.ok && termsHash(r.terms) === lockedHash;\" -> \"  return termsHash(storedTermsJson as TermsV1) === lockedHash;\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "reader architecture"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "71 tests passed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "JSON text is parsed only where the result is validated before it is trusted no parsed JSON is cast to an authorization type"
+          ],
+          "detail": "1/13 tests failed"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C15",
+      "suite": "C",
+      "defence": "the policy engine reports a future terms version as plain invalid terms (version information lost)",
+      "file": "src/domain/policy.ts",
+      "mutation": "\"parsed.code === \\\"TERMS_VERSION_UNSUPPORTED\\\" || parsed.code === \\\"CRITERION_VERSION_UNSUPPORTED\\\" ? \\\"TERMS_ -> \"\\\"TERMS_INVALID\\\"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "policy evaluation refuses unsupported authorization input before anything else is trusted future-version or version-carrying terms: BLOCKED TERMS_VERSION_UNSUPPORTED"
+          ],
+          "detail": "1/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C16",
+      "suite": "C",
+      "defence": "the session token schema silently strips unknown fields again",
+      "file": "src/lib/session.ts",
+      "mutation": "\"z.strictObject({ uid\" -> \"z.object({ uid\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "readers unit (golden fixtures, adversarial)"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the session token (also an authorization-bearing document) is read strictly a validly signed token with an extra field, a missing field, a wrong type or a duplicate key is refused"
+          ],
+          "detail": "1/71 tests failed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C17",
+      "suite": "C",
+      "defence": "the mandate WRITER emits a version field (a V2-looking document)",
+      "file": "src/domain/mandate.ts",
+      "mutation": "\"  return {\\n    principalId,\\n    currency: draft.currency,\" -> \"  return {\\n    schemaVersion: 2,\\n    principalId,\\n    currency: draft.currency,\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "reader architecture"
+      ],
+      "detectors": [
+        {
+          "name": "strict-json unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "58 tests passed"
+        },
+        {
+          "name": "readers unit (golden fixtures, adversarial)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "71 tests passed"
+        },
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "no new authorization-document version can be WRITTEN by this build (P1 has no V2 writers) no production source assigns a schemaVersion (the term appears only where it is REFUSED)",
+            "no new authorization-document version can be WRITTEN by this build (P1 has no V2 writers) a freshly built mandate document has exactly the V1_FULL keys and passes its own strict reader"
+          ],
+          "detail": "2/13 tests failed"
+        },
+        {
+          "name": "session unit",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        },
+        {
+          "name": "readers DB (all read paths)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C18",
+      "suite": "C",
+      "defence": "NEW module parses a mandate document itself with JSON.parse and a cast",
+      "file": "src/domain/rogue-reader.ts",
+      "mutation": "create src/domain/rogue-reader.ts",
+      "verdict": "KILLED",
+      "killedBy": [
+        "reader architecture"
+      ],
+      "detectors": [
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "JSON text is parsed only where the result is validated before it is trusted JSON.parse appears only in the model-output wrapper, the seller client (counterparty body, validated by strict wire schemas) and the PayPal client (external API body)",
+            "JSON text is parsed only where the result is validated before it is trusted no parsed JSON is cast to an authorization type"
+          ],
+          "detail": "2/13 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C19",
+      "suite": "C",
+      "defence": "NEW module reads stored terms with the writer schema, bypassing the dispatcher",
+      "file": "src/settlement/rogue-terms.ts",
+      "mutation": "create src/settlement/rogue-terms.ts",
+      "verdict": "KILLED",
+      "killedBy": [
+        "reader architecture"
+      ],
+      "detectors": [
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "every stored-terms read goes through the version dispatcher the strict terms WRITER schema is parsed only where terms are written (terms module, lockTerms, the negotiation draft)",
+            "every stored-terms read goes through the version dispatcher every use of a stored termsJson is a write, a null check, the policy input, or an argument of readTerms / readTermsOrThrow / termsMatchLock"
+          ],
+          "detail": "2/13 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C20",
+      "suite": "C",
+      "defence": "NEW module writes a future-version authorization document",
+      "file": "src/domain/v2-writer.ts",
+      "mutation": "create src/domain/v2-writer.ts",
+      "verdict": "KILLED",
+      "killedBy": [
+        "reader architecture"
+      ],
+      "detectors": [
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "no new authorization-document version can be WRITTEN by this build (P1 has no V2 writers) no production source assigns a schemaVersion (the term appears only where it is REFUSED)"
+          ],
+          "detail": "1/13 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P1-C21",
+      "suite": "C",
+      "defence": "integrity check trusts a non-string ledger digest (cast regression)",
+      "file": "src/orchestration/integrity.ts",
+      "mutation": "\"const recorded = stringField(created?.payload, \\\"mandateDigest\\\");\" -> \"const recorded = (created?.payload as { mandateDigest?: string } | undefined)?.mandateDigest;\"",
+      "verdict": "SURVIVED",
+      "killedBy": [],
+      "detectors": [
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "13 tests passed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    }
+  ]
+}

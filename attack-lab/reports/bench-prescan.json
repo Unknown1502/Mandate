@@ -1,0 +1,160 @@
+{
+  "environment": {
+    "node": "v22.17.1",
+    "platform": "win32 10.0.26200",
+    "cpu": "11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz",
+    "logicalCpus": 8,
+    "memoryGiB": 19.7,
+    "budget": {
+      "maxUnits": 600000,
+      "deadlineMs": 5000
+    },
+    "intakeCapBytes": 200000,
+    "at": "2026-11-07T15:20:41.256Z"
+  },
+  "results": [
+    {
+      "family": "NORMAL",
+      "name": "500 honest rows (id, email, date)",
+      "bytes": 17296,
+      "cells": 1500,
+      "units": 10428,
+      "parseMs": 2,
+      "scanMs": 28,
+      "complete": true,
+      "flags": []
+    },
+    {
+      "family": "NORMAL",
+      "name": "300 rows of international names and addresses",
+      "bytes": 14758,
+      "cells": 900,
+      "units": 6780,
+      "parseMs": 1,
+      "scanMs": 27,
+      "complete": true,
+      "flags": []
+    },
+    {
+      "family": "ADMISSIBLE",
+      "name": "100 columns of 1 character (max cell count)",
+      "bytes": 199990,
+      "cells": 99800,
+      "units": 244586,
+      "parseMs": 18,
+      "scanMs": 270,
+      "complete": true,
+      "flags": []
+    },
+    {
+      "family": "ADMISSIBLE",
+      "name": "100 columns, short ASCII words",
+      "bytes": 199909,
+      "cells": 51200,
+      "units": 168074,
+      "parseMs": 14,
+      "scanMs": 175,
+      "complete": true,
+      "flags": []
+    },
+    {
+      "family": "ADMISSIBLE",
+      "name": "20 columns, 36-char ASCII prose",
+      "bytes": 199890,
+      "cells": 5180,
+      "units": 106152,
+      "parseMs": 6,
+      "scanMs": 145,
+      "complete": true,
+      "flags": []
+    },
+    {
+      "family": "ADMISSIBLE",
+      "name": "10 columns, Cyrillic prose (non-ASCII)",
+      "bytes": 199860,
+      "cells": 2830,
+      "units": 59295,
+      "parseMs": 6,
+      "scanMs": 45,
+      "complete": true,
+      "flags": [
+        "UNSCANNED_LANGUAGE"
+      ]
+    },
+    {
+      "family": "ADMISSIBLE",
+      "name": "100 columns, 1 Cyrillic letter",
+      "bytes": 199890,
+      "cells": 66500,
+      "units": 163055,
+      "parseMs": 2,
+      "scanMs": 193,
+      "complete": true,
+      "flags": []
+    },
+    {
+      "family": "ADMISSIBLE",
+      "name": "100 columns, 'ignore' trigger words (every cell hits)",
+      "bytes": 198390,
+      "cells": 11000,
+      "units": 115170,
+      "parseMs": 3,
+      "scanMs": 88,
+      "complete": true,
+      "flags": []
+    },
+    {
+      "family": "OVER-LIMIT",
+      "name": "10,000 x 100 numeric (1M cells, ~7 MB)",
+      "bytes": null,
+      "cells": 1000000,
+      "units": 5017117,
+      "parseMs": null,
+      "scanMs": 335,
+      "complete": false,
+      "flags": [
+        "SCAN_INCOMPLETE"
+      ]
+    },
+    {
+      "family": "OVER-LIMIT",
+      "name": "10,000 x 100 short text (1M cells)",
+      "bytes": null,
+      "cells": 1000000,
+      "units": 10765640,
+      "parseMs": null,
+      "scanMs": 715,
+      "complete": false,
+      "flags": [
+        "SCAN_INCOMPLETE"
+      ]
+    },
+    {
+      "family": "OVER-LIMIT",
+      "name": "10,000 x 100 trigger-heavy ASCII (1M cells)",
+      "bytes": null,
+      "cells": 1000000,
+      "units": 13500200,
+      "parseMs": null,
+      "scanMs": 918,
+      "complete": false,
+      "flags": [
+        "SCAN_INCOMPLETE"
+      ]
+    },
+    {
+      "family": "OVER-LIMIT",
+      "name": "10,000 x 100 Cyrillic prose (1M cells, the reported 32 s case)",
+      "bytes": null,
+      "cells": 1000000,
+      "units": 21452140,
+      "parseMs": null,
+      "scanMs": 846,
+      "complete": false,
+      "flags": [
+        "SCAN_INCOMPLETE",
+        "UNSCANNED_LANGUAGE"
+      ]
+    }
+  ]
+}

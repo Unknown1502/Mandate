@@ -1,0 +1,237 @@
+{
+  "ranAt": "2026-11-09T12:55:14.830Z",
+  "base": "http://localhost:3000",
+  "browser": "156.0.8078.80",
+  "viewports": {
+    "desktop-stubbed": {
+      "console": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": []
+    }
+  },
+  "findings": [
+    {
+      "severity": "high",
+      "where": "desktop",
+      "text": "journey aborted: TimeoutError: locator.click: Timeout 30000ms exceeded."
+    },
+    {
+      "severity": "high",
+      "where": "mobile",
+      "text": "journey aborted: TimeoutError: locator.waitFor: Timeout 30000ms exceeded."
+    }
+  ],
+  "checks": [
+    {
+      "id": "desktop/login: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > innerWidth 1366"
+    },
+    {
+      "id": "desktop/login: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/login: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop: wrong credentials show an error and stay on the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: empty states are shown (no mandate, no deals, no deal selected)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: PayPal chip says MOCK",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: Buyer Agent chip says Rule-based and nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: Seller chip says Local simulator",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/dashboard-empty: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > innerWidth 1366"
+    },
+    {
+      "id": "desktop/dashboard-empty: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/dashboard-empty: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop: mandate appears with a verified seal",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "id": "desktop: transcript shows rule-based buyer and local-simulator seller",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: \"no AI model was called\" note is shown",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: PayPal card is labelled MOCK and shows no capture",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: no \"Paid\" success is shown before any capture",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/negotiation: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > innerWidth 1366"
+    },
+    {
+      "id": "desktop/negotiation: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/negotiation: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop: flagged delivery shows scanner flags and asks for a human decision",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: flagged delivery shows no capture and no \"Paid\"",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: no reject button exists (policy: no unrestricted reject)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/flagged: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > innerWidth 1366"
+    },
+    {
+      "id": "desktop/flagged: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/flagged: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop: duplicate-row delivery shows a failed verification and is not paid",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: journey completed",
+      "ok": false,
+      "detail": "TimeoutError: locator.click: Timeout 30000ms exceeded."
+    },
+    {
+      "id": "mobile/login: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 390 > innerWidth 390"
+    },
+    {
+      "id": "mobile/login: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/login: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "mobile: wrong credentials show an error and stay on the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: journey completed",
+      "ok": false,
+      "detail": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded."
+    },
+    {
+      "id": "desktop [STUBBED API]: configured Gemini shows \"Live AI · gemini · model\" in the chip",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: a Gemini failure is shown as a failure with its reason and \"no fallback\"",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: a failed call never labels the buyer as AI or rule-based success",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: a recorded successful call labels that deal's buyer messages with the provider and model",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: incomplete Gemini configuration is shown as \"Rule-based (AI NOT configured)\", never as AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop-stubbed: no browser console errors or page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop-stubbed: no failed network requests",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop-stubbed: no unexpected HTTP error responses",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "summary": {
+    "passed": 38,
+    "failed": 3,
+    "findings": 2
+  }
+}

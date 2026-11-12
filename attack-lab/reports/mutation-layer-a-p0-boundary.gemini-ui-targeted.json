@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-11-09T13:16:02.589Z",
+  "suite": "Layer A - P0 security boundary",
+  "counts": {
+    "defined": 1,
+    "killed": 1,
+    "survived": 0,
+    "invalid": 0,
+    "unreached": 0,
+    "notEvaluated": 0
+  },
+  "srcRestoredByteForByte": true,
+  "srcDigestBefore": "a0cd2932e5eb6473adb363d359832778f35893951499e5f84ce69a40f718e837",
+  "srcDigestAfter": "a0cd2932e5eb6473adb363d359832778f35893951499e5f84ce69a40f718e837",
+  "srcFiles": 98,
+  "rows": [
+    {
+      "id": "P0-A16",
+      "suite": "A",
+      "defence": "NEW model provider created in production source (a second route to the vendor)",
+      "file": "src/lib/shadow-provider.ts",
+      "mutation": "create src/lib/shadow-provider.ts",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 unit+architecture"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) nothing in production source CREATES a provider or an artifact-bearing verifier/skeptic",
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) the verifier/skeptic implementations are named only in the module that defines them",
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) only the pipeline and the orchestrator (types) import the verification/ai module; only buyer, ai, pipeline (types) and negotiation (types) import agents/llm"
+          ],
+          "detail": "3/26 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    }
+  ]
+}

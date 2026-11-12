@@ -1,0 +1,148 @@
+{
+  "ranAt": "2026-11-10T08:17:36.940Z",
+  "requestsSent": 0,
+  "outboundGuardRefused": 0,
+  "deal": {
+    "id": "cmw9owm800004vfoshymk7yir",
+    "state": "VERIFYING",
+    "order": "4YJ97804H20584006",
+    "authorization": "19070882T8512554U",
+    "lockedPrice": "20"
+  },
+  "checks": [
+    {
+      "id": "the full authorization of the deal re-derives from the stored records (mandate seal, terms hash, counterparty, attestation)",
+      "ok": true,
+      "detail": "ok"
+    },
+    {
+      "id": "the recorded verification is intact: ALL required criteria are met and no flag was raised",
+      "ok": true,
+      "detail": "2 required criteria, all met: true; flags 0"
+    },
+    {
+      "id": "the stored authorization id equals the Stage 3 provider-read id and the deal records it as CREATED",
+      "ok": true,
+      "detail": "19070882T8512554U / CREATED"
+    },
+    {
+      "id": "the authorization has NOT expired (expires 2026-12-08T21:01:21Z; the engine requires 5 minutes of margin)",
+      "ok": true,
+      "detail": "valid for 29 more days"
+    },
+    {
+      "id": "the authorization amount equals the locked price (20.00 USD)",
+      "ok": true,
+      "detail": "20.00"
+    },
+    {
+      "id": "the DETERMINISTIC settlement decision permits capture: FULL_CAPTURE of exactly 20.00",
+      "ok": true,
+      "detail": "FULL_CAPTURE 20.00 earned 100 reasons -"
+    },
+    {
+      "id": "the buyer's challenge window has ended (so the engine will not wait); no acceptance is required by the engine",
+      "ok": true,
+      "detail": "ended 2026-11-09T22:09:56.185Z"
+    },
+    {
+      "id": "no capture exists: no capture/void operation, no settlement record, nothing captured on the deal, none on the order at the Stage 3 read",
+      "ok": true,
+      "detail": "CREATE_ORDER:CONFIRMED,AUTHORIZE:CONFIRMED"
+    },
+    {
+      "id": "the deal is in the state the capture stage starts from (VERIFYING)",
+      "ok": true,
+      "detail": "VERIFYING"
+    },
+    {
+      "id": "DB: request ids are unique (a second operation cannot reuse a PayPal-Request-Id)",
+      "ok": true,
+      "detail": "unique index on PayPalOperation.requestId"
+    },
+    {
+      "id": "DB: one operation per (deal, type, seq)",
+      "ok": true,
+      "detail": "unique (dealId, type, seq)"
+    },
+    {
+      "id": "DB: at most ONE live CAPTURE/VOID per deal (partial unique index)",
+      "ok": true,
+      "detail": "PayPalOperation_one_live_settlement_per_deal"
+    },
+    {
+      "id": "DB: at most ONE settlement record per deal (unique dealId)",
+      "ok": true,
+      "detail": "Settlement_pkey,Settlement_dealId_key"
+    }
+  ],
+  "decision": {
+    "decision": "FULL_CAPTURE",
+    "amount": "20.00",
+    "earned": 100,
+    "reasons": []
+  },
+  "plan": [
+    {
+      "n": 1,
+      "method": "POST",
+      "path": "/v1/oauth2/token",
+      "effect": "SDK token request; no state change"
+    },
+    {
+      "n": 2,
+      "method": "GET",
+      "path": "/v2/payments/authorizations/19070882T8512554U",
+      "effect": "settlement-decision read: the engine decides only if CREATED, 20.00 USD, unexpired (else NEEDS_HUMAN / no capture)"
+    },
+    {
+      "n": 3,
+      "method": "GET",
+      "path": "/v2/payments/authorizations/19070882T8512554U",
+      "effect": "fresh pre-capture check (the engine's pre-send guard); a capture exceeding the authorization or the price is refused before sending"
+    },
+    {
+      "n": 4,
+      "method": "POST",
+      "path": "/v2/payments/authorizations/19070882T8512554U/capture",
+      "effect": "THE WRITE: capture 20.00 USD, final_capture true",
+      "headers": {
+        "PayPal-Request-Id": "cmw9owm800004vfoshymk7yir-CAPTURE-1",
+        "Prefer": "return=representation"
+      },
+      "body": {
+        "amount": {
+          "currency_code": "USD",
+          "value": "20.00"
+        },
+        "final_capture": true,
+        "invoice_id": "cmw9owm800004vfoshymk7yir-settle-1"
+      }
+    },
+    {
+      "n": 5,
+      "method": "GET",
+      "path": "/v2/payments/captures/{captureId}",
+      "effect": "capture read-back: must be COMPLETED (a PENDING or DECLINED capture is not success)"
+    },
+    {
+      "n": 6,
+      "method": "GET",
+      "path": "/v2/payments/authorizations/19070882T8512554U",
+      "effect": "authorization reconciliation: status moves to CAPTURED; the deal then becomes CAPTURED"
+    }
+  ],
+  "indexes": [
+    "Settlement_pkey",
+    "Settlement_dealId_key",
+    "PayPalOperation_pkey",
+    "PayPalOperation_requestId_key",
+    "PayPalOperation_dealId_type_idx",
+    "PayPalOperation_dealId_type_seq_key",
+    "PayPalOperation_one_live_settlement_per_deal"
+  ],
+  "notProvable": [
+    "what PayPal reports right now (requests 2 and 3 re-verify it before any capture)",
+    "that PayPal will accept the capture (request 5 confirms COMPLETED)"
+  ]
+}

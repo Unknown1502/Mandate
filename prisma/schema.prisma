@@ -1,0 +1,445 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DealState {
+  PROPOSED
+  NEGOTIATING
+  TERMS_LOCKED
+  POLICY_CHECKED
+  BLOCKED
+  NEEDS_HUMAN
+  ORDER_CREATED
+  AWAITING_BUYER_APPROVAL
+  AUTHORIZED
+  AWAITING_DELIVERY
+  DELIVERED
+  VERIFYING
+  SETTLEMENT_REVIEW
+  SETTLING
+  SETTLEMENT_PENDING
+  CAPTURED
+  PARTIALLY_CAPTURED
+  VOIDED
+  EXPIRED
+  FAILED
+}
+
+enum OperationType {
+  CREATE_ORDER
+  AUTHORIZE
+  CAPTURE
+  VOID
+  REAUTHORIZE
+}
+
+enum OperationStatus {
+  PLANNED
+  SENT
+  UNKNOWN
+  CONFIRMED
+  FAILED
+}
+
+enum ReservationStatus {
+  ACTIVE
+  CONVERTED
+  RELEASED
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  createdAt DateTime  @default(now())
+  mandates  Mandate[]
+}
+
+model Mandate {
+  id                String              @id @default(cuid())
+  principalId       String
+  principal         User                @relation(fields: [principalId], references: [id])
+  currency          String              @default("USD")
+  budgetTotal       Decimal             @db.Decimal(14, 2)
+  perDealMax        Decimal             @db.Decimal(14, 2)
+  requireHumanAbove Decimal?            @db.Decimal(14, 2)
+  allowedTaskTypes  String[]
+  counterparties    String[]
+  injectionPolicy   String              @default("HUMAN_REVIEW")
+  expiresAt         DateTime
+  revokedAt         DateTime?
+  canonicalJson     String
+  mandateDigest     String
+  approvedBy        String
+  approvedAt        DateTime
+  approvalMethod    String
+  keyVersion        String
+  signature         String
+  /// P3 (additive): 1 = legacy seal, 2 = V2 seal. Query/dispatch hint ONLY; the signed canonicalJson stays authoritative and a hint that disagrees with the bytes fails closed.
+  sealVersion       Int                 @default(1)
+  schemaVersion     Int                 @default(1)
+  languagePolicyHash String?
+  /// V2 mandate identity nonce (128-bit hex, inside the signed document). Unique: a sealed document cannot be stored twice under different ids.
+  mandateNonce      String?             @unique
+  /// P3 (additive) mirrors of the detector pinned INSIDE the signed language policy (query / audit hints; the signed bytes are authoritative and a mismatch fails closed)
+  detectorId        String?
+  detectorVersion   String?
+  detectorVocabularyHash String?
+  createdAt         DateTime            @default(now())
+  deals             Deal[]
+  reservations      BudgetReservation[]
+}
+
+model Deal {
+  id                    String               @id @default(cuid())
+  mandateId             String
+  mandate               Mandate              @relation(fields: [mandateId], references: [id])
+  state                 DealState            @default(PROPOSED)
+  sellerId              String
+  termsJson             Json?
+  termsHash             String?
+  price                 Decimal?             @db.Decimal(14, 2)
+  paypalOrderId         String?              @unique
+  paypalAuthId          String?              @unique
+  paypalAuthStatus      String?
+  authorizedAt          DateTime?
+  authExpiresAt         DateTime?
+  approvalUrl           String?
+  capturedAmount        Decimal?             @db.Decimal(14, 2)
+  paypalCaptureId       String?
+  deadline              DateTime?
+  needsHumanFrom        DealState?
+  needsHumanReason      String?
+  verificationJson      Json?
+  humanVerdictsJson     Json?
+  challengeWindowEndsAt DateTime?
+  reviewDeadline        DateTime?
+  challengesJson        Json?
+  negotiationRounds     Int                  @default(0)
+  /// P3 (additive) query hints; the locked termsJson/termsHash and the ledger are authoritative.
+  termsSchemaVersion    Int                  @default(1)
+  languagePolicyHash    String?
+  attestation           TermsAttestation?
+  termsVersions         TermsVersion[]
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+  messages              NegotiationMessage[]
+  events                DealEvent[]
+  delivery              Delivery?
+  verificationRuns      VerificationRun[]
+  orchestrationSteps    OrchestrationStep[]
+  settlement            Settlement?
+  operations            PayPalOperation[]
+  reservations          BudgetReservation[]
+}
+
+model BudgetReservation {
+  id        String            @id @default(cuid())
+  mandateId String
+  mandate   Mandate           @relation(fields: [mandateId], references: [id])
+  dealId    String
+  deal      Deal              @relation(fields: [dealId], references: [id])
+  amount    Decimal           @db.Decimal(14, 2)
+  status    ReservationStatus @default(ACTIVE)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@unique([dealId])
+  @@index([mandateId, status])
+}
+
+model NegotiationMessage {
+  id        String   @id @default(cuid())
+  dealId    String
+  deal      Deal     @relation(fields: [dealId], references: [id])
+  round     Int
+  sender    String
+  kind      String
+  payload   Json
+  createdAt DateTime @default(now())
+
+  @@index([dealId, round])
+}
+
+model PayPalOperation {
+  id               String          @id @default(cuid())
+  dealId           String
+  deal             Deal            @relation(fields: [dealId], references: [id])
+  type             OperationType
+  seq              Int             @default(1)
+  requestId        String          @unique
+  path             String          @default("")
+  requestBody      Json?
+  requestBodyHash  String
+  status           OperationStatus @default(PLANNED)
+  paypalResourceId String?
+  resourceStatus   String?
+  responseStatus   Int?
+  debugId          String?
+  attemptCount     Int             @default(0)
+  lastError        String?
+  lastAttemptAt    DateTime?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  @@unique([dealId, type, seq])
+  @@index([dealId, type])
+}
+
+model DealEvent {
+  id        String   @id @default(cuid())
+  dealId    String
+  deal      Deal     @relation(fields: [dealId], references: [id])
+  seq       Int
+  type      String
+  actor     String
+  payload   Json
+  prevHash  String
+  hash      String
+  createdAt DateTime @default(now())
+
+  @@unique([dealId, seq])
+}
+
+model Delivery {
+  id                String            @id @default(cuid())
+  dealId            String            @unique
+  deal              Deal              @relation(fields: [dealId], references: [id])
+  sellerPrincipalId String            @default("")
+  termsHash         String            @default("")
+  artifactReference String            @default("")
+  artifactSha256    String
+  artifactSize      Int               @default(0)
+  mediaType         String            @default("")
+  artifactText      String
+  manifestJson      Json?
+  manifestHash      String            @default("")
+  submittedAt       DateTime?
+  parserVersion     String            @default("")
+  parseSummaryJson  Json?
+  resultsJson       Json?
+  flagsJson         Json?
+  createdAt         DateTime          @default(now())
+  verifications     VerificationRun[]
+}
+
+/// Immutable (DB trigger). criterion results, AI assessment refs, skeptic observations and evidence provenance live inside the
+/// hashed resultJson, so there is a single source of truth that cannot drift from its hash.
+model VerificationRun {
+  id                String   @id @default(cuid())
+  verificationId    String   @unique
+  dealId            String
+  deal              Deal     @relation(fields: [dealId], references: [id])
+  deliveryId        String
+  delivery          Delivery @relation(fields: [deliveryId], references: [id])
+  sequence          Int
+  termsHash         String
+  artifactSha256    String
+  verifierVersion   String
+  overall           String
+  resultJson        Json
+  resultHash        String
+  inputEvidenceRefs String[]
+  /// P3/P4 (additive): result lineage. resultJson (immutable) carries the full binding; these are query hints.
+  termsSchemaVersion Int?
+  bindingHash       String?
+  createdAt         DateTime @default(now())
+
+  @@unique([deliveryId, sequence])
+  @@index([dealId])
+  @@index([bindingHash])
+}
+
+model Settlement {
+  id          String   @id @default(cuid())
+  dealId      String   @unique
+  deal        Deal     @relation(fields: [dealId], references: [id])
+  decision    String
+  earned      Int
+  amount      Decimal  @db.Decimal(14, 2)
+  reasonCodes String[]
+  createdAt   DateTime @default(now())
+}
+
+model PaypalCall {
+  id         String   @id @default(cuid())
+  dealId     String?
+  endpoint   String
+  status     Int
+  debugId    String?
+  requestId  String?
+  durationMs Int
+  createdAt  DateTime @default(now())
+}
+
+model WebhookEvent {
+  id           String    @id
+  type         String
+  verified     Boolean
+  status       String    @default("RECEIVED")
+  resourceType String?
+  resourceId   String?
+  dealId       String?
+  attemptCount Int       @default(0)
+  lastError    String?
+  receivedAt   DateTime  @default(now())
+  processedAt  DateTime?
+}
+
+model Job {
+  id        String   @id @default(cuid())
+  type      String
+  dealId    String?
+  runAt     DateTime @default(now())
+  status    String   @default("PENDING")
+  attempts  Int      @default(0)
+  lastError String?
+  createdAt DateTime @default(now())
+
+  @@index([status, runAt])
+}
+
+model AgentRun {
+  id         String   @id @default(cuid())
+  dealId     String?
+  role       String
+  model      String
+  promptHash String
+  outputJson Json
+  tokensIn   Int?
+  tokensOut  Int?
+  latencyMs  Int?
+  /// P4 (additive): sha256 of the per-call ModelInputManifest.
+  inputManifestHash String?
+  createdAt  DateTime @default(now())
+}
+
+model AttackRun {
+  id         String   @id @default(cuid())
+  batchId    String
+  caseId     String
+  runIndex   Int
+  outcome    String
+  succeeded  Boolean
+  detailJson Json
+  createdAt  DateTime @default(now())
+}
+
+/// Orchestration progress and idempotency. One row per logical step (deal, step, key). A step is COMPLETED at most once; a crashed
+/// worker's STARTED row is taken over only after its lease expires. Not part of the audit ledger (the ledger records outcomes).
+model OrchestrationStep {
+  id             String    @id @default(cuid())
+  dealId         String
+  deal           Deal      @relation(fields: [dealId], references: [id])
+  step           String
+  idempotencyKey String
+  status         String    @default("STARTED")
+  attempts       Int       @default(1)
+  resultJson     Json?
+  error          String?
+  leaseExpiresAt DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@unique([dealId, step, idempotencyKey])
+  @@index([dealId])
+}
+
+/// Persistent atomic claim on a (delivery, sequence) verification, so concurrent requests cannot each call the AI provider.
+model VerificationClaim {
+  id             String   @id @default(cuid())
+  deliveryId     String
+  sequence       Int
+  claimedBy      String
+  leaseExpiresAt DateTime
+  status         String   @default("CLAIMED")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([deliveryId, sequence])
+}
+
+/// P3: the application's attestation that a human approved EXACT locked terms under a mandate (not a user signature). Immutable (DB trigger). One per deal; the nonce is single-use.
+/// The signed payloadJson is authoritative; the other columns are copies for queries and uniqueness and are re-verified against it.
+model TermsAttestation {
+  id                 String   @id @default(cuid())
+  dealId             String   @unique
+  deal               Deal     @relation(fields: [dealId], references: [id])
+  mandateId          String
+  mandateDigest      String
+  termsHash          String
+  termsSchemaVersion Int
+  languagePolicyHash String?
+  mappingHash        String
+  approvalKind       String
+  actorKind          String
+  actorId            String
+  approvedAt         DateTime
+  approvalNonce      String   @unique
+  keyVersion         String
+  payloadJson        String
+  signature          String
+  createdAt          DateTime @default(now())
+
+  @@index([mandateId])
+}
+
+/// P7: a governed, immutable detector release. Everything except `status` is fixed at registration (DB trigger); `status` moves only along the allowed workflow
+/// (DRAFT -> EVALUATION -> REVIEW -> APPROVED -> RELEASED -> RETIRED, REVOKED from any later state, RETIRED -> RELEASED only by a signed ROLLBACK event).
+model DetectorRelease {
+  id                       String                 @id @default(cuid())
+  detectorId               String
+  version                  String
+  vocabularyHash           String
+  contentHash              String
+  languageCoverage         String[]
+  evaluationDatasetVersion String
+  manifestJson             Json
+  submittedBy              String
+  status                   String                 @default("DRAFT")
+  statusChangedAt          DateTime               @default(now())
+  createdAt                DateTime               @default(now())
+  events                   DetectorReleaseEvent[]
+
+  @@unique([detectorId, version])
+  @@unique([detectorId, vocabularyHash])
+}
+
+/// P7: append-only, hash-chained, application-signed release log (who, when, manifest hash, review records, evaluation results). Immutable (DB trigger).
+model DetectorReleaseEvent {
+  id         String          @id @default(cuid())
+  releaseId  String
+  release    DetectorRelease @relation(fields: [releaseId], references: [id])
+  seq        Int
+  type       String
+  actor      String
+  payload    Json
+  prevHash   String
+  hash       String
+  keyVersion String
+  signature  String
+  createdAt  DateTime        @default(now())
+
+  @@unique([releaseId, seq])
+}
+
+/// Terms version history (additive). One immutable row per locked version of a deal's terms. Terms cannot change after the lock, so a deal has exactly one version today;
+/// the (dealId, version) key and the trigger make any future re-lock an explicit, auditable new version instead of an overwrite.
+model TermsVersion {
+  id                 String   @id @default(cuid())
+  dealId             String
+  deal               Deal     @relation(fields: [dealId], references: [id])
+  version            Int
+  termsSchemaVersion Int
+  termsHash          String
+  termsJson          Json
+  lockedBy           String
+  lockedAt           DateTime @default(now())
+
+  @@unique([dealId, version])
+  @@index([termsHash])
+}

@@ -1,0 +1,66 @@
+{
+  "ranAt": "2026-11-09T15:07:18.481Z",
+  "outcome": "transcript",
+  "dealState": "AWAITING_BUYER_APPROVAL",
+  "buyerChipText": "Buyer Agent negotiates only the price. Criteria are fixed by you. ",
+  "transcript": [
+    {
+      "sender": "buyer",
+      "kind": "propose",
+      "price": null,
+      "message": null
+    },
+    {
+      "sender": "seller",
+      "kind": "accept",
+      "price": null,
+      "message": null
+    }
+  ],
+  "modelRuns": [
+    {
+      "role": "buyer",
+      "model": "openai/gpt-oss-20b",
+      "ok": true,
+      "latencyMs": 730,
+      "error": null
+    }
+  ],
+  "pageClaimsLiveAi": true,
+  "pageShowsRecordedModelCalls": true,
+  "pageSaysNoAiCalled": false,
+  "problems": [],
+  "note": "synthetic mandate; PayPal mock; no checkout or delivery performed; V2 disabled",
+  "verifiedFromDatabase": {
+    "note": "the extractor above missed some field names; these values were read from the throwaway database before it was dropped",
+    "transcript": [
+      {
+        "round": 1,
+        "sender": "buyer",
+        "kind": "propose",
+        "price": "25.00",
+        "message": "I can pay $25.00 for the data-cleaning job. Let me know if that works for you."
+      },
+      {
+        "round": 1,
+        "sender": "seller",
+        "kind": "accept"
+      }
+    ],
+    "modelRuns": [
+      {
+        "role": "buyer",
+        "provider": "groq",
+        "model": "openai/gpt-oss-20b",
+        "ok": true,
+        "tokensIn": 534,
+        "tokensOut": 324,
+        "latencyMs": 730
+      }
+    ],
+    "lockedPrice": "25.00",
+    "userTargetPrice": "20.00",
+    "paypal": "mock",
+    "v2": "disabled"
+  }
+}

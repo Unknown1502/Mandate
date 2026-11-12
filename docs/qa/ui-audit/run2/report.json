@@ -1,0 +1,82 @@
+{
+  "ranAt": "2026-11-09T12:58:25.372Z",
+  "base": "http://localhost:3000",
+  "browser": "156.0.8078.80",
+  "viewports": {
+    "desktop-stubbed": {
+      "console": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": []
+    }
+  },
+  "findings": [
+    {
+      "severity": "high",
+      "where": "desktop",
+      "text": "journey aborted: Error: refusing to reset a database that is not a disposable audit database"
+    },
+    {
+      "severity": "high",
+      "where": "mobile",
+      "text": "journey aborted: Error: refusing to reset a database that is not a disposable audit database"
+    }
+  ],
+  "checks": [
+    {
+      "id": "desktop: journey completed",
+      "ok": false,
+      "detail": "Error: refusing to reset a database that is not a disposable audit database"
+    },
+    {
+      "id": "mobile: journey completed",
+      "ok": false,
+      "detail": "Error: refusing to reset a database that is not a disposable audit database"
+    },
+    {
+      "id": "desktop [STUBBED API]: configured Gemini shows \"Live AI · gemini · model\" in the chip",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: a Gemini failure is shown as a failure with its reason and \"no fallback\"",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: a failed call never labels the buyer as AI or rule-based success",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: a recorded successful call labels that deal's buyer messages with the provider and model",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: incomplete Gemini configuration is shown as \"Rule-based (AI NOT configured)\", never as AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop-stubbed: no browser console errors or page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop-stubbed: no failed network requests",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop-stubbed: no unexpected HTTP error responses",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 2,
+    "findings": 2
+  }
+}

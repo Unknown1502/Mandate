@@ -1,0 +1,138 @@
+{
+  "stage": "1 of the PayPal Sandbox E2E: create the order only",
+  "ranAt": "2026-11-09T18:45:43.178Z",
+  "environment": {
+    "paypalMode": "sandbox (process-level, this run only)",
+    "writes": "authorized (process-level, this run only; .env.local untouched)",
+    "baseUrl": "https://api-m.sandbox.paypal.com",
+    "database": "mandate_e2e",
+    "clientIdFingerprint": "10dda8d6",
+    "v2": "disabled",
+    "production": "unavailable"
+  },
+  "outboundRequests": {
+    "permitted": 3,
+    "allowedAndSent": [
+      {
+        "rule": "1-oauth-token",
+        "method": "POST",
+        "host": "api-m.sandbox.paypal.com",
+        "path": "/v1/oauth2/token"
+      },
+      {
+        "rule": "2-create-order",
+        "method": "POST",
+        "host": "api-m.sandbox.paypal.com",
+        "path": "/v2/checkout/orders"
+      },
+      {
+        "rule": "3-read-order",
+        "method": "GET",
+        "host": "api-m.sandbox.paypal.com",
+        "path": "/v2/checkout/orders/{orderId}"
+      }
+    ],
+    "refusedByGuard": [],
+    "nonLoopbackTcpConnects": [
+      "api-m.sandbox.paypal.com:443"
+    ]
+  },
+  "paypal": {
+    "operations": [
+      {
+        "op": "write:CREATE_ORDER",
+        "outcome": "ok",
+        "httpStatus": 200,
+        "debugId": "ca57ef9f5ee6f"
+      },
+      {
+        "op": "read:ORDER",
+        "outcome": "ok",
+        "httpStatus": 200,
+        "debugId": "ca57efa007fd9"
+      }
+    ]
+  },
+  "order": {
+    "id": "4R58521703025521B",
+    "status": "PAYER_ACTION_REQUIRED",
+    "intent": "AUTHORIZE",
+    "amount": "20.00",
+    "currency": "USD",
+    "referenceId": "cmw9m38nq0004vf7solxwm61x",
+    "customId": "cmw9m38nq0004vf7solxwm61x",
+    "boundToDeal": true
+  },
+  "payeeVerification": {
+    "expectedBusinessAccount": "<sandbox-business-email>",
+    "payeeEmailReturnedByPayPal": "<sandbox-business-email>",
+    "merchantId": "2V6GR7UPQBMY8",
+    "matches": true
+  },
+  "buyerAccount": {
+    "expected": "<sandbox-buyer-email>",
+    "verified": false,
+    "note": "the buyer account is only used when the buyer logs in on PayPal's page (next stage)"
+  },
+  "deal": {
+    "id": "cmw9m38nq0004vf7solxwm61x",
+    "state": "AWAITING_BUYER_APPROVAL",
+    "lockedPrice": "20",
+    "paypalOrderIdPersisted": true,
+    "paypalAuthId": null,
+    "approvalLinkRecorded": true
+  },
+  "localOperations": [
+    {
+      "type": "CREATE_ORDER",
+      "seq": 1,
+      "status": "CONFIRMED",
+      "requestId": "cmw9m38nq0004vf7solxwm61x-CREATE_ORDER-1",
+      "httpStatus": 200,
+      "resourceStatus": "PAYER_ACTION_REQUIRED",
+      "debugId": "ca57ef9f5ee6f"
+    }
+  ],
+  "ledgerEventTypes": [
+    "DEAL_CREATED",
+    "STATE_TRANSITION",
+    "NEGOTIATION_MESSAGE",
+    "NEGOTIATION_MESSAGE",
+    "STATE_TRANSITION",
+    "STATE_TRANSITION",
+    "ORCHESTRATION_STEP",
+    "BUDGET_RESERVED",
+    "PAYPAL_OPERATION_PLANNED",
+    "PAYPAL_WRITE",
+    "PAYPAL_READ",
+    "STATE_TRANSITION",
+    "STATE_TRANSITION",
+    "ORCHESTRATION_STEP"
+  ],
+  "negotiation": {
+    "outcome": "LOCKED",
+    "termsHash": "b068de824ce4416f4bb54eb2b945b150999cfaa4f5e6792dc3485da3bb94739d",
+    "price": "20.00",
+    "rounds": 1
+  },
+  "engineAdvance": {
+    "state": "AWAITING_BUYER_APPROVAL",
+    "status": "WAITING",
+    "reason": "BUYER_APPROVAL_PENDING",
+    "steps": [
+      "POLICY",
+      "ORDER",
+      "APPROVAL"
+    ]
+  },
+  "threw": null,
+  "notDone": [
+    "buyer checkout",
+    "approval",
+    "authorization",
+    "capture",
+    "void",
+    "refund",
+    "any read of the four spike orders"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "ranAt": "2026-11-09T15:19:55.794Z",
+  "outcome": "transcript",
+  "dealState": "AWAITING_BUYER_APPROVAL",
+  "buyerChipText": "Buyer Agent negotiates only the price. Criteria are fixed by you. ",
+  "transcript": [
+    {
+      "round": 1,
+      "sender": "buyer",
+      "kind": "propose",
+      "price": "20.00",
+      "message": null
+    },
+    {
+      "round": 1,
+      "sender": "seller",
+      "kind": "counter",
+      "price": "25.59",
+      "message": "Simulated seller (not a real merchant): My price for this job is 25.59."
+    },
+    {
+      "round": 2,
+      "sender": "buyer",
+      "kind": "counter",
+      "price": "22.80",
+      "message": null
+    },
+    {
+      "round": 2,
+      "sender": "seller",
+      "kind": "accept",
+      "price": null,
+      "message": "Simulated seller (not a real merchant): Agreed."
+    }
+  ],
+  "modelRuns": [],
+  "pageClaimsLiveAi": false,
+  "pageShowsRecordedModelCalls": false,
+  "buyerBrainShown": "Buyer Agent · rule-based (no AI)",
+  "pageSaysNoAiCalled": true,
+  "problems": [],
+  "note": "synthetic mandate; PayPal mock; no checkout or delivery performed; V2 disabled"
+}

@@ -1,0 +1,200 @@
+{
+  "meta": {
+    "label": "mut-M29",
+    "generatedAt": "2026-11-07T19:07:44.066Z",
+    "runsPerCase": 1,
+    "casesExecuted": 1,
+    "stallsDiscarded": [],
+    "runsExecuted": 1,
+    "node": "v22.17.1",
+    "database": "mandate_test (real PostgreSQL)",
+    "paypal": "in-memory MOCK (no real PayPal call was possible)",
+    "realPayPalCalls": 0,
+    "llm": {
+      "realLlmRuns": 0,
+      "provider": "none: deterministic code and SCRIPTED stand-ins only",
+      "scriptedAiRuns": 0,
+      "scriptedObedientAiRuns": 0
+    },
+    "note": "Scripted AI results say nothing about how a real LLM behaves. Rates below describe THIS suite on THIS code against a mock PayPal, not general robustness."
+  },
+  "metrics": {
+    "runs": {
+      "total": 1,
+      "uniqueCases": 1,
+      "honest": 0,
+      "lazy": 0,
+      "attack": 1,
+      "errored": 0
+    },
+    "attackContainment": {
+      "numerator": 0,
+      "denominator": 1,
+      "rate": 0
+    },
+    "honestCompletion": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falsePositive": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "incorrectSettlement": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1
+    },
+    "incorrectSettlementAmongMoneyMoved": {
+      "numerator": 1,
+      "denominator": 1,
+      "rate": 1
+    },
+    "falsePositiveFlags": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "attackRunsFlagged": {
+      "numerator": 0,
+      "denominator": 1,
+      "rate": 0
+    },
+    "attackEscalationsWithoutFlag": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "flagMisses": [
+      {
+        "caseId": "G31",
+        "missedRuns": 1,
+        "runs": 1
+      }
+    ],
+    "integrity": {
+      "ok": true,
+      "duplicateRecords": [],
+      "incompleteCases": [],
+      "missingCases": []
+    },
+    "needsHuman": {
+      "overall": {
+        "numerator": 0,
+        "denominator": 1,
+        "rate": 0
+      },
+      "honest": {
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null
+      },
+      "attack": {
+        "numerator": 0,
+        "denominator": 1,
+        "rate": 0
+      },
+      "lazy": {
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null
+      }
+    },
+    "outcomeMatchesPolicy": {
+      "numerator": 0,
+      "denominator": 1,
+      "rate": 0
+    },
+    "flagDetection": {
+      "numerator": 0,
+      "denominator": 1,
+      "rate": 0
+    },
+    "perCategory": {
+      "POLICY_BYPASS": {
+        "runs": 1,
+        "contained": {
+          "numerator": 0,
+          "denominator": 1,
+          "rate": 0
+        },
+        "outcomeMatchesPolicy": {
+          "numerator": 0,
+          "denominator": 1,
+          "rate": 0
+        }
+      }
+    },
+    "perAiMode": {
+      "none": 1
+    },
+    "verificationLatencyMs": {
+      "median": 675,
+      "p95": 675,
+      "samples": 1
+    },
+    "nondeterministicCases": [],
+    "payPalApiFailureRate": "NOT MEASURED (mock PayPal: no real API was called)"
+  },
+  "cases": [
+    {
+      "id": "G31",
+      "category": "POLICY_BYPASS",
+      "kind": "attack",
+      "ai": "none",
+      "source": "invented",
+      "title": "The wall-clock deadline is hit (deterministic injected clock) on a 500-row file",
+      "expected": "NEEDS_HUMAN/NONE",
+      "observed": [
+        "CAPTURED/CAPTURE 22.80"
+      ],
+      "contained": false,
+      "outcomeMatchesPolicy": false,
+      "detection": "MISSED",
+      "violations": [
+        "captured 22.8 but the policy-defined maximum was 0"
+      ],
+      "errors": [],
+      "refusals": [],
+      "deliveryOutcomes": [
+        "DONE"
+      ],
+      "expectedReasons": [
+        "HIGH_SEVERITY_FLAG"
+      ],
+      "flags": [],
+      "reasons": [],
+      "halted": []
+    }
+  ],
+  "failures": [
+    {
+      "caseId": "G31",
+      "run": 1,
+      "kind": "ATTACK_NOT_CONTAINED",
+      "details": "captured 22.8 but the policy-defined maximum was 0"
+    },
+    {
+      "caseId": "G31",
+      "run": 1,
+      "kind": "OUTCOME_DIFFERS_FROM_POLICY",
+      "details": "observed CAPTURED/CAPTURE 22.80 reasons []; expected NEEDS_HUMAN/NONE reasons [HIGH_SEVERITY_FLAG]"
+    },
+    {
+      "caseId": "G31",
+      "run": 1,
+      "kind": "EXPECTED_FLAG_NOT_RAISED",
+      "details": "none of the declared flags [SCAN_INCOMPLETE] was raised; seen []"
+    },
+    {
+      "caseId": "G31",
+      "run": 1,
+      "kind": "INCORRECT_SETTLEMENT",
+      "details": "CAPTURED/CAPTURE 22.80"
+    }
+  ],
+  "knownGaps": [],
+  "probes": []
+}

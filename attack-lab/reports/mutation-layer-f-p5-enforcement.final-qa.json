@@ -1,0 +1,925 @@
+{
+  "generatedAt": "2026-11-09T08:41:15.790Z",
+  "suite": "Layer F - P5 authorization re-derivation, settlement gates, reservation cleanup, HTTP hardening",
+  "counts": {
+    "defined": 38,
+    "killed": 38,
+    "survived": 0,
+    "invalid": 0,
+    "unreached": 0,
+    "notEvaluated": 0
+  },
+  "srcRestoredByteForByte": true,
+  "srcDigestBefore": "4e30b6da688fb84b9a29bd3f9b25a39df0d715cf5ca32107edb41e204ef85c9b",
+  "srcDigestAfter": "4e30b6da688fb84b9a29bd3f9b25a39df0d715cf5ca32107edb41e204ef85c9b",
+  "srcFiles": 78,
+  "rows": [
+    {
+      "id": "P5-F01",
+      "suite": "F",
+      "defence": "a tampered / invalid TermsAttestation is no longer refused by the central authorization",
+      "file": "src/domain/authorization.ts",
+      "mutation": "\"    if (!v.ok) return fail(\\\"ATTESTATION_INVALID\\\", v.field ? `${v.code}:${v.field}` : v.code);\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 authorization + approval (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 authorization + approval (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "two-step human approval and the TermsAttestation the attestation is immutable in the database; a tampered copy (trigger bypassed) is refused by authorization and by the settlement engine"
+          ],
+          "detail": "1/25 tests failed"
+        },
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F02",
+      "suite": "F",
+      "defence": "a V2 deal without an attestation is authorized",
+      "file": "src/domain/authorization.ts",
+      "mutation": "\"if (!a) return fail(\\\"ATTESTATION_MISSING\\\");\" -> \"if (!a) return { ok: true, auth: { deal, mandate: m, terms, attestation: null } };\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 authorization + approval (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 authorization + approval (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "policy for V2 deals the legacy approval path cannot approve a V2 deal, and a bare reserveForDeal(humanApproved) without an attestation refuses",
+            "two-step human approval and the TermsAttestation the settlement engine will not create a PayPal order for a V2 deal without a verifying attestation, even if the ledger and reservation look right"
+          ],
+          "detail": "2/25 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F03",
+      "suite": "F",
+      "defence": "a revoked mandate still authorizes",
+      "file": "src/domain/authorization.ts",
+      "mutation": "\"  if (deal.mandate.revokedAt) return fail(\\\"MANDATE_REVOKED\\\");\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 enforcement (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "settlement re-derives the whole authorization a tampered attestation: settlement refuses (ATTESTATION_INVALID); a revoked mandate: settlement refuses (MANDATE_REVOKED)"
+          ],
+          "detail": "1/14 tests failed"
+        },
+        {
+          "name": "V2 authorization + approval (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F04",
+      "suite": "F",
+      "defence": "mandate expiry is not checked",
+      "file": "src/domain/authorization.ts",
+      "mutation": "\"  if (opts.checkExpiry && new Date(m.doc.expiresAt) <= now) return fail(\\\"MANDATE_EXPIRED\\\");\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 enforcement (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "settlement re-derives the whole authorization order creation after the mandate expired is refused with nothing changed"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F05",
+      "suite": "F",
+      "defence": "terms drift (the stored terms no longer hash to the locked hash) is not detected",
+      "file": "src/domain/authorization.ts",
+      "mutation": "\"  if (termsHash !== deal.termsHash) return fail(\\\"TERMS_DRIFT\\\");\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 enforcement (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "settlement re-derives the whole authorization terms changed after lock: settlement refuses to capture and routes to a human (TERMS_DRIFT)"
+          ],
+          "detail": "1/14 tests failed"
+        },
+        {
+          "name": "V2 authorization + approval (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F06",
+      "suite": "F",
+      "defence": "a flipped mirrored column (termsSchemaVersion) is not detected",
+      "file": "src/domain/authorization.ts",
+      "mutation": "\"  if (deal.termsSchemaVersion !== parsed.version) return fail(\\\"COLUMN_HINT_MISMATCH\\\", \\\"termsSchemaVersion\\ -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 enforcement (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "settlement re-derives the whole authorization the mirrored query columns are checked against the signed / locked values: a flipped terms version or language-policy hash stops settlement"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F07",
+      "suite": "F",
+      "defence": "a flipped mirrored column (languagePolicyHash) is not detected",
+      "file": "src/domain/authorization.ts",
+      "mutation": "\"  if ((deal.languagePolicyHash ?? null) !== lpHash) return fail(\\\"COLUMN_HINT_MISMATCH\\\", \\\"languagePolicyHas -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 enforcement (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "settlement re-derives the whole authorization the mirrored query columns are checked against the signed / locked values: a flipped terms version or language-policy hash stops settlement"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F08",
+      "suite": "F",
+      "defence": "the active-reservation requirement is ignored",
+      "file": "src/domain/authorization.ts",
+      "mutation": "\"const reservationOk = !opts.requireActiveReservation || deal.reservations.some((r) => r.status === \\\"ACTIVE\\\" -> \"const reservationOk = true;\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 enforcement (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "settlement re-derives the whole authorization a CAPTURE is not sent without an ACTIVE or CONVERTED budget reservation (checked again at the pre-send guard)"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F09",
+      "suite": "F",
+      "defence": "the attestation columns are not compared with the signed payload",
+      "file": "src/domain/authorization.ts",
+      "mutation": "\"return fail(\\\"ATTESTATION_INVALID\\\", \\\"COLUMNS_DIFFER_FROM_SIGNED_PAYLOAD\\\");\" -> \"attestation = null;\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 authorization + approval (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 authorization + approval (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "two-step human approval and the TermsAttestation the attestation is immutable in the database; a tampered copy (trigger bypassed) is refused by authorization and by the settlement engine"
+          ],
+          "detail": "1/25 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F10",
+      "suite": "F",
+      "defence": "order creation: an authorization failure no longer refuses the order",
+      "file": "src/settlement/engine.ts",
+      "mutation": "\"      if (!auth.ok && !TERMS_FAILURES.has(auth.reason)) return { kind: \\\"refuse\\\", reason: auth.reason } as c -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 authorization + approval (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 authorization + approval (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "two-step human approval and the TermsAttestation the attestation is immutable in the database; a tampered copy (trigger bypassed) is refused by authorization and by the settlement engine",
+            "two-step human approval and the TermsAttestation the settlement engine will not create a PayPal order for a V2 deal without a verifying attestation, even if the ledger and reservation look right",
+            "two-step human approval and the TermsAttestation an engine without the registry cannot verify a V2 deal at all (fail closed)"
+          ],
+          "detail": "3/25 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F11",
+      "suite": "F",
+      "defence": "order creation ignores mandate expiry",
+      "file": "src/settlement/engine.ts",
+      "mutation": "\"const auth = authorizeLoadedDeal(deal, { ...ctx.deps, now: ctx.now() }, { checkExpiry: true });\" -> \"const auth = authorizeLoadedDeal(deal, { ...ctx.deps, now: ctx.now() }, { checkExpiry: false });\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 enforcement (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "settlement re-derives the whole authorization order creation after the mandate expired is refused with nothing changed"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F12",
+      "suite": "F",
+      "defence": "settlement does not stop on an authorization failure (it proceeds with unverified terms)",
+      "file": "src/settlement/engine.ts",
+      "mutation": "\"if (!authz.ok) return toHuman([TERMS_FAILURES.has(authz.reason) ? \\\"TERMS_DRIFT\\\" : authz.reason]);\" -> \"if (!authz.ok) return toHuman([\\\"IGNORED\\\"]);\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 enforcement (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "settlement re-derives the whole authorization terms changed after lock: settlement refuses to capture and routes to a human (TERMS_DRIFT)",
+            "settlement re-derives the whole authorization a tampered attestation: settlement refuses (ATTESTATION_INVALID); a revoked mandate: settlement refuses (MANDATE_REVOKED)",
+            "settlement re-derives the whole authorization the mirrored query columns are checked against the signed / locked values: a flipped terms version or language-policy hash stops settlement"
+          ],
+          "detail": "3/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F13",
+      "suite": "F",
+      "defence": "the pre-send re-derivation before a first CAPTURE is skipped",
+      "file": "src/settlement/engine.ts",
+      "mutation": "\"    const full = await authorizeDealForCapture(ctx, op.dealId);\\n    if (full) return fail(\\\"AUTHORIZATION:\\\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 enforcement (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "settlement re-derives the whole authorization authorization lost between the settlement decision and the first CAPTURE send: the capture is NOT sent (pre-send re-derivation), the deal goes to a human",
+            "settlement re-derives the whole authorization a CAPTURE is not sent without an ACTIVE or CONVERTED budget reservation (checked again at the pre-send guard)"
+          ],
+          "detail": "2/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F14",
+      "suite": "F",
+      "defence": "the intake binding refusal is ignored",
+      "file": "src/settlement/verification-intake.ts",
+      "mutation": "\"  if (refusal) return refuse(refusal);\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 verification + intake binding (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 verification + intake binding (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "V2 verification: authorization is re-derived, and the intake binding rejects mismatched results a V1-style result (no binding) for a V2 deal and a V2 result for a V1 deal are both refused at intake"
+          ],
+          "detail": "1/29 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F15",
+      "suite": "F",
+      "defence": "a result resting on model calls is accepted after the deployment stopped permitting them",
+      "file": "src/settlement/verification-intake.ts",
+      "mutation": "\"if (r.binding && r.binding.modelCalls.length > 0 && !authorizeLoadedDeal(full, { ...ctx.deps, now }).ok) retu -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 verification + intake binding (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 verification + intake binding (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "V2 verification: authorization is re-derived, and the intake binding rejects mismatched results intake refuses a result that rests on model calls once the deployment no longer permits them"
+          ],
+          "detail": "1/29 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F16",
+      "suite": "F",
+      "defence": "the reservation sweeper never expires an idle pre-order deal",
+      "file": "src/domain/reservations.ts",
+      "mutation": "\"if (!mandateExpired && d.updatedAt > cutoff) continue;\" -> \"continue;\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 enforcement (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "reservation expiry and cleanup an idle pre-order V2 deal is BLOCKED and its reservation released after the TTL; a fresh one is untouched; a deal with an order is never touched",
+            "reservation expiry and cleanup an expired mandate frees its pre-order reservations at once; a terminal deal that still holds a reservation is cleaned up (defence in depth); the sweep is idempotent"
+          ],
+          "detail": "2/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F17",
+      "suite": "F",
+      "defence": "the reservation sweeper does not release a reservation of a terminal deal",
+      "file": "src/domain/reservations.ts",
+      "mutation": "\"      await releaseReservation(tx, fresh.dealId);\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 enforcement (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 enforcement (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "reservation expiry and cleanup an expired mandate frees its pre-order reservations at once; a terminal deal that still holds a reservation is cleaned up (defence in depth); the sweep is idempotent"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F18",
+      "suite": "F",
+      "defence": "the rate limiter never refuses",
+      "file": "src/lib/http-guard.ts",
+      "mutation": "\"      if (arr.length >= o.limit) return false;\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "HTTP guards (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "HTTP guards (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "createRateLimiter allows `limit` requests per window, then refuses until the window slides",
+            "createRateLimiter a refused request is not counted (no self-extending lockout) and the key table is size-capped"
+          ],
+          "detail": "2/7 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F19",
+      "suite": "F",
+      "defence": "a request body larger than the limit is buffered and accepted",
+      "file": "src/lib/http-guard.ts",
+      "mutation": "\"    if (total > maxBytes) {\" -> \"    if (false) {\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "HTTP guards (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "HTTP guards (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "readJsonBounded refuses an oversized body by declared length and by streamed length, without buffering it"
+          ],
+          "detail": "1/7 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F20",
+      "suite": "F",
+      "defence": "the login route no longer consults the rate limiter",
+      "file": "src/app/api/auth/login/route.ts",
+      "mutation": "\"if (!globalLimiter.take(\\\"*\\\") || !perClient.take(key)) {\" -> \"if (false) {\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "HTTP guards (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "HTTP guards (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "secure headers and the login route the login route checks origin, rate limit and body size before it compares any credential"
+          ],
+          "detail": "1/7 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F21",
+      "suite": "F",
+      "defence": "the login route reads an unbounded body",
+      "file": "src/app/api/auth/login/route.ts",
+      "mutation": "\"const raw = await readJsonBounded(req, 4_096);\" -> \"const raw = { ok: true as const, value: await req.json().catch(() => null) };\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "HTTP guards (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "HTTP guards (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "secure headers and the login route the login route checks origin, rate limit and body size before it compares any credential"
+          ],
+          "detail": "1/7 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F22",
+      "suite": "F",
+      "defence": "clickjacking protection (X-Frame-Options) is removed",
+      "file": "next.config.ts",
+      "mutation": "\"  { key: \\\"X-Frame-Options\\\", value: \\\"DENY\\\" },\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "HTTP guards (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "HTTP guards (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "secure headers and the login route next.config applies the security headers to every route and no-store to the API"
+          ],
+          "detail": "1/7 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F23",
+      "suite": "F",
+      "defence": "API responses are cacheable",
+      "file": "next.config.ts",
+      "mutation": "\"{ source: \\\"/api/:path*\\\", headers: [{ key: \\\"Cache-Control\\\", value: \\\"no-store\\\" }] },\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "HTTP guards (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "HTTP guards (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "secure headers and the login route next.config applies the security headers to every route and no-store to the API"
+          ],
+          "detail": "1/7 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F24",
+      "suite": "F",
+      "defence": "a NEW settlement-side module derives a ModelAuthorization (model authority outside verification)",
+      "file": "src/settlement/shadow-auth.ts",
+      "mutation": "create src/settlement/shadow-auth.ts",
+      "verdict": "KILLED",
+      "killedBy": [
+        "architecture (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "architecture (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) P4: model authority is derived, and a ModelRunner is used, only inside the verification layer; nothing in production source constructs a ModelRunner"
+          ],
+          "detail": "1/61 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F25",
+      "suite": "F",
+      "defence": "a V2 mandate opens without an open release gate",
+      "file": "src/domain/mandates.ts",
+      "mutation": "\"  if (!gateStillValid(ctx.v2Gate, new Date())) return null; // V2 is disabled until the release gate is open\\ -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 negotiation + release gate + terms history (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 negotiation + release gate + terms history (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "V2 negotiation: the agents negotiate the PRICE only with the release gate closed, a V2 mandate cannot be negotiated at all (fail closed)",
+            "the V2 release gate at the database boundary without an open gate a V2 mandate neither opens nor can be written; an expired gate is no gate"
+          ],
+          "detail": "2/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F26",
+      "suite": "F",
+      "defence": "the mirrored detector columns are not compared with the signed pin",
+      "file": "src/domain/mandates.ts",
+      "mutation": "\"  if (row.detectorId !== dp.id || row.detectorVersion !== dp.version || row.detectorVocabularyHash !== dp.voc -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 negotiation + release gate + terms history (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 negotiation + release gate + terms history (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "detector-pin mirrors and the terms history the mirrored detector columns equal the signed pin; any difference makes the mandate unreadable"
+          ],
+          "detail": "1/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F27",
+      "suite": "F",
+      "defence": "a V2 mandate can be written without an open release gate",
+      "file": "src/domain/mandate-v2-writer.ts",
+      "mutation": "\"  if (!gateStillValid(p.v2Gate, p.now ?? new Date())) throw new V2DisabledError(\\\"V2 is disabled: the release -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 negotiation + release gate + terms history (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 negotiation + release gate + terms history (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the V2 release gate at the database boundary without an open gate a V2 mandate neither opens nor can be written; an expired gate is no gate"
+          ],
+          "detail": "1/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F28",
+      "suite": "F",
+      "defence": "an expired release record still opens the gate",
+      "file": "src/domain/v2-release-gate.ts",
+      "mutation": "\"    if (expires <= i.now.getTime()) return closed(\\\"RECORD_EXPIRED\\\");\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 release gate (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 release gate (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "evaluateV2Gate expiry, a future issue time and an over-long validity close it"
+          ],
+          "detail": "1/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F29",
+      "suite": "F",
+      "defence": "the release record's signature is not verified",
+      "file": "src/domain/v2-release-gate.ts",
+      "mutation": "\"    if (!verifyMessage(rec.data.payloadJson, rec.data.signature, key.publicKeyB64)) return closed(\\\"SIGNATURE -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 release gate (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 release gate (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "evaluateV2Gate an altered payload, a flipped signature, a foreign key, a disabled / revoked key all keep it closed"
+          ],
+          "detail": "1/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F30",
+      "suite": "F",
+      "defence": "a release record issued for different source code still opens the gate",
+      "file": "src/domain/v2-release-gate.ts",
+      "mutation": "\"    if (i.runtimeSourceDigest !== p.data.sourceDigest) return closed(\\\"SOURCE_DIGEST_MISMATCH\\\");\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 release gate (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 release gate (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "evaluateV2Gate the record must be for the code that is running",
+            "loader (composition root) opens only with BOTH the opt-in and a valid record for this tree; either alone, or a stale tree, keeps it closed"
+          ],
+          "detail": "2/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F31",
+      "suite": "F",
+      "defence": "the deployment opt-in is ignored",
+      "file": "src/domain/v2-release-gate.ts",
+      "mutation": "\"    if (!i.optedIn) return closed(\\\"NOT_OPTED_IN\\\");\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 release gate (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 release gate (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "evaluateV2Gate is closed without the deployment opt-in, without a record, and for a malformed record",
+            "loader (composition root) opens only with BOTH the opt-in and a valid record for this tree; either alone, or a stale tree, keeps it closed"
+          ],
+          "detail": "2/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F32",
+      "suite": "F",
+      "defence": "an open gate never expires once built",
+      "file": "src/domain/v2-release-gate.ts",
+      "mutation": "\"isV2GateOpen(g) && new Date(g.expiresAt).getTime() > now.getTime();\" -> \"isV2GateOpen(g);\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 release gate (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 release gate (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "evaluateV2Gate a gate cannot be forged or kept past its expiry"
+          ],
+          "detail": "1/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F33",
+      "suite": "F",
+      "defence": "a hand-built object is accepted as an open gate",
+      "file": "src/domain/v2-release-gate.ts",
+      "mutation": "\"typeof g === \\\"object\\\" && g !== null && OPEN.has(g);\" -> \"typeof g === \\\"object\\\" && g !== null && (g as { kind?: string }).kind === \\\"V2GateOpen\\\";\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 release gate (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 release gate (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "evaluateV2Gate a gate cannot be forged or kept past its expiry"
+          ],
+          "detail": "1/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F34",
+      "suite": "F",
+      "defence": "a disabled / revoked / wrong-algorithm key still validates a release record",
+      "file": "src/domain/v2-release-gate.ts",
+      "mutation": "\"if (!key || key.status !== \\\"ACTIVE\\\" || key.algorithm !== \\\"ed25519\\\" || publicKeyFingerprint(key.publicKeyB -> \"if (!key) return closed(\\\"KEY_NOT_TRUSTED\\\");\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 release gate (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 release gate (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "evaluateV2Gate an altered payload, a flipped signature, a foreign key, a disabled / revoked key all keep it closed"
+          ],
+          "detail": "1/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F35",
+      "suite": "F",
+      "defence": "a release record may be valid for longer than 30 days",
+      "file": "src/domain/v2-release-gate.ts",
+      "mutation": "\"    if (expires - issued > GATE_MAX_VALIDITY_MS) return closed(\\\"RECORD_VALIDITY_TOO_LONG\\\");\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 release gate (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 release gate (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "evaluateV2Gate expiry, a future issue time and an over-long validity close it"
+          ],
+          "detail": "1/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F36",
+      "suite": "F",
+      "defence": "the loader treats the deployment as opted in without the variable",
+      "file": "src/lib/v2-gate-loader.ts",
+      "mutation": "\"optedIn: env.MANDATE_V2_ENABLED === \\\"true\\\"\" -> \"optedIn: true\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 release gate (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 release gate (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "loader (composition root) opens only with BOTH the opt-in and a valid record for this tree; either alone, or a stale tree, keeps it closed"
+          ],
+          "detail": "1/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F37",
+      "suite": "F",
+      "defence": "the terms version history row is not written",
+      "file": "src/domain/deals.ts",
+      "mutation": "\"    await tx.termsVersion.create({ data: { dealId: p.dealId, version: 1, termsSchemaVersion: 2, termsHash: ha -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "V2 negotiation + release gate + terms history (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "V2 negotiation + release gate + terms history (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "V2 negotiation: the agents negotiate the PRICE only honest negotiation locks V2 terms (hash, version, policy hash, history row) and the deal then needs the human attestation",
+            "detector-pin mirrors and the terms history a terms history row is immutable, keyed (deal, version) and checked"
+          ],
+          "detail": "2/12 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P5-F38",
+      "suite": "F",
+      "defence": "a NEW settlement-side module evaluates the release gate itself",
+      "file": "src/settlement/shadow-gate.ts",
+      "mutation": "create src/settlement/shadow-gate.ts",
+      "verdict": "KILLED",
+      "killedBy": [
+        "architecture (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "architecture (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) final directive: a model input can be language-cleared only by assessAndClear; the V2 release gate is evaluated only by the gate module and its loader"
+          ],
+          "detail": "1/61 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    }
+  ]
+}

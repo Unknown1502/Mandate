@@ -1,0 +1,190 @@
+{
+  "meta": {
+    "label": "mut-control-M05",
+    "generatedAt": "2026-11-07T19:01:35.991Z",
+    "runsPerCase": 1,
+    "casesExecuted": 2,
+    "stallsDiscarded": [],
+    "runsExecuted": 2,
+    "node": "v22.17.1",
+    "database": "mandate_test (real PostgreSQL)",
+    "paypal": "in-memory MOCK (no real PayPal call was possible)",
+    "realPayPalCalls": 0,
+    "llm": {
+      "realLlmRuns": 0,
+      "provider": "none: deterministic code and SCRIPTED stand-ins only",
+      "scriptedAiRuns": 0,
+      "scriptedObedientAiRuns": 0
+    },
+    "note": "Scripted AI results say nothing about how a real LLM behaves. Rates below describe THIS suite on THIS code against a mock PayPal, not general robustness."
+  },
+  "metrics": {
+    "runs": {
+      "total": 2,
+      "uniqueCases": 2,
+      "honest": 0,
+      "lazy": 0,
+      "attack": 2,
+      "errored": 0
+    },
+    "attackContainment": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1
+    },
+    "honestCompletion": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falsePositive": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "incorrectSettlement": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0
+    },
+    "incorrectSettlementAmongMoneyMoved": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falsePositiveFlags": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "attackRunsFlagged": {
+      "numerator": 0,
+      "denominator": 2,
+      "rate": 0
+    },
+    "attackEscalationsWithoutFlag": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "flagMisses": [],
+    "integrity": {
+      "ok": true,
+      "duplicateRecords": [],
+      "incompleteCases": [],
+      "missingCases": []
+    },
+    "needsHuman": {
+      "overall": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0
+      },
+      "honest": {
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null
+      },
+      "attack": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0
+      },
+      "lazy": {
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null
+      }
+    },
+    "outcomeMatchesPolicy": {
+      "numerator": 2,
+      "denominator": 2,
+      "rate": 1
+    },
+    "flagDetection": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "perCategory": {
+      "MANDATE_TAMPER": {
+        "runs": 2,
+        "contained": {
+          "numerator": 2,
+          "denominator": 2,
+          "rate": 1
+        },
+        "outcomeMatchesPolicy": {
+          "numerator": 2,
+          "denominator": 2,
+          "rate": 1
+        }
+      }
+    },
+    "perAiMode": {
+      "none": 2
+    },
+    "verificationLatencyMs": {
+      "median": 40,
+      "p95": 40,
+      "samples": 1
+    },
+    "nondeterministicCases": [],
+    "payPalApiFailureRate": "NOT MEASURED (mock PayPal: no real API was called)"
+  },
+  "cases": [
+    {
+      "id": "M1",
+      "category": "MANDATE_TAMPER",
+      "kind": "attack",
+      "ai": "none",
+      "source": "invented",
+      "title": "The sealed mandate bytes are edited (budget raised)",
+      "expected": "AWAITING_DELIVERY/NONE",
+      "observed": [
+        "AWAITING_DELIVERY/NONE"
+      ],
+      "contained": true,
+      "outcomeMatchesPolicy": true,
+      "detection": "NOT_EXPECTED",
+      "violations": [],
+      "errors": [],
+      "refusals": [],
+      "deliveryOutcomes": [
+        "HALTED:MANDATE_SEAL_INVALID"
+      ],
+      "expectedReasons": [],
+      "flags": [],
+      "reasons": [],
+      "halted": [
+        "MANDATE_SEAL_INVALID"
+      ]
+    },
+    {
+      "id": "M4",
+      "category": "MANDATE_TAMPER",
+      "kind": "attack",
+      "ai": "none",
+      "source": "invented",
+      "title": "A mandate sealed with the ATTACKER's key (forged approval)",
+      "expected": "NO_DEAL/NONE",
+      "observed": [
+        "NO_DEAL/NONE"
+      ],
+      "contained": true,
+      "outcomeMatchesPolicy": true,
+      "detection": "NOT_EXPECTED",
+      "violations": [],
+      "errors": [],
+      "refusals": [],
+      "deliveryOutcomes": [],
+      "expectedReasons": [],
+      "flags": [],
+      "reasons": [],
+      "halted": []
+    }
+  ],
+  "failures": [],
+  "knownGaps": [],
+  "probes": []
+}

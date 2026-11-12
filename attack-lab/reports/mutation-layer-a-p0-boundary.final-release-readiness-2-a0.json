@@ -1,0 +1,716 @@
+{
+  "generatedAt": "2026-11-09T11:16:00.402Z",
+  "suite": "Layer A - P0 security boundary",
+  "counts": {
+    "defined": 17,
+    "killed": 17,
+    "survived": 0,
+    "invalid": 0,
+    "unreached": 0,
+    "notEvaluated": 0
+  },
+  "srcRestoredByteForByte": true,
+  "srcDigestBefore": "853182b911ba4506e57a252cb02464343a79884d6a940ccf7daf47891b5f9a82",
+  "srcDigestAfter": "853182b911ba4506e57a252cb02464343a79884d6a940ccf7daf47891b5f9a82",
+  "srcFiles": 79,
+  "rows": [
+    {
+      "id": "P0-A01",
+      "suite": "A",
+      "defence": "the model gate decision is ignored (verifier and skeptic always reachable)",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"const models: { ai?: AiVerifier; skeptic?: LlmSkeptic } = modelPolicy.permitted ? { ai: d.ai, skeptic: d.skep -> \"const models: { ai?: AiVerifier; skeptic?: LlmSkeptic } = { ai: d.ai, skeptic: d.skeptic };\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 isolation (canaries)",
+        "Lab subset (real gate)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "26 tests passed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works zero verifier calls, zero skeptic calls, zero provider requests, no AgentRun, canary absent; the deterministic verdict and settlement are unchanged",
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works deterministic safeguards still work with no model: a failed REQUIRED criterion is VOIDED; an injection-style cell still raises the deterministic flag and routes to human review",
+            "5. V1 deal with an llm_judged criterion: AI verification is blocked BEFORE any model invocation and the gap is never treated as success zero calls at all three boundaries; the llm criterion is UNVERIFIABLE with the blocked reason; the deal goes to human review; no money moves",
+            "5. V1 deal with an llm_judged criterion: AI verification is blocked BEFORE any model invocation and the gap is never treated as success an OPTIONAL llm_judged criterion is blocked the same way (it is not silently skipped)",
+            "7. orchestration replay never invokes a model V1 deterministic-only: delivery, advance, sweep and delivery REPLAYS (sequential and concurrent) make zero model calls and one capture",
+            "7. orchestration replay never invokes a model V1 llm_judged: every replay stays in human review with zero model calls and no money",
+            "8. retries and worker recovery never invoke a model a live claim blocks without a model call; an expired claim (crashed worker) is taken over once, still with zero model calls",
+            "8. retries and worker recovery never invoke a model a failed verification releases its claim and the retry succeeds, with zero model calls on both attempts"
+          ],
+          "detail": "10/18 tests failed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "A1",
+            "G18",
+            "G19",
+            "G26",
+            "G27",
+            "G32"
+          ],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A02",
+      "suite": "A",
+      "defence": "a VERIFIER call is permitted for V1 deterministic-only terms",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"const models: { ai?: AiVerifier; skeptic?: LlmSkeptic } = modelPolicy.permitted ? { ai: d.ai, skeptic: d.skep -> \"const models: { ai?: AiVerifier; skeptic?: LlmSkeptic } = modelPolicy.permitted ? { ai: d.ai, skeptic: d.skep",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 isolation (canaries)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "26 tests passed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works zero verifier calls, zero skeptic calls, zero provider requests, no AgentRun, canary absent; the deterministic verdict and settlement are unchanged",
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works deterministic safeguards still work with no model: a failed REQUIRED criterion is VOIDED; an injection-style cell still raises the deterministic flag and routes to human review",
+            "7. orchestration replay never invokes a model V1 deterministic-only: delivery, advance, sweep and delivery REPLAYS (sequential and concurrent) make zero model calls and one capture",
+            "8. retries and worker recovery never invoke a model a live claim blocks without a model call; an expired claim (crashed worker) is taken over once, still with zero model calls",
+            "8. retries and worker recovery never invoke a model a failed verification releases its claim and the retry succeeds, with zero model calls on both attempts",
+            "8. retries and worker recovery never invoke a model a fresh orchestrator instance (restart) and a dead worker's expired VERIFY step both re-run verification with zero model calls",
+            "8. retries and worker recovery never invoke a model a challenge-driven re-verification (sequence 2) makes zero model calls and still re-verifies the same artifact against the original terms"
+          ],
+          "detail": "7/18 tests failed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A03",
+      "suite": "A",
+      "defence": "a SKEPTIC call is permitted for V1 deterministic-only terms",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"const models: { ai?: AiVerifier; skeptic?: LlmSkeptic } = modelPolicy.permitted ? { ai: d.ai, skeptic: d.skep -> \"const models: { ai?: AiVerifier; skeptic?: LlmSkeptic } = modelPolicy.permitted ? { ai: d.ai, skeptic: d.skep",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 isolation (canaries)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "26 tests passed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works zero verifier calls, zero skeptic calls, zero provider requests, no AgentRun, canary absent; the deterministic verdict and settlement are unchanged",
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works deterministic safeguards still work with no model: a failed REQUIRED criterion is VOIDED; an injection-style cell still raises the deterministic flag and routes to human review",
+            "7. orchestration replay never invokes a model V1 deterministic-only: delivery, advance, sweep and delivery REPLAYS (sequential and concurrent) make zero model calls and one capture",
+            "8. retries and worker recovery never invoke a model a live claim blocks without a model call; an expired claim (crashed worker) is taken over once, still with zero model calls",
+            "8. retries and worker recovery never invoke a model a failed verification releases its claim and the retry succeeds, with zero model calls on both attempts",
+            "8. retries and worker recovery never invoke a model a fresh orchestrator instance (restart) and a dead worker's expired VERIFY step both re-run verification with zero model calls",
+            "8. retries and worker recovery never invoke a model a challenge-driven re-verification (sequence 2) makes zero model calls and still re-verifies the same artifact against the original terms"
+          ],
+          "detail": "7/18 tests failed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A04",
+      "suite": "A",
+      "defence": "models are permitted for V1 LLM-judged terms (the gate returns permitted = hasLlmCriteria)",
+      "file": "src/verification/model-gate.ts",
+      "mutation": "\"return { permitted: false, hasLlmCriteria,\" -> \"return { permitted: hasLlmCriteria, hasLlmCriteria,\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 unit+architecture",
+        "P0 isolation (canaries)",
+        "Lab subset (real gate)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "modelPolicyFor: decides from the parsed criteria of the locked terms, fails closed on anything else terms with an llm_judged criterion: AI-based verification is blocked (P0: no V2 exists yet)",
+            "modelPolicyFor: decides from the parsed criteria of the locked terms, fails closed on anything else the policy never permits a model, whatever the criteria"
+          ],
+          "detail": "2/26 tests failed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "5. V1 deal with an llm_judged criterion: AI verification is blocked BEFORE any model invocation and the gap is never treated as success zero calls at all three boundaries; the llm criterion is UNVERIFIABLE with the blocked reason; the deal goes to human review; no money moves",
+            "5. V1 deal with an llm_judged criterion: AI verification is blocked BEFORE any model invocation and the gap is never treated as success an OPTIONAL llm_judged criterion is blocked the same way (it is not silently skipped)",
+            "7. orchestration replay never invokes a model V1 llm_judged: every replay stays in human review with zero model calls and no money"
+          ],
+          "detail": "3/18 tests failed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "A1",
+            "G18",
+            "G19",
+            "G26",
+            "G27",
+            "G32"
+          ],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A05",
+      "suite": "A",
+      "defence": "the gate permits models for deterministic-only terms (permitted = !hasLlmCriteria)",
+      "file": "src/verification/model-gate.ts",
+      "mutation": "\"return { permitted: false, hasLlmCriteria,\" -> \"return { permitted: !hasLlmCriteria, hasLlmCriteria,\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 unit+architecture",
+        "P0 isolation (canaries)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "modelPolicyFor: decides from the parsed criteria of the locked terms, fails closed on anything else deterministic-only terms: no model is permitted",
+            "modelPolicyFor: decides from the parsed criteria of the locked terms, fails closed on anything else the policy never permits a model, whatever the criteria"
+          ],
+          "detail": "2/26 tests failed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works zero verifier calls, zero skeptic calls, zero provider requests, no AgentRun, canary absent; the deterministic verdict and settlement are unchanged",
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works deterministic safeguards still work with no model: a failed REQUIRED criterion is VOIDED; an injection-style cell still raises the deterministic flag and routes to human review",
+            "7. orchestration replay never invokes a model V1 deterministic-only: delivery, advance, sweep and delivery REPLAYS (sequential and concurrent) make zero model calls and one capture",
+            "8. retries and worker recovery never invoke a model a live claim blocks without a model call; an expired claim (crashed worker) is taken over once, still with zero model calls",
+            "8. retries and worker recovery never invoke a model a failed verification releases its claim and the retry succeeds, with zero model calls on both attempts",
+            "8. retries and worker recovery never invoke a model a fresh orchestrator instance (restart) and a dead worker's expired VERIFY step both re-run verification with zero model calls",
+            "8. retries and worker recovery never invoke a model a challenge-driven re-verification (sequence 2) makes zero model calls and still re-verifies the same artifact against the original terms"
+          ],
+          "detail": "7/18 tests failed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A06",
+      "suite": "A",
+      "defence": "missing / invalid terms-hash rejection is bypassed before the gate",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"if (!deal.termsHash || !termsMatchLock(deal.termsJson, deal.termsHash)) throw new VerificationError(\\\"TERMS_D -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 isolation (canaries)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "26 tests passed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "6. invalid or unclassifiable terms fail closed before any model a criterion with an unknown type: TERMS_DRIFT, zero model calls, no verification record",
+            "6. invalid or unclassifiable terms fail closed before any model a criterion with no type: TERMS_DRIFT, zero model calls, no verification record",
+            "6. invalid or unclassifiable terms fail closed before any model an empty criteria list: TERMS_DRIFT, zero model calls, no verification record",
+            "6. invalid or unclassifiable terms fail closed before any model criteria that are not a list: TERMS_DRIFT, zero model calls, no verification record",
+            "6. invalid or unclassifiable terms fail closed before any model terms that changed after locking (an llm criterion silently turned deterministic): TERMS_DRIFT, zero model calls, no verification record",
+            "6. invalid or unclassifiable terms fail closed before any model terms that are not an object: TERMS_DRIFT, zero model calls, no verification record",
+            "8. retries and worker recovery never invoke a model a failed verification releases its claim and the retry succeeds, with zero model calls on both attempts"
+          ],
+          "detail": "7/18 tests failed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A07",
+      "suite": "A",
+      "defence": "an unknown criterion type no longer fails closed in the gate",
+      "file": "src/verification/model-gate.ts",
+      "mutation": "\"else if (type !== \\\"deterministic\\\") throw new UnclassifiableTermsError(\\\"unknown criterion type\\\");\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 unit+architecture"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "modelPolicyFor: decides from the parsed criteria of the locked terms, fails closed on anything else an unknown or missing criterion type, an empty list, or a non-list throws (the caller fails closed)"
+          ],
+          "detail": "1/26 tests failed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "18 tests passed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A08",
+      "suite": "A",
+      "defence": "an empty / non-list criteria set no longer fails closed in the gate",
+      "file": "src/verification/model-gate.ts",
+      "mutation": "\"if (!Array.isArray(criteria) || criteria.length === 0) throw new UnclassifiableTermsError(\\\"no criteria\\\");\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 unit+architecture"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "modelPolicyFor: decides from the parsed criteria of the locked terms, fails closed on anything else an unknown or missing criterion type, an empty list, or a non-list throws (the caller fails closed)"
+          ],
+          "detail": "1/26 tests failed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "18 tests passed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A09",
+      "suite": "A",
+      "defence": "the gate is bypassed on re-verification (sequence > 1: challenge / replay path)",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"const models: { ai?: AiVerifier; skeptic?: LlmSkeptic } = modelPolicy.permitted ? { ai: d.ai, skeptic: d.skep -> \"const models: { ai?: AiVerifier; skeptic?: LlmSkeptic } = modelPolicy.permitted || sequence > 1 ? { ai: d.ai,",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 isolation (canaries)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "26 tests passed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "8. retries and worker recovery never invoke a model a challenge-driven re-verification (sequence 2) makes zero model calls and still re-verifies the same artifact against the original terms"
+          ],
+          "detail": "1/18 tests failed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A10",
+      "suite": "A",
+      "defence": "the gate is bypassed whenever claim options are supplied (every orchestrated run: retry, restart, worker recovery)",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"const models: { ai?: AiVerifier; skeptic?: LlmSkeptic } = modelPolicy.permitted ? { ai: d.ai, skeptic: d.skep -> \"const models: { ai?: AiVerifier; skeptic?: LlmSkeptic } = modelPolicy.permitted || d.claim !== undefined ? { ",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 isolation (canaries)",
+        "Lab subset (real gate)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "26 tests passed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "7. orchestration replay never invokes a model V1 deterministic-only: delivery, advance, sweep and delivery REPLAYS (sequential and concurrent) make zero model calls and one capture",
+            "7. orchestration replay never invokes a model V1 llm_judged: every replay stays in human review with zero model calls and no money",
+            "8. retries and worker recovery never invoke a model a live claim blocks without a model call; an expired claim (crashed worker) is taken over once, still with zero model calls",
+            "8. retries and worker recovery never invoke a model a fresh orchestrator instance (restart) and a dead worker's expired VERIFY step both re-run verification with zero model calls",
+            "8. retries and worker recovery never invoke a model a challenge-driven re-verification (sequence 2) makes zero model calls and still re-verifies the same artifact against the original terms"
+          ],
+          "detail": "5/18 tests failed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "A1",
+            "G18",
+            "G19",
+            "G26",
+            "G27",
+            "G32"
+          ],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A11",
+      "suite": "A",
+      "defence": "a V1 LLM-judged criterion no longer carries the P0 blocked reason / UNVERIFIABLE status",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"const merged = !modelPolicy.permitted\" -> \"const merged = false\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 isolation (canaries)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "26 tests passed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "5. V1 deal with an llm_judged criterion: AI verification is blocked BEFORE any model invocation and the gap is never treated as success zero calls at all three boundaries; the llm criterion is UNVERIFIABLE with the blocked reason; the deal goes to human review; no money moves",
+            "5. V1 deal with an llm_judged criterion: AI verification is blocked BEFORE any model invocation and the gap is never treated as success an OPTIONAL llm_judged criterion is blocked the same way (it is not silently skipped)"
+          ],
+          "detail": "2/18 tests failed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-M25",
+      "suite": "A",
+      "defence": "REPLACES historical M25: a blocked verifier call is allowed (the call falls back to the raw configured verifier d.ai when the gate refuses)",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"if (models.ai && !blockedReason) {\" -> \"if ((models.ai ?? d.ai) && !blockedReason) {\" ;; \"const out = await models.ai.assess(aiCtx, i, onRun);\" -> \"const out = await (models.ai ?? d.ai)!.assess(aiCtx, i, onRun);\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 unit+architecture",
+        "P0 isolation (canaries)",
+        "Lab subset (real gate)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "static: the only paths to a model are the ones the gate controls the pipeline calls assess() only on the gated handles, and obtains them through modelPolicyFor"
+          ],
+          "detail": "1/26 tests failed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works zero verifier calls, zero skeptic calls, zero provider requests, no AgentRun, canary absent; the deterministic verdict and settlement are unchanged",
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works deterministic safeguards still work with no model: a failed REQUIRED criterion is VOIDED; an injection-style cell still raises the deterministic flag and routes to human review",
+            "5. V1 deal with an llm_judged criterion: AI verification is blocked BEFORE any model invocation and the gap is never treated as success zero calls at all three boundaries; the llm criterion is UNVERIFIABLE with the blocked reason; the deal goes to human review; no money moves",
+            "5. V1 deal with an llm_judged criterion: AI verification is blocked BEFORE any model invocation and the gap is never treated as success an OPTIONAL llm_judged criterion is blocked the same way (it is not silently skipped)",
+            "7. orchestration replay never invokes a model V1 deterministic-only: delivery, advance, sweep and delivery REPLAYS (sequential and concurrent) make zero model calls and one capture",
+            "7. orchestration replay never invokes a model V1 llm_judged: every replay stays in human review with zero model calls and no money",
+            "8. retries and worker recovery never invoke a model a live claim blocks without a model call; an expired claim (crashed worker) is taken over once, still with zero model calls",
+            "8. retries and worker recovery never invoke a model a failed verification releases its claim and the retry succeeds, with zero model calls on both attempts"
+          ],
+          "detail": "10/18 tests failed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "G18",
+            "G19",
+            "G26",
+            "G27",
+            "G32"
+          ],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A13",
+      "suite": "A",
+      "defence": "a blocked SKEPTIC call is allowed (falls back to the raw configured skeptic d.skeptic)",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"if (models.skeptic && !blockedReason) {\" -> \"if ((models.skeptic ?? d.skeptic) && !blockedReason) {\" ;; \"const out = await models.skeptic.assess(aiCtx, onRun);\" -> \"const out = await (models.skeptic ?? d.skeptic)!.assess(aiCtx, onRun);\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 unit+architecture",
+        "P0 isolation (canaries)",
+        "Lab subset (real gate)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "static: the only paths to a model are the ones the gate controls the pipeline calls assess() only on the gated handles, and obtains them through modelPolicyFor"
+          ],
+          "detail": "1/26 tests failed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works zero verifier calls, zero skeptic calls, zero provider requests, no AgentRun, canary absent; the deterministic verdict and settlement are unchanged",
+            "1-4. V1 deterministic-only deal, verifier and skeptic CONFIGURED: zero model calls, canary never reaches a model, deterministic verification still works deterministic safeguards still work with no model: a failed REQUIRED criterion is VOIDED; an injection-style cell still raises the deterministic flag and routes to human review",
+            "5. V1 deal with an llm_judged criterion: AI verification is blocked BEFORE any model invocation and the gap is never treated as success zero calls at all three boundaries; the llm criterion is UNVERIFIABLE with the blocked reason; the deal goes to human review; no money moves",
+            "5. V1 deal with an llm_judged criterion: AI verification is blocked BEFORE any model invocation and the gap is never treated as success an OPTIONAL llm_judged criterion is blocked the same way (it is not silently skipped)",
+            "7. orchestration replay never invokes a model V1 deterministic-only: delivery, advance, sweep and delivery REPLAYS (sequential and concurrent) make zero model calls and one capture",
+            "7. orchestration replay never invokes a model V1 llm_judged: every replay stays in human review with zero model calls and no money",
+            "8. retries and worker recovery never invoke a model a live claim blocks without a model call; an expired claim (crashed worker) is taken over once, still with zero model calls",
+            "8. retries and worker recovery never invoke a model a failed verification releases its claim and the retry succeeds, with zero model calls on both attempts"
+          ],
+          "detail": "10/18 tests failed"
+        },
+        {
+          "name": "Lab subset (real gate)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "A1",
+            "G18",
+            "G19",
+            "G26",
+            "G27",
+            "G32"
+          ],
+          "detail": "7 Lab runs"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A14",
+      "suite": "A",
+      "defence": "NEW direct artifact-bearing consumer: a module outside the pipeline instantiates and calls LlmAiVerifier",
+      "file": "src/verification/shadow-verifier.ts",
+      "mutation": "create src/verification/shadow-verifier.ts",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 unit+architecture"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) nothing in production source CREATES a provider or an artifact-bearing verifier/skeptic",
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) the verifier/skeptic implementations are named only in the module that defines them",
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) .assess( is called only by the verification pipeline (the single gated call site), including via optional chaining",
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) only the pipeline and the orchestrator (types) import the verification/ai module; only buyer, ai, pipeline (types) and negotiation (types) import agents/llm"
+          ],
+          "detail": "4/26 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A15",
+      "suite": "A",
+      "defence": "NEW direct model consumer: a module outside the approved sites calls callLLM with artifact text",
+      "file": "src/settlement/shadow-llm.ts",
+      "mutation": "create src/settlement/shadow-llm.ts",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 unit+architecture"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) callLLM is CALLED only by the legacy V1 verifier/skeptic (ai.ts; permanently gated off by the P0 gate), the P4 ModelRunner and the negotiation buyer",
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) only the pipeline and the orchestrator (types) import the verification/ai module; only buyer, ai, pipeline (types) and negotiation (types) import agents/llm",
+            "static: the only paths to a model are the ones the gate controls callLLM has exactly three call sites (legacy V1 verifier/skeptic in ai.ts, the P4 ModelRunner, negotiation buyer) and a provider is only ever invoked inside callLLM (or the runner's counting wrapper)"
+          ],
+          "detail": "3/26 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A16",
+      "suite": "A",
+      "defence": "NEW model provider created in production source (a second route to the vendor)",
+      "file": "src/lib/shadow-provider.ts",
+      "mutation": "create src/lib/shadow-provider.ts",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 unit+architecture"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) nothing in production source CREATES a provider or an artifact-bearing verifier/skeptic",
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) the verifier/skeptic implementations are named only in the module that defines them",
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) only the pipeline and the orchestrator (types) import the verification/ai module; only buyer, ai, pipeline (types) and negotiation (types) import agents/llm"
+          ],
+          "detail": "3/26 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P0-A17",
+      "suite": "A",
+      "defence": "the orchestrator calls the configured verifier directly, outside the pipeline",
+      "file": "src/orchestration/service.ts",
+      "mutation": "\"private async verifyAndSubmit(dealId: string, sequence: number, evidenceRefs: string[] | undefined): Promise< -> \"private async verifyAndSubmit(dealId: string, sequence: number, evidenceRefs: string[] | undefined): Promise<",
+      "verdict": "KILLED",
+      "killedBy": [
+        "P0 unit+architecture",
+        "P0 isolation (canaries)"
+      ],
+      "detectors": [
+        {
+          "name": "P0 unit+architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the approved model-consumer inventory is closed (production source: src/ and seller-service/) .assess( is called only by the verification pipeline (the single gated call site), including via optional chaining"
+          ],
+          "detail": "1/26 tests failed"
+        },
+        {
+          "name": "P0 isolation (canaries)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "7. orchestration replay never invokes a model V1 deterministic-only: delivery, advance, sweep and delivery REPLAYS (sequential and concurrent) make zero model calls and one capture",
+            "7. orchestration replay never invokes a model V1 llm_judged: every replay stays in human review with zero model calls and no money",
+            "8. retries and worker recovery never invoke a model a fresh orchestrator instance (restart) and a dead worker's expired VERIFY step both re-run verification with zero model calls",
+            "8. retries and worker recovery never invoke a model a challenge-driven re-verification (sequence 2) makes zero model calls and still re-verifies the same artifact against the original terms"
+          ],
+          "detail": "4/18 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    }
+  ]
+}

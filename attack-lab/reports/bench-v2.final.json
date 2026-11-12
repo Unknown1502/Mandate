@@ -1,0 +1,157 @@
+{
+  "label": "final",
+  "generatedAt": "2026-11-08T16:37:43.455Z",
+  "environment": {
+    "node": "v22.17.1",
+    "platform": "win32 10.0.26200",
+    "cpu": "11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz x8",
+    "memGB": 20,
+    "postgres": "PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (A",
+    "database": "mandate_test",
+    "paypal": "MOCK",
+    "model": "SCRIPTED"
+  },
+  "limits": {
+    "maxArtifactBytes": 200000,
+    "maxRows": 10000,
+    "maxColumns": 100,
+    "maxCellChars": 10000,
+    "oversizedArtifactBytes": 600002,
+    "modelInputMaxChars": 60000,
+    "modelRowsMax": 15,
+    "modelFieldsMax": 50
+  },
+  "part1": [
+    {
+      "name": "max bytes (~200,000 B, 4 columns)",
+      "bytes": 144678,
+      "rows": 1333,
+      "cols": 4,
+      "ms": {
+        "parse": 11,
+        "checks": 1,
+        "prescan": 60,
+        "buildModelInput": 1,
+        "languageAssessment": 4
+      },
+      "prescanFlags": [],
+      "modelView": {
+        "inputChars": 3143,
+        "languageBlocked": "LANGUAGE_UNCERTAIN"
+      }
+    },
+    {
+      "name": "max rows (10,000 rows, 1 column)",
+      "bytes": 58902,
+      "rows": 10000,
+      "cols": 1,
+      "ms": {
+        "parse": 5,
+        "checks": 0,
+        "prescan": 43,
+        "buildModelInput": 0,
+        "languageAssessment": 0
+      },
+      "prescanFlags": [],
+      "modelView": {
+        "refused": "INPUT_FIELD_ABSENT"
+      }
+    },
+    {
+      "name": "max columns (100 columns, 100 rows)",
+      "bytes": 58390,
+      "rows": 100,
+      "cols": 100,
+      "ms": {
+        "parse": 5,
+        "checks": 0,
+        "prescan": 33,
+        "buildModelInput": 0,
+        "languageAssessment": 0
+      },
+      "prescanFlags": [],
+      "modelView": {
+        "refused": "INPUT_FIELD_ABSENT"
+      }
+    },
+    {
+      "name": "max cell length (10,000 chars, 15 rows)",
+      "bytes": 300260,
+      "rows": 15,
+      "cols": 4,
+      "ms": {
+        "parse": 11,
+        "checks": 1,
+        "prescan": 33,
+        "buildModelInput": 2,
+        "languageAssessment": 1
+      },
+      "prescanFlags": [
+        "ENCODED_PAYLOAD"
+      ],
+      "modelView": {
+        "inputChars": 7831,
+        "languageBlocked": "LANGUAGE_UNCERTAIN"
+      }
+    }
+  ],
+  "part2": [
+    {
+      "concurrentWorkflows": 1,
+      "completed": 1,
+      "failed": 0,
+      "failures": [],
+      "wallMs": 827,
+      "perWorkflowMs": {
+        "p50": 827,
+        "p95": 827,
+        "max": 827
+      },
+      "invariants": {
+        "capturesPerDealMax": 1,
+        "allCaptured": true,
+        "settlements": 1,
+        "reservationsConverted": 1,
+        "ledgerChainsIntact": "1/1"
+      }
+    },
+    {
+      "concurrentWorkflows": 5,
+      "completed": 5,
+      "failed": 0,
+      "failures": [],
+      "wallMs": 1127,
+      "perWorkflowMs": {
+        "p50": 1123,
+        "p95": 1127,
+        "max": 1127
+      },
+      "invariants": {
+        "capturesPerDealMax": 1,
+        "allCaptured": true,
+        "settlements": 5,
+        "reservationsConverted": 5,
+        "ledgerChainsIntact": "5/5"
+      }
+    },
+    {
+      "concurrentWorkflows": 10,
+      "completed": 10,
+      "failed": 0,
+      "failures": [],
+      "wallMs": 1948,
+      "perWorkflowMs": {
+        "p50": 1858,
+        "p95": 1947,
+        "max": 1947
+      },
+      "invariants": {
+        "capturesPerDealMax": 1,
+        "allCaptured": true,
+        "settlements": 10,
+        "reservationsConverted": 10,
+        "ledgerChainsIntact": "10/10"
+      }
+    }
+  ]
+}

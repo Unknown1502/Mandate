@@ -1,0 +1,312 @@
+{
+  "stage": "5 of the PayPal Sandbox E2E: the one final capture",
+  "ranAt": "2026-11-10T08:17:59.199Z",
+  "basis": "deterministic verification ALL_REQUIRED_PASSED; buyer challenge window ended unused; settlement decision FULL_CAPTURE; no explicit buyer acceptance event exists and none was created",
+  "environment": {
+    "paypalMode": "sandbox (process-level, this run only)",
+    "writes": "authorized (process-level, this run only; .env.local untouched)",
+    "baseUrl": "https://api-m.sandbox.paypal.com",
+    "database": "mandate_e2e",
+    "clientIdFingerprint": "f29310d5",
+    "v2": "disabled"
+  },
+  "outboundRequests": {
+    "permitted": 6,
+    "allowedAndSent": [
+      {
+        "rule": "1-oauth-token",
+        "method": "POST",
+        "host": "api-m.sandbox.paypal.com",
+        "path": "/v1/oauth2/token"
+      },
+      {
+        "rule": "2-authorization-read",
+        "method": "GET",
+        "host": "api-m.sandbox.paypal.com",
+        "path": "/v2/payments/authorizations/{authorizationId}"
+      },
+      {
+        "rule": "3-fresh-authorization-read",
+        "method": "GET",
+        "host": "api-m.sandbox.paypal.com",
+        "path": "/v2/payments/authorizations/{authorizationId}"
+      },
+      {
+        "rule": "4-capture",
+        "method": "POST",
+        "host": "api-m.sandbox.paypal.com",
+        "path": "/v2/payments/authorizations/{authorizationId}/capture"
+      },
+      {
+        "rule": "5-capture-read",
+        "method": "GET",
+        "host": "api-m.sandbox.paypal.com",
+        "path": "/v2/payments/captures/{captureId}"
+      },
+      {
+        "rule": "6-authorization-reconcile",
+        "method": "GET",
+        "host": "api-m.sandbox.paypal.com",
+        "path": "/v2/payments/authorizations/{authorizationId}"
+      }
+    ],
+    "refusedByGuard": []
+  },
+  "paypal": {
+    "operations": [
+      {
+        "op": "read:AUTHORIZATION",
+        "outcome": "ok",
+        "httpStatus": 200,
+        "debugId": "f105708d41ba0"
+      },
+      {
+        "op": "read:AUTHORIZATION",
+        "outcome": "ok",
+        "httpStatus": 200,
+        "debugId": "f47355242b00d"
+      },
+      {
+        "op": "write:CAPTURE",
+        "outcome": "ok",
+        "httpStatus": 201,
+        "debugId": "f47355289abf3"
+      },
+      {
+        "op": "read:CAPTURE",
+        "outcome": "ok",
+        "httpStatus": 200,
+        "debugId": "f493703014924"
+      },
+      {
+        "op": "read:AUTHORIZATION",
+        "outcome": "ok",
+        "httpStatus": 200,
+        "debugId": "f83741925e7de"
+      }
+    ]
+  },
+  "authorizationReads": [
+    {
+      "id": "19070882T8512554U",
+      "status": "CREATED",
+      "amount": {
+        "currency_code": "USD",
+        "value": "20.00"
+      },
+      "create_time": "2026-11-09T21:01:21Z",
+      "update_time": "2026-11-09T21:01:21Z",
+      "expiration_time": "2026-12-08T21:01:21Z",
+      "linkRels": [
+        "self",
+        "capture",
+        "void",
+        "reauthorize",
+        "up"
+      ]
+    },
+    {
+      "id": "19070882T8512554U",
+      "status": "CREATED",
+      "amount": {
+        "currency_code": "USD",
+        "value": "20.00"
+      },
+      "create_time": "2026-11-09T21:01:21Z",
+      "update_time": "2026-11-09T21:01:21Z",
+      "expiration_time": "2026-12-08T21:01:21Z",
+      "linkRels": [
+        "self",
+        "capture",
+        "void",
+        "reauthorize",
+        "up"
+      ]
+    },
+    {
+      "id": "19070882T8512554U",
+      "status": "CAPTURED",
+      "amount": {
+        "currency_code": "USD",
+        "value": "20.00"
+      },
+      "create_time": "2026-11-09T21:01:21Z",
+      "update_time": "2026-11-10T08:18:06Z",
+      "expiration_time": "2026-12-08T21:01:21Z",
+      "linkRels": [
+        "self",
+        "capture",
+        "void",
+        "reauthorize",
+        "up"
+      ]
+    }
+  ],
+  "capturePost": {
+    "id": "02U8827748683101W",
+    "status": "COMPLETED",
+    "amount": {
+      "currency_code": "USD",
+      "value": "20.00"
+    },
+    "final_capture": true,
+    "invoice_id": "cmw9owm800004vfoshymk7yir-settle-1",
+    "create_time": "2026-11-10T08:18:06Z",
+    "update_time": "2026-11-10T08:18:06Z",
+    "sellerReceivable": {
+      "gross": {
+        "currency_code": "USD",
+        "value": "20.00"
+      },
+      "paypalFee": {
+        "currency_code": "USD",
+        "value": "1.19"
+      },
+      "net": {
+        "currency_code": "USD",
+        "value": "18.81"
+      }
+    },
+    "linkRels": [
+      "self",
+      "refund",
+      "up"
+    ]
+  },
+  "capture": {
+    "id": "02U8827748683101W",
+    "status": "COMPLETED",
+    "amount": "20.00",
+    "currency": "USD",
+    "finalCapture": true,
+    "invoiceId": "cmw9owm800004vfoshymk7yir-settle-1",
+    "sellerReceivable": {
+      "gross": {
+        "currency_code": "USD",
+        "value": "20.00"
+      },
+      "paypalFee": {
+        "currency_code": "USD",
+        "value": "1.19"
+      },
+      "net": {
+        "currency_code": "USD",
+        "value": "18.81"
+      }
+    },
+    "createdAt": "2026-11-10T08:18:06Z"
+  },
+  "verification": {
+    "captureIdMatchesPost": true,
+    "captureCompleted": true,
+    "amountIs20USD": true,
+    "finalCaptureTrue": true,
+    "invoiceIdIsStable": true,
+    "requestIdIsStable": true,
+    "authorizationAfter": "CAPTURED",
+    "exactlyOneCaptureOperation": true,
+    "noVoidNoRefund": true,
+    "noAcceptanceEventFabricated": true
+  },
+  "engineRun": {
+    "state": "CAPTURED",
+    "status": "DONE",
+    "reason": null,
+    "steps": [
+      "SETTLE"
+    ]
+  },
+  "settlementRecord": {
+    "decision": "FULL_CAPTURE",
+    "earned": 100,
+    "amount": "20",
+    "reasonCodes": []
+  },
+  "localDeal": {
+    "id": "cmw9owm800004vfoshymk7yir",
+    "state": "CAPTURED",
+    "capturedAmount": "20",
+    "lockedPrice": "20",
+    "paypalAuthStatus": "CAPTURED"
+  },
+  "localOperations": [
+    {
+      "type": "CREATE_ORDER",
+      "seq": 1,
+      "status": "CONFIRMED",
+      "requestId": "cmw9owm800004vfoshymk7yir-CREATE_ORDER-1",
+      "httpStatus": 200,
+      "resourceStatus": "PAYER_ACTION_REQUIRED",
+      "debugId": "f481148d44473"
+    },
+    {
+      "type": "AUTHORIZE",
+      "seq": 1,
+      "status": "CONFIRMED",
+      "requestId": "cmw9owm800004vfoshymk7yir-AUTHORIZE-1",
+      "httpStatus": 201,
+      "resourceStatus": "CREATED",
+      "debugId": "f8392841931ae"
+    },
+    {
+      "type": "CAPTURE",
+      "seq": 1,
+      "status": "CONFIRMED",
+      "requestId": "cmw9owm800004vfoshymk7yir-CAPTURE-1",
+      "httpStatus": 201,
+      "resourceStatus": "COMPLETED",
+      "debugId": "f47355289abf3"
+    }
+  ],
+  "ledgerEventsAdded": 9,
+  "ledgerEventTypes": [
+    "DEAL_CREATED",
+    "STATE_TRANSITION",
+    "NEGOTIATION_MESSAGE",
+    "NEGOTIATION_MESSAGE",
+    "STATE_TRANSITION",
+    "STATE_TRANSITION",
+    "ORCHESTRATION_STEP",
+    "BUDGET_RESERVED",
+    "PAYPAL_OPERATION_PLANNED",
+    "PAYPAL_WRITE",
+    "PAYPAL_READ",
+    "STATE_TRANSITION",
+    "STATE_TRANSITION",
+    "ORCHESTRATION_STEP",
+    "PAYPAL_READ",
+    "PAYPAL_WRITE",
+    "PAYPAL_READ",
+    "PAYPAL_READ",
+    "STATE_TRANSITION",
+    "STATE_TRANSITION",
+    "STATE_TRANSITION",
+    "DELIVERY_RECEIVED",
+    "ORCHESTRATION_STEP",
+    "VERIFICATION_RECORDED",
+    "ORCHESTRATION_STEP",
+    "STATE_TRANSITION",
+    "VERIFICATION_SUBMITTED",
+    "ORCHESTRATION_STEP",
+    "PAYPAL_READ_FAILED",
+    "PAYPAL_READ",
+    "STATE_TRANSITION",
+    "PAYPAL_OPERATION_PLANNED",
+    "PAYPAL_READ",
+    "PAYPAL_WRITE",
+    "PAYPAL_READ",
+    "PAYPAL_READ",
+    "STATE_TRANSITION",
+    "ORCHESTRATION_STEP"
+  ],
+  "threw": null,
+  "notDone": [
+    "a second capture",
+    "void",
+    "refund",
+    "reauthorize",
+    "another order",
+    "any acceptance event",
+    "any read of the four spike orders"
+  ]
+}

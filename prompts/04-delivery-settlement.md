@@ -1,0 +1,4 @@
+Phase 4 — Delivery, verification, settlement.
+Implement deterministic validators for data_cleaning (csv_schema_matches, row_count_range, no_duplicate_rows, null_rate_below, no_forbidden_values, column_values_in_set), the verification pipeline (docs/04 §4.5), and domain/settlement.ts as a PURE function implementing §4.6 exactly. Then the Settlement Engine: executes capture (final_capture true) or void via paypal/, GETs the resource fresh, then transitions state and writes ledger, guarded by the unique Settlement row.
+Tests: exhaustive table tests for settlement (required met/not_met/unverifiable, HIGH flags, earned 0/49/50/70/100, rounding), replay/double-trigger cannot double-capture, PayPal error => NEEDS_HUMAN with authorization intact.
+Sandbox integration: one full capture, one partial, one void through the full pipeline. Report real IDs and statuses.

@@ -1,0 +1,548 @@
+{
+  "generatedAt": "2026-11-07T15:11:38.309Z",
+  "note": "Each row: the same cases were run unmutated (control, must pass) and then with ONE defence weakened. SURVIVED means the Lab did not notice: a Lab blind spot or a redundant guard. 'Unit/DB layer' reports whether the named unit/DB test files notice the same mutant (a mutant the Lab misses but those tests kill is masked end to end, not untested).",
+  "rows": [
+    {
+      "id": "M01",
+      "defence": "outbound leak guard (nothing a buyer says may contain mandate limits or secrets)",
+      "file": "src/agents/sanitize.ts",
+      "cases": "^E[1-4]$",
+      "caughtBy": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (4 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M02",
+      "defence": "per-deal maximum in the policy check",
+      "file": "src/domain/policy.ts",
+      "cases": "^(T3|M3)$",
+      "caughtBy": [
+        "M3",
+        "T3"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (2 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M03",
+      "defence": "total-budget check in the policy check",
+      "file": "src/domain/policy.ts",
+      "cases": "^(T4|B4)$",
+      "caughtBy": [
+        "T4"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (2 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M04",
+      "defence": "counterparty allow-list in the policy check",
+      "file": "src/domain/policy.ts",
+      "cases": "^B5$",
+      "caughtBy": [
+        "B5"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (1 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M05",
+      "defence": "mandate seal verification (accept any stored mandate bytes)",
+      "file": "src/domain/mandates.ts",
+      "cases": "^(M1|M4)$",
+      "caughtBy": [
+        "M4"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (2 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M06",
+      "defence": "artifact hash check at delivery intake",
+      "file": "src/verification/delivery.ts",
+      "cases": "^(V3|V5)$",
+      "caughtBy": [
+        "V5"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (2 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M07",
+      "defence": "step 4 only: deterministic severe-flag escalation (step 5 HIGH-flag escalation still present)",
+      "file": "src/domain/settlement.ts",
+      "cases": "^(I2|I3b|I5|I6|X1|X2|X3)$",
+      "caughtBy": [
+        "I2",
+        "I3b",
+        "I5",
+        "I6",
+        "X1",
+        "X2",
+        "X3"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (7 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M08",
+      "defence": "step 5 only: HIGH-severity-flag escalation (step 4 severe-flag escalation still present)",
+      "file": "src/domain/settlement.ts",
+      "cases": "^(P2|E1|C1|X1|X2|X3)$",
+      "caughtBy": [
+        "C1",
+        "P2"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (6 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M09",
+      "defence": "steps 4 AND 5 together: every flag-based escalation",
+      "file": "src/domain/settlement.ts",
+      "cases": "^(I1|I2|I4|P2|C1|X1|X2|X3)$",
+      "caughtBy": [
+        "C1",
+        "I4",
+        "P2"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (8 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M10",
+      "defence": "an LLM-only required failure must go to a human (mutant: it voids instead)",
+      "file": "src/domain/settlement.ts",
+      "cases": "^A[1-4]$",
+      "caughtBy": [
+        "A2"
+      ],
+      "kinds": [
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (4 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M12",
+      "defence": "French and Chinese override patterns (language.ts) wired into the skeptic",
+      "file": "src/verification/prescan.ts",
+      "cases": "^(I5|I5b|I5c|I5d|I5f)$",
+      "caughtBy": [
+        "I5",
+        "I5b",
+        "I5c",
+        "I5d",
+        "I5f"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "EXPECTED_FLAG_NOT_RAISED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (5 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M13",
+      "defence": "UNSCANNED_LANGUAGE escalates (mutant: severity LOW, so it no longer reaches a human)",
+      "file": "src/verification/prescan.ts",
+      "cases": "^(G35|I5g|I5h|I5i|I5j|I5k)$",
+      "caughtBy": [
+        "G35"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (6 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M14",
+      "defence": "language-coverage guard (unreadable prose is no longer detected)",
+      "file": "src/verification/prescan.ts",
+      "cases": "^(G22|G35|G36|I5g|I5h|I5i|I5j|I5k)$",
+      "caughtBy": [
+        "G36"
+      ],
+      "kinds": [
+        "EXPECTED_FLAG_NOT_RAISED"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (8 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M15",
+      "defence": "instructions split across consecutive rows of one column",
+      "file": "src/verification/prescan.ts",
+      "cases": "^(I5e|I5f)$",
+      "caughtBy": [
+        "I5e",
+        "I5f"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (2 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M16",
+      "defence": "instructions split across the fields of one row (row-joined scan)",
+      "file": "src/verification/prescan.ts",
+      "cases": "^(I5d|I5k|I6)$",
+      "caughtBy": [
+        "I5d",
+        "I6"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (3 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M17",
+      "defence": "unreadable prose split across short fields of one row (joined language guard)",
+      "file": "src/verification/prescan.ts",
+      "cases": "^G35$",
+      "caughtBy": [
+        "G35"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "EXPECTED_FLAG_NOT_RAISED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (1 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M18",
+      "defence": "short-string screening (restores the minimum-word bypass: strings under 4 words skip the override vocabulary)",
+      "file": "src/verification/language.ts",
+      "cases": "^(G0[1-9]|G10|G12|G13|G14|G33|G34|I5l|I5m)$",
+      "caughtBy": [
+        "G33",
+        "G34"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "EXPECTED_FLAG_NOT_RAISED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (17 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M19",
+      "defence": "scope findings (short strings, uncertain text, split instructions) raise UNSCANNED_LANGUAGE",
+      "file": "src/verification/pipeline.ts",
+      "cases": "^(G0[1-9]|G10|G15|G16|G17|G25|I5l|I5m)$",
+      "caughtBy": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06",
+        "G07",
+        "G09",
+        "G10",
+        "G15",
+        "G16",
+        "G17",
+        "G25",
+        "I5l",
+        "I5m"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "EXPECTED_FLAG_NOT_RAISED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "SURVIVED (tests passed)",
+      "control": "passed (16 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M20",
+      "defence": "UNSCANNED_LANGUAGE blocks the AI: the model is no longer kept away from unreadable text",
+      "file": "src/verification/pipeline.ts",
+      "cases": "^(G01|G11|G15|G24|I5g|I5j|I5l)$",
+      "caughtBy": [
+        "G01",
+        "G11",
+        "G15",
+        "G24",
+        "I5g",
+        "I5j",
+        "I5l"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (7 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M21",
+      "defence": "uncertain semantic content is allowed to pass (only UNSUPPORTED is a finding)",
+      "file": "src/verification/scope.ts",
+      "cases": "^G25$",
+      "caughtBy": [
+        "G25"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "EXPECTED_FLAG_NOT_RAISED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (1 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M22",
+      "defence": "criterion-to-text mapping bypassed: an LLM-judged criterion no longer makes model-readable text language-relevant",
+      "file": "src/verification/scope.ts",
+      "cases": "^(G0[1-9]|G10|G11|G12|G15|G17|G24|G25|I5g|I5l)$",
+      "caughtBy": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06",
+        "G07",
+        "G08",
+        "G09",
+        "G10",
+        "G11",
+        "G12",
+        "G15",
+        "G17",
+        "G24",
+        "G25",
+        "I5g",
+        "I5l"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "EXPECTED_FLAG_NOT_RAISED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (18 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M23",
+      "defence": "withheld (opaque) columns are not withheld from the prompt",
+      "file": "src/verification/ai.ts",
+      "cases": "^(G18|G32)$",
+      "caughtBy": [
+        "G18",
+        "G32"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (2 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M24",
+      "defence": "withheld (opaque) columns are not exempt from the pipeline's language guard",
+      "file": "src/verification/pipeline.ts",
+      "cases": "^G32$",
+      "caughtBy": [
+        "G32"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (1 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M25",
+      "defence": "the AI verifier is called on text the policy blocked",
+      "file": "src/verification/pipeline.ts",
+      "cases": "^(G01|G11|G30|I5g|I5j)$",
+      "caughtBy": [
+        "G01",
+        "G11",
+        "G30",
+        "I5g"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (5 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M26",
+      "defence": "the timeout/limit safety outcome is removed (no SCAN_INCOMPLETE flag when a limit is hit)",
+      "file": "src/verification/prescan.ts",
+      "cases": "^(G28|G30|G31)$",
+      "caughtBy": [
+        "G28",
+        "G30",
+        "G31"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "EXPECTED_FLAG_NOT_RAISED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (3 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M27",
+      "defence": "an incomplete prescan is treated as complete by the pipeline",
+      "file": "src/verification/pipeline.ts",
+      "cases": "^G30$",
+      "caughtBy": [
+        "G30"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (1 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M28",
+      "defence": "the deterministic work budget is not enforced",
+      "file": "src/verification/prescan.ts",
+      "cases": "^(G28|G30)$",
+      "caughtBy": [
+        "G28",
+        "G30"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "EXPECTED_FLAG_NOT_RAISED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (2 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M29",
+      "defence": "the wall-clock deadline is not enforced",
+      "file": "src/verification/prescan.ts",
+      "cases": "^G31$",
+      "caughtBy": [
+        "G31"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "EXPECTED_FLAG_NOT_RAISED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "KILLED (tests failed)",
+      "control": "passed (1 runs)",
+      "result": "KILLED (Lab reported failures)"
+    },
+    {
+      "id": "M11",
+      "defence": "required deterministic failure must void (mutant: ignore it)",
+      "file": "src/domain/settlement.ts",
+      "cases": "^(L3|F1|F2|F3)$",
+      "caughtBy": [
+        "F1",
+        "F2",
+        "F3",
+        "L3"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ],
+      "unitLayer": "not run",
+      "control": "passed (4 runs)",
+      "result": "KILLED (Lab reported failures)"
+    }
+  ]
+}

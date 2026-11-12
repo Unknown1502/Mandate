@@ -1,0 +1,64 @@
+{
+  "generatedAt": "2026-11-09T09:55:02.670Z",
+  "suite": "Layer G - P7 detector registry, governance workflow, evaluation core, detector identity",
+  "counts": {
+    "defined": 2,
+    "killed": 2,
+    "survived": 0,
+    "invalid": 0,
+    "unreached": 0,
+    "notEvaluated": 0
+  },
+  "srcRestoredByteForByte": true,
+  "srcDigestBefore": "853182b911ba4506e57a252cb02464343a79884d6a940ccf7daf47891b5f9a82",
+  "srcDigestAfter": "853182b911ba4506e57a252cb02464343a79884d6a940ccf7daf47891b5f9a82",
+  "srcFiles": 79,
+  "rows": [
+    {
+      "id": "P7-G38",
+      "suite": "G",
+      "defence": "confusables: a single look-alike letter in an ASCII identifier is not flagged",
+      "file": "src/verification/confusables.ts",
+      "mutation": "\"} else if (nonLatin.length === 1 && scripts.size === 1 && letters === 1 && asciiAlnum && confusableLetter) {\" -> \"} else if (false) {\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "confusable screening (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "confusable screening (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "confusableFindings (structural, not a phrase list) flags a single look-alike letter inside an otherwise digit-only identifier (no ASCII letter to expose the mix)"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G40",
+      "suite": "G",
+      "defence": "confusables: a whole-script look-alike word is flagged even without Latin context (false positives on real Cyrillic)",
+      "file": "src/verification/confusables.ts",
+      "mutation": "\"if (latinOnlyChunks > 0) for (const w of nonLatinOnly)\" -> \"if (true) for (const w of nonLatinOnly)\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "confusable screening (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "confusable screening (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "confusableFindings (structural, not a phrase list) flags a whole-script look-alike word only inside Latin text"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    }
+  ]
+}

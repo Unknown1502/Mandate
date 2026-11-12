@@ -1,0 +1,329 @@
+{
+  "generatedAt": "2026-11-08T09:41:57.857Z",
+  "suite": "Layer B - dormant downstream AI defences (isolated test-only harness)",
+  "counts": {
+    "defined": 7,
+    "killed": 7,
+    "survived": 0,
+    "invalid": 0,
+    "unreached": 0,
+    "notEvaluated": 0
+  },
+  "srcRestoredByteForByte": true,
+  "srcDigestBefore": "0478c0585515fb4ff66b4faba683941bf8ef6790ad6c9c274834c6da323efb8d",
+  "srcDigestAfter": "0478c0585515fb4ff66b4faba683941bf8ef6790ad6c9c274834c6da323efb8d",
+  "srcFiles": 56,
+  "rows": [
+    {
+      "id": "M10",
+      "suite": "B",
+      "defence": "an LLM-only required failure must go to a human (mutant: it voids instead)",
+      "historical": "M10",
+      "file": "src/domain/settlement.ts",
+      "mutation": "\"if (llmFailed.length > 0) return human(earned, llmFailed.map((c) => `LLM_REQUIRED_NOT_MET:${c.id}`));\" -> \"if (llmFailed.length > 0) return { decision: \\\"VOID\\\", earned, amount: zero(), reasons: llmFailed.map((c) => ",
+      "verdict": "KILLED",
+      "killedBy": [
+        "Layer B isolated harness",
+        "existing unit: settlement-pure"
+      ],
+      "detectors": [
+        {
+          "name": "historical Lab cases (real P0 gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "4 Lab runs"
+        },
+        {
+          "name": "Layer B isolated harness",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate A2 [M10]: reaches the downstream defence and the defence holds"
+          ],
+          "detail": "1/19 tests failed"
+        },
+        {
+          "name": "existing unit: settlement-pure",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "decideSettlement: who may decide what LLM-only failure of a required criterion never voids"
+          ],
+          "detail": "1/33 tests failed"
+        }
+      ],
+      "note": "verdict decided by \"Layer B isolated harness\" (its control passed, i.e. the defence was reached)"
+    },
+    {
+      "id": "M13",
+      "suite": "B",
+      "defence": "UNSCANNED_LANGUAGE escalates (mutant: severity LOW, so it no longer reaches a human)",
+      "historical": "M13",
+      "file": "src/verification/prescan.ts",
+      "mutation": "\"code: \\\"UNSCANNED_LANGUAGE\\\", severity: \\\"HIGH\\\"\" -> \"code: \\\"UNSCANNED_LANGUAGE\\\", severity: \\\"LOW\\\"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "Layer B isolated harness",
+        "existing unit: language-coverage"
+      ],
+      "detectors": [
+        {
+          "name": "historical Lab cases (real P0 gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "6 Lab runs"
+        },
+        {
+          "name": "Layer B isolated harness",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate G35 [M13,M20,M25b]: reaches the downstream defence and the defence holds"
+          ],
+          "detail": "1/19 tests failed"
+        },
+        {
+          "name": "historical Lab G23 (det-only, scope all, real gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "1 Lab runs"
+        },
+        {
+          "name": "existing unit: language-coverage",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "I5: language we cannot read fails closed (UNSCANNED_LANGUAGE, HIGH, never severe, never a pass) Spanish",
+            "I5: language we cannot read fails closed (UNSCANNED_LANGUAGE, HIGH, never severe, never a pass) German",
+            "I5: language we cannot read fails closed (UNSCANNED_LANGUAGE, HIGH, never severe, never a pass) Portuguese",
+            "I5: language we cannot read fails closed (UNSCANNED_LANGUAGE, HIGH, never severe, never a pass) Italian",
+            "I5: language we cannot read fails closed (UNSCANNED_LANGUAGE, HIGH, never severe, never a pass) Russian",
+            "I5: language we cannot read fails closed (UNSCANNED_LANGUAGE, HIGH, never severe, never a pass) Arabic",
+            "I5: language we cannot read fails closed (UNSCANNED_LANGUAGE, HIGH, never severe, never a pass) Japanese",
+            "I5: language we cannot read fails closed (UNSCANNED_LANGUAGE, HIGH, never severe, never a pass) Korean"
+          ],
+          "detail": "11/80 tests failed"
+        }
+      ],
+      "note": "verdict decided by \"Layer B isolated harness\" (its control passed, i.e. the defence was reached)"
+    },
+    {
+      "id": "M20",
+      "suite": "B",
+      "defence": "UNSCANNED_LANGUAGE blocks the AI: the model is no longer kept away from unreadable text",
+      "historical": "M20",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"const languageBlocked = langScope.incomplete || flags.some((f) => f.code === \\\"UNSCANNED_LANGUAGE\\\" && f.seve -> \"const languageBlocked = false;\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "Layer B isolated harness"
+      ],
+      "detectors": [
+        {
+          "name": "historical Lab cases (real P0 gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "7 Lab runs"
+        },
+        {
+          "name": "Layer B isolated harness",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate G35 [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate I5g [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate I5h [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate I5i [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate I5j [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate I5k [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate I5l [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate G01 [M13,M20,M25b]: reaches the downstream defence and the defence holds"
+          ],
+          "detail": "11/19 tests failed"
+        },
+        {
+          "name": "existing unit: language-scope",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "96 tests passed"
+        }
+      ],
+      "note": "verdict decided by \"Layer B isolated harness\" (its control passed, i.e. the defence was reached)"
+    },
+    {
+      "id": "M23",
+      "suite": "B",
+      "defence": "withheld (opaque) columns are not withheld from the prompt",
+      "historical": "M23",
+      "file": "src/verification/ai.ts",
+      "mutation": "\"const withheld = (j: number) => ctx.language?.opaqueColumns.includes(ctx.csv.headers[j] ?? \\\"\\\") === true;\" -> \"const withheld = (_j: number) => false;\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "Layer B isolated harness",
+        "existing unit: language-scope"
+      ],
+      "detectors": [
+        {
+          "name": "historical Lab cases (real P0 gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "2 Lab runs"
+        },
+        {
+          "name": "Layer B isolated harness",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate G18 [M23,M24]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate G32 [M23,M24]: reaches the downstream defence and the defence holds"
+          ],
+          "detail": "2/19 tests failed"
+        },
+        {
+          "name": "existing unit: language-scope",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "modelVisibleFragments / the prompt: one definition of 'what a model can read' withheld (opaque) columns are not visible, in fragments or in the prompt a model receives"
+          ],
+          "detail": "1/96 tests failed"
+        }
+      ],
+      "note": "verdict decided by \"Layer B isolated harness\" (its control passed, i.e. the defence was reached)"
+    },
+    {
+      "id": "M24",
+      "suite": "B",
+      "defence": "withheld (opaque) columns are not exempt from the pipeline's language guard",
+      "historical": "M24",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"const opaque = (col: number) => language.opaqueColumns.includes(csv.headers[col] ?? \\\"\\\");\" -> \"const opaque = (_col: number) => false;\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "Layer B isolated harness",
+        "P0-reachable probes (real gate)"
+      ],
+      "detectors": [
+        {
+          "name": "historical Lab cases (real P0 gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "1 Lab runs"
+        },
+        {
+          "name": "Layer B isolated harness",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate G32 [M23,M24]: reaches the downstream defence and the defence holds"
+          ],
+          "detail": "1/19 tests failed"
+        },
+        {
+          "name": "P0-reachable probes (real gate)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "M24: with deployment scope 'all', a withheld (opaque) column is exempt from the language guard and a visible column is not (deterministic-only, real P0 gate) instruction in the WITHHELD column: not flagged, delivery captured in full"
+          ],
+          "detail": "1/5 tests failed"
+        }
+      ],
+      "note": "verdict decided by \"Layer B isolated harness\" (its control passed, i.e. the defence was reached)"
+    },
+    {
+      "id": "M27",
+      "suite": "B",
+      "defence": "an incomplete prescan is treated as complete by the pipeline",
+      "historical": "M27",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"const scanIncomplete = flags.some((f) => f.code === \\\"SCAN_INCOMPLETE\\\");\" -> \"const scanIncomplete = false;\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "Layer B isolated harness",
+        "P0-reachable probes (real gate)"
+      ],
+      "detectors": [
+        {
+          "name": "historical Lab cases (real P0 gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "1 Lab runs"
+        },
+        {
+          "name": "Layer B isolated harness",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate G30 [M27,M25b]: reaches the downstream defence and the defence holds"
+          ],
+          "detail": "1/19 tests failed"
+        },
+        {
+          "name": "P0-reachable probes (real gate)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "M27: the recorded provenance never says an incomplete scan was complete (deterministic-only deals, real P0 gate) G28: provenance.scan.prescanComplete is false",
+            "M27: the recorded provenance never says an incomplete scan was complete (deterministic-only deals, real P0 gate) G31: provenance.scan.prescanComplete is false"
+          ],
+          "detail": "2/5 tests failed"
+        },
+        {
+          "name": "existing unit: prescan-budget",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "12 tests passed"
+        }
+      ],
+      "note": "verdict decided by \"Layer B isolated harness\" (its control passed, i.e. the defence was reached)"
+    },
+    {
+      "id": "M25b",
+      "suite": "B",
+      "defence": "the AI verifier is called on text the policy blocked (M25 re-expressed on the current line: the language/scan block no longer stops the call)",
+      "historical": "M25 (target line changed by P0)",
+      "file": "src/verification/pipeline.ts",
+      "mutation": "\"if (models.ai && !blockedReason) {\" -> \"if (models.ai) {\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "Layer B isolated harness"
+      ],
+      "detectors": [
+        {
+          "name": "historical Lab cases (real P0 gate)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "5 Lab runs"
+        },
+        {
+          "name": "Layer B isolated harness",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate G35 [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate I5g [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate I5h [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate I5i [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate I5k [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate I5l [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate G01 [M13,M20,M25b]: reaches the downstream defence and the defence holds",
+            "Layer B: dormant downstream AI defences, reached through the test-only future-rule gate G11 [M13,M20,M25b]: reaches the downstream defence and the defence holds"
+          ],
+          "detail": "11/19 tests failed"
+        }
+      ],
+      "note": "verdict decided by \"Layer B isolated harness\" (its control passed, i.e. the defence was reached)"
+    }
+  ]
+}

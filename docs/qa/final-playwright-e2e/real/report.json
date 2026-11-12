@@ -1,0 +1,549 @@
+{
+  "ranAt": "2026-11-10T06:56:59.756Z",
+  "target": "http://localhost:3000",
+  "readOnly": true,
+  "viewports": {
+    "desktop": {
+      "chips": {
+        "sandbox": true,
+        "rulebased": true,
+        "v2": true
+      },
+      "browser": {
+        "console": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "pageErrors": [],
+        "failed": [],
+        "http": [
+          "401 GET /api/auth/session",
+          "401 POST /api/auth/login"
+        ]
+      }
+    },
+    "tablet": {
+      "chips": {
+        "sandbox": true,
+        "rulebased": true,
+        "v2": true
+      },
+      "browser": {
+        "console": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "pageErrors": [],
+        "failed": [],
+        "http": [
+          "401 GET /api/auth/session",
+          "401 POST /api/auth/login"
+        ]
+      }
+    },
+    "mobile": {
+      "chips": {
+        "sandbox": true,
+        "rulebased": true,
+        "v2": true
+      },
+      "browser": {
+        "console": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "pageErrors": [],
+        "failed": [],
+        "http": [
+          "401 GET /api/auth/session",
+          "401 POST /api/auth/login"
+        ]
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "desktop/login: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > 1366"
+    },
+    {
+      "id": "desktop/login: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/login: every button and link has an accessible name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop/login: page has a title, a language and headings",
+      "ok": true,
+      "detail": "{\"main\":true,\"lang\":\"en\",\"title\":\"MANDATE\"}"
+    },
+    {
+      "id": "desktop: wrong credentials show an error and stay on the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/payment-state: PayPal chip says Sandbox with writes LOCKED (never mock, never 'authorized writes')",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/payment-state: lifecycle says authorized = a hold, capture NOT permitted yet",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/payment-state: order and authorization shown, Authorization CREATED, nothing captured",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/payment-state: no payment success is displayed for this deal ('Paid', 'Captured (PayPal Sandbox)')",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/payment-state: operations table lists exactly CREATE_ORDER and AUTHORIZE",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/delivery evidence: CSV preview, three PASS checks, 'no model' statement",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/buyer decision: acceptance is pending (Accept offered, not taken)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/negotiation: transcript present, rule-based buyer, local simulator, 'no AI model was called'",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/truth: nothing claims Live AI; V2 shown Disabled; the footer says Sandbox only",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/real-deal: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > 1366"
+    },
+    {
+      "id": "desktop/real-deal: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/real-deal: every button and link has an accessible name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop/real-deal: page has a title, a language and headings",
+      "ok": true,
+      "detail": "{\"main\":true,\"lang\":\"en\",\"title\":\"MANDATE\"}"
+    },
+    {
+      "id": "desktop/navigation: the audit history expands (UI only)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/navigation: Refresh reloads the deal (GET only) and keeps it selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/accessibility: keyboard Tab reaches a focusable control",
+      "ok": true,
+      "detail": "BUTTON"
+    },
+    {
+      "id": "desktop/forms: mandate field \"Total budget (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/forms: mandate field \"Max per deal (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/forms: mandate field \"Ask me above (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/forms: mandate field \"Valid for (days)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/forms: deal field \"Task\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/forms: deal field \"Target price (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/empty state (STUBBED responses): 'No mandate yet' and 'No deals yet' are shown",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/failure state (STUBBED 500): a deal-load failure is shown as an error, not as a success or a payment",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: sign out returns to the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/login: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 768 > 768"
+    },
+    {
+      "id": "tablet/login: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/login: every button and link has an accessible name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "tablet/login: page has a title, a language and headings",
+      "ok": true,
+      "detail": "{\"main\":true,\"lang\":\"en\",\"title\":\"MANDATE\"}"
+    },
+    {
+      "id": "tablet: wrong credentials show an error and stay on the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/payment-state: PayPal chip says Sandbox with writes LOCKED (never mock, never 'authorized writes')",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/payment-state: lifecycle says authorized = a hold, capture NOT permitted yet",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/payment-state: order and authorization shown, Authorization CREATED, nothing captured",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/payment-state: no payment success is displayed for this deal ('Paid', 'Captured (PayPal Sandbox)')",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/payment-state: operations table lists exactly CREATE_ORDER and AUTHORIZE",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/delivery evidence: CSV preview, three PASS checks, 'no model' statement",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/buyer decision: acceptance is pending (Accept offered, not taken)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/negotiation: transcript present, rule-based buyer, local simulator, 'no AI model was called'",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/truth: nothing claims Live AI; V2 shown Disabled; the footer says Sandbox only",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/real-deal: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 768 > 768"
+    },
+    {
+      "id": "tablet/real-deal: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/real-deal: every button and link has an accessible name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "tablet/real-deal: page has a title, a language and headings",
+      "ok": true,
+      "detail": "{\"main\":true,\"lang\":\"en\",\"title\":\"MANDATE\"}"
+    },
+    {
+      "id": "tablet/navigation: the audit history expands (UI only)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/navigation: Refresh reloads the deal (GET only) and keeps it selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/accessibility: keyboard Tab reaches a focusable control",
+      "ok": true,
+      "detail": "BUTTON"
+    },
+    {
+      "id": "tablet/forms: mandate field \"Total budget (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/forms: mandate field \"Max per deal (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/forms: mandate field \"Ask me above (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/forms: mandate field \"Valid for (days)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/forms: deal field \"Task\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/forms: deal field \"Target price (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/empty state (STUBBED responses): 'No mandate yet' and 'No deals yet' are shown",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet/failure state (STUBBED 500): a deal-load failure is shown as an error, not as a success or a payment",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "tablet: sign out returns to the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/login: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 390 > 390"
+    },
+    {
+      "id": "mobile/login: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/login: every button and link has an accessible name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "mobile/login: page has a title, a language and headings",
+      "ok": true,
+      "detail": "{\"main\":true,\"lang\":\"en\",\"title\":\"MANDATE\"}"
+    },
+    {
+      "id": "mobile: wrong credentials show an error and stay on the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/payment-state: PayPal chip says Sandbox with writes LOCKED (never mock, never 'authorized writes')",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/payment-state: lifecycle says authorized = a hold, capture NOT permitted yet",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/payment-state: order and authorization shown, Authorization CREATED, nothing captured",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/payment-state: no payment success is displayed for this deal ('Paid', 'Captured (PayPal Sandbox)')",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/payment-state: operations table lists exactly CREATE_ORDER and AUTHORIZE",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/delivery evidence: CSV preview, three PASS checks, 'no model' statement",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/buyer decision: acceptance is pending (Accept offered, not taken)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/negotiation: transcript present, rule-based buyer, local simulator, 'no AI model was called'",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/truth: nothing claims Live AI; V2 shown Disabled; the footer says Sandbox only",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/real-deal: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 390 > 390"
+    },
+    {
+      "id": "mobile/real-deal: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/real-deal: every button and link has an accessible name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "mobile/real-deal: page has a title, a language and headings",
+      "ok": true,
+      "detail": "{\"main\":true,\"lang\":\"en\",\"title\":\"MANDATE\"}"
+    },
+    {
+      "id": "mobile/navigation: the audit history expands (UI only)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/navigation: Refresh reloads the deal (GET only) and keeps it selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/accessibility: keyboard Tab reaches a focusable control",
+      "ok": true,
+      "detail": "BUTTON"
+    },
+    {
+      "id": "mobile/forms: mandate field \"Total budget (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/forms: mandate field \"Max per deal (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/forms: mandate field \"Ask me above (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/forms: mandate field \"Valid for (days)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/forms: deal field \"Task\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/forms: deal field \"Target price (USD)\" is labelled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/empty state (STUBBED responses): 'No mandate yet' and 'No deals yet' are shown",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/failure state (STUBBED 500): a deal-load failure is shown as an error, not as a success or a payment",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: sign out returns to the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "browser: no unexpected console errors, page errors, failed requests or HTTP errors on any viewport (sign-in 401 probes and the STUBBED 500 excluded)",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "id": "SAFETY: the audit attempted NO state-changing request (every non-GET except sign-in/out would have been aborted and listed here)",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "blockedMutationAttempts": [],
+  "screenshots": [
+    "01-desktop-login.png",
+    "02-desktop-real-deal-verified-authorized.png",
+    "03-desktop-activity-expanded.png",
+    "04-desktop-mandate-form-open-not-submitted.png",
+    "05-desktop-STUBBED-empty-state.png",
+    "06-desktop-STUBBED-failure-state.png",
+    "07-tablet-login.png",
+    "08-tablet-real-deal-verified-authorized.png",
+    "09-tablet-activity-expanded.png",
+    "10-tablet-mandate-form-open-not-submitted.png",
+    "11-tablet-STUBBED-empty-state.png",
+    "12-tablet-STUBBED-failure-state.png",
+    "13-mobile-login.png",
+    "14-mobile-real-deal-verified-authorized.png",
+    "15-mobile-activity-expanded.png",
+    "16-mobile-mandate-form-open-not-submitted.png",
+    "17-mobile-STUBBED-empty-state.png",
+    "18-mobile-STUBBED-failure-state.png"
+  ],
+  "notes": [],
+  "browserNoise": []
+}

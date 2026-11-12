@@ -1,0 +1,529 @@
+{
+  "label": "final-release-readiness-2",
+  "startedAt": "2026-11-09T11:17:29.240Z",
+  "databases": {
+    "a": "mandate_qa_c_261109111729_a",
+    "rb": "mandate_qa_c_261109111729_rb",
+    "rs": "mandate_qa_c_261109111729_rs"
+  },
+  "checks": [
+    {
+      "id": "C1 target is the newly created disposable database",
+      "ok": true,
+      "detail": {
+        "database": "mandate_qa_c_261109111729_a",
+        "server": "PostgreSQL 16.15 on x86_64-pc-linux-musl"
+      }
+    },
+    {
+      "id": "C3 pre-V2 history is exactly the 6 older migrations",
+      "ok": true,
+      "detail": [
+        "20261105164034_init",
+        "20261105190000_core_domain",
+        "20261106090000_settlement_engine",
+        "20261106120000_settlement_review",
+        "20261106150000_delivery_verification",
+        "20261106180000_orchestration"
+      ]
+    },
+    {
+      "id": "C2 V1 golden serialization: V1_BASE re-canonicalises to the stored text and digest",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C2 V1 shape recognised: V1_BASE",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C2 V1 golden serialization: V1_NO_CANCELLATION_FLAG re-canonicalises to the stored text and digest",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C2 V1 shape recognised: V1_NO_CANCELLATION_FLAG",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C2 V1 golden serialization: V1_FULL re-canonicalises to the stored text and digest",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C2 V1 shape recognised: V1_FULL",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C2 V1 fixtures seeded (3 valid, 3 tampered/foreign, deals with legacy terms)",
+      "ok": true,
+      "detail": {
+        "User": 3,
+        "Mandate": 6,
+        "Deal": 2
+      }
+    },
+    {
+      "id": "C3 migrate deploy applied exactly the 3 V2 migrations",
+      "ok": true,
+      "detail": [
+        "Applying migration `20261108130000_detector_governance`",
+        "Applying migration `20261108140000_terms_history_detector_refs`",
+        "  └─ 20261108120000_v2_authorization/",
+        "  └─ 20261108130000_detector_governance/",
+        "  └─ 20261108140000_terms_history_detector_refs/"
+      ]
+    },
+    {
+      "id": "C3 migration history complete (9 finished, none rolled back)",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V1 row counts unchanged by the migrations",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V1 row content (all pre-existing columns) byte-identical after the migrations",
+      "ok": true,
+      "detail": {
+        "pre": {
+          "User": "3350535f1c3f347c55a06f1187b3ed3d2d391d418c2f0644f9c71bd406c9af4b",
+          "Mandate": "d29f5d3ec4f5578b1f6df503abc567d6bb0bb406d3d20ac646d0dd96efaaa38c",
+          "Deal": "e6f5dafe580dd0fa5baa5ad9e7b855a444003b9b59bc97cbfb070a489d85c540"
+        },
+        "post": {
+          "User": "3350535f1c3f347c55a06f1187b3ed3d2d391d418c2f0644f9c71bd406c9af4b",
+          "Mandate": "d29f5d3ec4f5578b1f6df503abc567d6bb0bb406d3d20ac646d0dd96efaaa38c",
+          "Deal": "e6f5dafe580dd0fa5baa5ad9e7b855a444003b9b59bc97cbfb070a489d85c540"
+        }
+      }
+    },
+    {
+      "id": "C3 every existing mandate got the V1 defaults (sealVersion 1, no nonce)",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V1 V1_BASE opens (version 1) after migration",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V1 V1_NO_CANCELLATION_FLAG opens (version 1) after migration",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V1 V1_FULL opens (version 1) after migration",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V1 digest-mismatch mandate refused (fail closed) after migration",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V1 signature-invalid mandate refused (fail closed) after migration",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V1 unknown-key mandate refused (fail closed) after migration",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V1 locked terms 0 read and match their lock",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V1 locked terms 1 with a changed stored hash fail the lock check",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 concurrent V1 budget reservations (3 x 60.00 against a 100.00 budget): exactly one succeeds, no overspend",
+      "ok": true,
+      "detail": {
+        "ready": 3,
+        "ok": 1,
+        "reserved": "60"
+      }
+    },
+    {
+      "id": "C2 V2 golden document digest matches the frozen vector",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 valid V2 seal verifies through the key registry",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V2 seal refused: digest mismatch",
+      "ok": true,
+      "detail": "DIGEST_MISMATCH"
+    },
+    {
+      "id": "C3 V2 seal refused: signature tampered",
+      "ok": true,
+      "detail": "ENVELOPE_INVALID"
+    },
+    {
+      "id": "C3 V2 seal refused: unknown key version",
+      "ok": true,
+      "detail": "KEY_VERSION_UNKNOWN"
+    },
+    {
+      "id": "C3 V2 seal refused: revoked key",
+      "ok": true,
+      "detail": "KEY_REVOKED"
+    },
+    {
+      "id": "C3 V2 seal refused: unknown envelope field",
+      "ok": true,
+      "detail": "ENVELOPE_INVALID"
+    },
+    {
+      "id": "C3 V2 seal refused: malformed envelope (no signature)",
+      "ok": true,
+      "detail": "ENVELOPE_INVALID"
+    },
+    {
+      "id": "C3 V2 seal refused: row identity mismatch (wrong mandate id)",
+      "ok": true,
+      "detail": "MANDATE_ID_MISMATCH"
+    },
+    {
+      "id": "C3 V2 seal refused: nonce mismatch",
+      "ok": true,
+      "detail": "NONCE_MISMATCH"
+    },
+    {
+      "id": "C3 V2 seal refused: not canonical (reordered text)",
+      "ok": true,
+      "detail": "NON_CANONICAL_DOCUMENT"
+    },
+    {
+      "id": "C3 the V2 mandate row opens ONLY through the release gate: openMandateRow returns null while the gate is closed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 DB CHECK refuses a V2 mandate with a malformed nonce",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23514`. Message: `ERROR: new row for relation \"Mandate\" violates check constraint \"Mandate_v2_identity_check\" DETAIL: Failing"
+    },
+    {
+      "id": "C3 DB CHECK refuses a V1-sealed mandate that carries a nonce",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23514`. Message: `ERROR: new row for relation \"Mandate\" violates check constraint \"Mandate_v2_identity_check\" DETAIL: Failing"
+    },
+    {
+      "id": "C3 DB CHECK refuses a V2 mandate whose id is not a cuid-shaped id",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23514`. Message: `ERROR: new row for relation \"Mandate\" violates check constraint \"Mandate_v2_identity_check\" DETAIL: Failing"
+    },
+    {
+      "id": "C3 stored V2 attestation verifies against the re-derived binding",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 V2 attestation refused: terms hash differs from the locked terms",
+      "ok": true,
+      "detail": "ATTESTATION_BINDING_MISMATCH"
+    },
+    {
+      "id": "C3 V2 attestation refused: mandate digest differs",
+      "ok": true,
+      "detail": "ATTESTATION_BINDING_MISMATCH"
+    },
+    {
+      "id": "C3 V2 attestation refused: attestation presented for another deal",
+      "ok": true,
+      "detail": "ATTESTATION_BINDING_MISMATCH"
+    },
+    {
+      "id": "C3 V2 attestation refused: actor is not the mandate principal",
+      "ok": true,
+      "detail": "ATTESTATION_ACTOR_MISMATCH"
+    },
+    {
+      "id": "C3 V2 attestation refused: signing key revoked",
+      "ok": true,
+      "detail": "KEY_REVOKED"
+    },
+    {
+      "id": "C3 V2 attestation refused: signing key unknown",
+      "ok": true,
+      "detail": "ATTESTATION_KEY_MISMATCH"
+    },
+    {
+      "id": "C3 V2 attestation refused: payload edited after signing",
+      "ok": true,
+      "detail": "ATTESTATION_MALFORMED"
+    },
+    {
+      "id": "C3 V2 attestation refused: malformed signature",
+      "ok": true,
+      "detail": "ATTESTATION_MALFORMED"
+    },
+    {
+      "id": "C3 attestation is immutable: UPDATE refused",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23000`. Message: `ERROR: MANDATE: TermsAttestation rows are immutable`"
+    },
+    {
+      "id": "C3 attestation is immutable: DELETE refused",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23000`. Message: `ERROR: MANDATE: TermsAttestation rows are immutable`"
+    },
+    {
+      "id": "C3 a second attestation for the same deal is refused (unique dealId)",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRaw()` invocation: Raw query failed. Code: `23505`. Message: `Key (\"dealId\")=(qa-v2-deal-1) alr"
+    },
+    {
+      "id": "C3 a reused approval nonce is refused (unique approvalNonce)",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRaw()` invocation: Raw query failed. Code: `23505`. Message: `Key (\"approvalNonce\")=(a28bca34c6"
+    },
+    {
+      "id": "C3 shape CHECK refuses a non-human / non-HUMAN_PREAUTH attestation",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRaw()` invocation: Raw query failed. Code: `23514`. Message: `ERROR: new row for relation \"Term"
+    },
+    {
+      "id": "C3 three concurrent attestations for one deal: exactly one is stored",
+      "ok": true,
+      "detail": {
+        "won": 1,
+        "rows3": 1
+      }
+    },
+    {
+      "id": "C3 terms history: duplicate (deal, version) refused",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23505`. Message: `Key (\"dealId\", version)=(qa-v2-deal-1, 1) already exists.`"
+    },
+    {
+      "id": "C3 terms history: malformed hash refused by CHECK",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23514`. Message: `ERROR: new row for relation \"TermsVersion\" violates check constraint \"TermsVersion_shape_check\" DETAIL: Fai"
+    },
+    {
+      "id": "C3 terms history is immutable: UPDATE refused",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23000`. Message: `ERROR: MANDATE: TermsVersion rows are immutable`"
+    },
+    {
+      "id": "C3 terms history is immutable: DELETE refused",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23000`. Message: `ERROR: MANDATE: TermsVersion rows are immutable`"
+    },
+    {
+      "id": "C3 detector release: illegal transition DRAFT -> RELEASED refused",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23000`. Message: `ERROR: MANDATE: illegal detector release status transition DRAFT -> RELEASED`"
+    },
+    {
+      "id": "C3 detector release: content is immutable",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23000`. Message: `ERROR: MANDATE: detector release content is immutable (only status may change)`"
+    },
+    {
+      "id": "C3 detector release: never deleted",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23000`. Message: `ERROR: MANDATE: detector releases are immutable (no delete)`"
+    },
+    {
+      "id": "C3 detector release: malformed vocabulary hash refused",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23514`. Message: `ERROR: new row for relation \"DetectorRelease\" violates check constraint \"DetectorRelease_shape_check\" DETAI"
+    },
+    {
+      "id": "C3 detector release: a legal transition DRAFT -> EVALUATION is accepted",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C3 detector 1.1.0 (mandate-lexical-detector) has no release row in this database",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C4 the documented order 'withdraw V2 mandates/deals first' is NOT executable as written (attestations and term history reference the deals; attestations are immutable)",
+      "ok": true,
+      "detail": " Invalid `prisma.$executeRawUnsafe()` invocation: Raw query failed. Code: `23503`. Message: `update or delete on table \"Deal\" violates foreign key constraint \"T"
+    },
+    {
+      "id": "C4 documented rollback statements all execute on the clone (after dependent tables are dropped first)",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "id": "C4 after rollback the seeded V1 mandates are byte-identical to before the rollback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "id": "C4 schema after the documented rollback equals the pre-migration schema",
+      "ok": true,
+      "detail": {
+        "rbSha": "cc89cd557e7a",
+        "preSha": "cc89cd557e7a",
+        "rsSha": "cc89cd557e7a"
+      }
+    },
+    {
+      "id": "C4 backup-restore recovery: restored snapshot has the pre-migration row counts and row content",
+      "ok": true,
+      "detail": {
+        "rsCounts": {
+          "User": 3,
+          "Mandate": 6,
+          "Deal": 2
+        }
+      }
+    },
+    {
+      "id": "C4 after rollback + roll-forward the schema equals the migrated schema",
+      "ok": true,
+      "detail": {
+        "rb": "13b974b5b1b5",
+        "migrated": "13b974b5b1b5"
+      }
+    },
+    {
+      "id": "C4 after restore + roll-forward the schema equals the migrated schema",
+      "ok": true,
+      "detail": {
+        "rs": "13b974b5b1b5",
+        "migrated": "13b974b5b1b5"
+      }
+    },
+    {
+      "id": "C1 mandate and mandate_test row counts identical before and after (read-only probe)",
+      "ok": true,
+      "detail": {
+        "untouchedBefore": {
+          "mandate": {
+            "error": -1
+          },
+          "mandate_test": {
+            "error": -1
+          }
+        },
+        "untouchedAfter": {
+          "mandate": {
+            "error": -1
+          },
+          "mandate_test": {
+            "error": -1
+          }
+        }
+      }
+    }
+  ],
+  "untouchedBefore": {
+    "mandate": {
+      "error": -1
+    },
+    "mandate_test": {
+      "error": -1
+    }
+  },
+  "databaseIdentity": {
+    "name": "mandate_qa_c_261109111729_a",
+    "host": "127.0.0.1:55432 (container mandate-pg)",
+    "postgres": "PostgreSQL 16.15 on x86_64-pc-linux-musl"
+  },
+  "preMigration": {
+    "counts": {
+      "User": 3,
+      "Mandate": 6,
+      "Deal": 2
+    },
+    "hashes": {
+      "User": "3350535f1c3f347c55a06f1187b3ed3d2d391d418c2f0644f9c71bd406c9af4b",
+      "Mandate": "d29f5d3ec4f5578b1f6df503abc567d6bb0bb406d3d20ac646d0dd96efaaa38c",
+      "Deal": "e6f5dafe580dd0fa5baa5ad9e7b855a444003b9b59bc97cbfb070a489d85c540"
+    }
+  },
+  "preSchemaSha256": "cc89cd557e7ae47a2071ea792e557fba5ebca199fc7a8d0d37a55927fedd7b98",
+  "postSchemaSha256": "13b974b5b1b5a3052d274d96e79801c323f3d56c347973ae62b0b2bcc4d4857d",
+  "postMigration": {
+    "counts": {
+      "User": 3,
+      "Mandate": 6,
+      "Deal": 2
+    },
+    "hashes": {
+      "User": "3350535f1c3f347c55a06f1187b3ed3d2d391d418c2f0644f9c71bd406c9af4b",
+      "Mandate": "d29f5d3ec4f5578b1f6df503abc567d6bb0bb406d3d20ac646d0dd96efaaa38c",
+      "Deal": "e6f5dafe580dd0fa5baa5ad9e7b855a444003b9b59bc97cbfb070a489d85c540"
+    }
+  },
+  "v2RefusalCodes": {
+    "digest mismatch": "DIGEST_MISMATCH",
+    "signature tampered": "ENVELOPE_INVALID",
+    "unknown key version": "KEY_VERSION_UNKNOWN",
+    "revoked key": "KEY_REVOKED",
+    "unknown envelope field": "ENVELOPE_INVALID",
+    "malformed envelope (no signature)": "ENVELOPE_INVALID",
+    "row identity mismatch (wrong mandate id)": "MANDATE_ID_MISMATCH",
+    "nonce mismatch": "NONCE_MISMATCH",
+    "not canonical (reordered text)": "NON_CANONICAL_DOCUMENT"
+  },
+  "finalA": {
+    "counts": {
+      "User": 5,
+      "Mandate": 8,
+      "Deal": 8,
+      "TermsAttestation": 2,
+      "TermsVersion": 6,
+      "DetectorRelease": 1,
+      "DetectorReleaseEvent": 0,
+      "BudgetReservation": 1
+    }
+  },
+  "rollbackLog": [
+    "ok   DROP TABLE \"TermsVersion\"",
+    "ok   DROP TABLE \"TermsAttestation\"",
+    "ok   DELETE FROM \"Deal\" WHERE \"termsSchemaVersion\"=2",
+    "ok   DELETE FROM \"Mandate\" WHERE \"sealVersion\"=2",
+    "ok   DROP TABLE \"DetectorReleaseEvent\"",
+    "ok   DROP TABLE \"DetectorRelease\"",
+    "ok   DROP FUNCTION mandate_detector_release_guard()",
+    "ok   ALTER TABLE \"Mandate\" DROP CONSTRAINT \"Mandate_v2_identity_check\", DROP COLUMN \"detectorId",
+    "ok   ALTER TABLE \"Deal\" DROP COLUMN \"termsSchemaVersion\", DROP COLUMN \"languagePolicyHash\"",
+    "ok   ALTER TABLE \"VerificationRun\" DROP COLUMN \"termsSchemaVersion\", DROP COLUMN \"bindingHash\"",
+    "ok   ALTER TABLE \"AgentRun\" DROP COLUMN \"inputManifestHash\"",
+    "ok   DELETE FROM _prisma_migrations WHERE migration_name IN ('20261108120000_v2_authorization',"
+  ],
+  "rollbackCounts": {
+    "User": 5,
+    "Mandate": 7,
+    "Deal": 5
+  },
+  "untouchedAfter": {
+    "mandate": {
+      "error": -1
+    },
+    "mandate_test": {
+      "error": -1
+    }
+  },
+  "droppedDisposableDatabases": true,
+  "failures": 0,
+  "finishedAt": "2026-11-09T11:17:45.687Z"
+}

@@ -1,0 +1,4 @@
+Phase 3 — Agents.
+Implement agents/llm.ts: callLLM({role, system, user, schema}) with Zod validation, timeouts, bounded retries, AgentRun + ledger event (prompt hash, redacted output). Implement Buyer, Seller (modes: honest, lazy, plus scenario hooks for the attack suite), Skeptic, Verifier; domain/verification/prescan.ts (zero-width/Unicode tags, bidi controls, base64 blobs, comments, text addressed to verifier/system); quotes.ts (normalize + verbatim check).
+Rules: counterparty text always inside <untrusted_*> delimiters, never in system prompts; Skeptic/Verifier have no tools; Buyer outputs typed intents only; negotiation ≤ MAX_NEGOTIATION_ROUNDS; terms lock after accept.
+Tests: schema-invalid LLM output rejected; quote validation; prescan fixtures; negotiation completes on an honest run with a real model. Report actual results.

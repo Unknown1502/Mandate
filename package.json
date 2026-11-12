@@ -1,0 +1,64 @@
+{
+  "name": "mandate",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prisma:validate": "prisma validate",
+    "db:migrate": "prisma migrate dev",
+    "spike": "tsx --env-file=.env.local scripts/spike/run.ts",
+    "gen-keys": "tsx scripts/gen-keys.ts",
+    "test:db": "node --env-file=.env.local ./node_modules/vitest/vitest.mjs run -c vitest.db.config.mts",
+    "seller": "tsx seller-service/main.ts",
+    "paypal:oauth-check": "tsx scripts/paypal-oauth-check.ts",
+    "ai:smoke": "tsx scripts/ai-smoke.ts",
+    "attack": "tsx --env-file=.env.local attack-lab/run.ts",
+    "attack:mutate": "tsx --env-file=.env.local attack-lab/mutate.ts",
+    "attack:stress": "tsx --env-file=.env.local attack-lab/stress.ts",
+    "bench:prescan": "tsx scripts/bench-prescan.ts",
+    "measure:language": "tsx scripts/measure-language.ts",
+    "attack:mutate:layers": "tsx --env-file=.env.local attack-lab/mutate-layers.ts",
+    "check:authorization-corpus": "tsx --env-file=.env.local scripts/check-authorization-corpus.ts",
+    "detector:eval": "tsx scripts/detector-eval.ts",
+    "bench:v2": "tsx --env-file=.env.local scripts/bench-v2.ts"
+  },
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "3.0.0",
+    "@paypal/paypal-server-sdk": "2.5.0",
+    "@prisma/client": "6.19.3",
+    "decimal.js": "10.6.0",
+    "groq-sdk": "1.6.0",
+    "next": "16.4.5",
+    "prisma": "6.19.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.4",
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.5",
+    "playwright-core": "1.65.0",
+    "prettier": "3.9.10",
+    "tailwindcss": "4.3.4",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vitest": "5.1.0"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "optionalDependencies": {
+    "@rolldown/binding-win32-x64-msvc": "1.2.16"
+  }
+}

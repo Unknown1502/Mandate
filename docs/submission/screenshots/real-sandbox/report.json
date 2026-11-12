@@ -1,0 +1,98 @@
+{
+  "ranAt": "2026-11-10T10:24:03.980Z",
+  "target": "http://localhost:3000",
+  "readOnly": true,
+  "screenshots": [
+    "desktop-full-deal-captured.png",
+    "desktop-negotiation.png",
+    "desktop-paypal-payment.png",
+    "desktop-delivery-evidence.png",
+    "desktop-settlement-basis.png",
+    "desktop-audit-history.png",
+    "mobile-full-deal-captured.png",
+    "mobile-negotiation.png",
+    "mobile-paypal-payment.png",
+    "mobile-delivery-evidence.png",
+    "mobile-settlement-basis.png",
+    "mobile-audit-history.png"
+  ],
+  "checks": [
+    {
+      "id": "desktop: PayPal chip says Sandbox with writes LOCKED",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: the deal shows CAPTURED (PayPal Sandbox), not mock",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: settlement basis says the expired-window rule and that no explicit acceptance was recorded",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: order, authorization and capture ids and the $20.00 capture are shown",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: the Buyer Agent chip is labelled as the setting for NEW deals and this deal's transcript says no AI model was called",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: no password or secret text on the page",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: no state-changing browser request was attempted",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: PayPal chip says Sandbox with writes LOCKED",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: the deal shows CAPTURED (PayPal Sandbox), not mock",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: settlement basis says the expired-window rule and that no explicit acceptance was recorded",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: order, authorization and capture ids and the $20.00 capture are shown",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: the Buyer Agent chip is labelled as the setting for NEW deals and this deal's transcript says no AI model was called",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: no password or secret text on the page",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: no state-changing browser request was attempted",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "blockedMutationAttempts": [],
+  "dealView": {
+    "id": "cmw9owm800004vfoshymk7yir",
+    "state": "CAPTURED",
+    "paypalOrderId": "4YJ97804H20584006",
+    "capturedAmount": "20"
+  }
+}

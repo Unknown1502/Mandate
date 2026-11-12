@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-11-08T11:12:16.066Z",
+  "suite": "Layer C - P1 forward-compatibility reader guards",
+  "counts": {
+    "defined": 1,
+    "killed": 1,
+    "survived": 0,
+    "invalid": 0,
+    "unreached": 0,
+    "notEvaluated": 0
+  },
+  "srcRestoredByteForByte": true,
+  "srcDigestBefore": "b088a1918c62b8d3678c1ea50440a41f70b6996f39a60d83152d7fd090a41453",
+  "srcDigestAfter": "b088a1918c62b8d3678c1ea50440a41f70b6996f39a60d83152d7fd090a41453",
+  "srcFiles": 58,
+  "rows": [
+    {
+      "id": "P1-C21",
+      "suite": "C",
+      "defence": "integrity check trusts a non-string ledger digest (cast regression)",
+      "file": "src/orchestration/integrity.ts",
+      "mutation": "\"const recorded = stringField(created?.payload, \\\"mandateDigest\\\");\" -> \"const recorded = (created?.payload as { mandateDigest?: string } | undefined)?.mandateDigest;\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "reader architecture"
+      ],
+      "detectors": [
+        {
+          "name": "reader architecture",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "JSON text is parsed only where the result is validated before it is trusted ledger-event payloads (JSON read back from the database) are not cast to a shape, except in the four existing comparison-only reads"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    }
+  ]
+}

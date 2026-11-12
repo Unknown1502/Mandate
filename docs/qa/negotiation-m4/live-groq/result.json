@@ -1,0 +1,161 @@
+{
+  "ranAt": "2026-11-09T15:37:10.986Z",
+  "outcome": "transcript",
+  "dealState": "BLOCKED",
+  "buyerChipText": "Buyer Agent negotiates only the price. Criteria are fixed by you. ",
+  "transcript": [
+    {
+      "round": 1,
+      "sender": "buyer",
+      "kind": "propose",
+      "price": "18.00",
+      "message": null
+    },
+    {
+      "round": 1,
+      "sender": "seller",
+      "kind": "counter",
+      "price": "24.89",
+      "message": "Simulated seller (not a real merchant): My price for this job is 24.89."
+    },
+    {
+      "round": 2,
+      "sender": "buyer",
+      "kind": "counter",
+      "price": "20.00",
+      "message": null
+    },
+    {
+      "round": 2,
+      "sender": "seller",
+      "kind": "counter",
+      "price": "22.58",
+      "message": "Simulated seller (not a real merchant): My price for this job is 22.58."
+    },
+    {
+      "round": 3,
+      "sender": "buyer",
+      "kind": "counter",
+      "price": "21.29",
+      "message": null
+    },
+    {
+      "round": 3,
+      "sender": "seller",
+      "kind": "counter",
+      "price": "22.00",
+      "message": "Simulated seller (not a real merchant): My price for this job is 22.00."
+    },
+    {
+      "round": 4,
+      "sender": "buyer",
+      "kind": "counter",
+      "price": "21.50",
+      "message": null
+    },
+    {
+      "round": 4,
+      "sender": "seller",
+      "kind": "counter",
+      "price": "22.00",
+      "message": "Simulated seller (not a real merchant): My price for this job is 22.00."
+    }
+  ],
+  "modelRuns": [
+    {
+      "role": "buyer",
+      "model": "openai/gpt-oss-20b",
+      "ok": true,
+      "latencyMs": 715,
+      "error": null
+    },
+    {
+      "role": "buyer",
+      "model": "openai/gpt-oss-20b",
+      "ok": true,
+      "latencyMs": 355,
+      "error": null
+    },
+    {
+      "role": "buyer",
+      "model": "openai/gpt-oss-20b",
+      "ok": true,
+      "latencyMs": 761,
+      "error": null
+    },
+    {
+      "role": "buyer",
+      "model": "openai/gpt-oss-20b",
+      "ok": true,
+      "latencyMs": 289,
+      "error": null
+    }
+  ],
+  "pageClaimsLiveAi": true,
+  "pageShowsRecordedModelCalls": true,
+  "buyerBrainShown": "Buyer Agent · groq · openai/gpt-oss-20b",
+  "pageSaysNoAiCalled": false,
+  "problems": [],
+  "note": "synthetic mandate; PayPal mock; no checkout or delivery performed; V2 disabled",
+  "verifiedFromDatabase": {
+    "note": "read from the throwaway database before it was dropped",
+    "dealState": "BLOCKED",
+    "blockReason": "NO_AGREEMENT_WITHIN_ROUNDS",
+    "rounds": 4,
+    "sellerScenario": "haggler (labeled simulator, private floor 22.00, never sent to the buyer)",
+    "buyerTarget": "20.00",
+    "mandateCeiling": "50.00",
+    "modelRuns": [
+      {
+        "n": 1,
+        "output": {
+          "kind": "propose",
+          "price": "18.00"
+        },
+        "tokensIn": 577,
+        "tokensOut": 36,
+        "latencyMs": 715
+      },
+      {
+        "n": 2,
+        "output": {
+          "kind": "counter",
+          "price": "20.00"
+        },
+        "tokensIn": 667,
+        "tokensOut": 72,
+        "latencyMs": 355
+      },
+      {
+        "n": 3,
+        "output": {
+          "kind": "counter",
+          "price": "21.29"
+        },
+        "tokensIn": 721,
+        "tokensOut": 61,
+        "latencyMs": 761
+      },
+      {
+        "n": 4,
+        "output": {
+          "kind": "counter",
+          "price": "21.50"
+        },
+        "tokensIn": 775,
+        "tokensOut": 101,
+        "latencyMs": 289
+      }
+    ],
+    "totals": {
+      "requests": 4,
+      "failed": 0,
+      "tokensIn": 2740,
+      "tokensOut": 270
+    },
+    "policyRejections": 0,
+    "outboundMessageBlocks": 0,
+    "paypalEvents": 0,
+    "payment": "none created or captured"
+  }
+}

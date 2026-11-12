@@ -1,0 +1,524 @@
+{
+  "ranAt": "2026-11-10T10:25:27.892Z",
+  "database": "mandate_qa_e2e_1794306327892",
+  "mode": "PAYPAL_MODE=mock (explicit)",
+  "buyer": "rule-based brain (no model call)",
+  "scenarios": {
+    "S1_honest": {
+      "deal1": "cmwajnzmw0005vfdgqpno7vpn",
+      "deal3": "cmwajp4in00arvfdgnhcfmhmj",
+      "browser": {
+        "console": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+          "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+          "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+          "Failed to load resource: net::ERR_FAILED",
+          "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+          "Failed to load resource: net::ERR_FAILED"
+        ],
+        "failed": [
+          "POST /api/deals/cmwajnzmw0005vfdgqpno7vpn/delivery net::ERR_FAILED",
+          "POST /api/deals/cmwajnzmw0005vfdgqpno7vpn/delivery net::ERR_FAILED"
+        ],
+        "http": [
+          "401 GET /api/auth/session",
+          "401 POST /api/auth/login",
+          "400 POST /api/mandates/preview",
+          "400 POST /api/deals",
+          "500 POST /api/deals/cmwajnzmw0005vfdgqpno7vpn/delivery"
+        ],
+        "pageErrors": []
+      },
+      "mobileBrowser": {
+        "console": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "failed": [],
+        "http": [
+          "401 GET /api/auth/session"
+        ],
+        "pageErrors": []
+      }
+    },
+    "S2_haggler": {
+      "transcript": [
+        "buyer:propose:20.00",
+        "seller:counter:25.59",
+        "buyer:counter:22.80",
+        "seller:accept:-"
+      ],
+      "browser": {
+        "console": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "failed": [],
+        "http": [
+          "401 GET /api/auth/session"
+        ],
+        "pageErrors": []
+      }
+    },
+    "S3_seller_refuses_range": {
+      "buyerOffers": [
+        20,
+        50,
+        50,
+        0
+      ],
+      "state": "BLOCKED",
+      "browser": {
+        "console": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "failed": [],
+        "http": [
+          "401 GET /api/auth/session"
+        ],
+        "pageErrors": []
+      }
+    },
+    "S4_seller_tamper": {
+      "state": "BLOCKED",
+      "browser": {
+        "console": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "failed": [],
+        "http": [
+          "401 GET /api/auth/session"
+        ],
+        "pageErrors": []
+      }
+    },
+    "S5_seller_injection": {
+      "transcript": [
+        "buyer:propose:20.00",
+        "seller:accept:-"
+      ],
+      "browser": {
+        "console": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "failed": [],
+        "http": [
+          "401 GET /api/auth/session"
+        ],
+        "pageErrors": []
+      }
+    },
+    "S6_seller_down": {
+      "state": "BLOCKED",
+      "browser": {
+        "console": [
+          "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+        ],
+        "failed": [],
+        "http": [
+          "401 GET /api/auth/session"
+        ],
+        "pageErrors": []
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "S1: seller simulator and mock-mode app are up",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: wrong credentials show an error and stay on the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: empty states shown (no mandate, no deals)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/empty-dashboard: PayPal is labelled MOCK, never Sandbox/live",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/empty-dashboard: Buyer Agent is Rule-based, nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/empty-dashboard: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "layout/desktop/empty-dashboard: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > 1366"
+    },
+    {
+      "id": "S1: an invalid budget is rejected with a visible error (no mandate is created)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: the mandate is sealed and verified",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: an invalid target price is refused and no deal is created",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: negotiation locked the price inside the limits ($20.00, one round)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: transcript shows rule-based buyer and local simulator; 'no AI model was called'",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: PayPal order exists and nothing is authorized or captured yet",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal1-order-pending: PayPal is labelled MOCK, never Sandbox/live",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal1-order-pending: Buyer Agent is Rule-based, nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal1-order-pending: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: double-clicking the mock checkout produced exactly ONE authorization",
+      "ok": true,
+      "detail": "CREATE_ORDER:CONFIRMED,AUTHORIZE:CONFIRMED"
+    },
+    {
+      "id": "S1: the authorized state is described as a hold, not captured, not escrow (MOCK)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: a network failure shows 'Could not reach the server' and changes nothing",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: a server error is shown as an error, not as success, and changes nothing",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: while a request is in flight the action buttons are disabled (loading state, no double submit)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: clean delivery passes all deterministic checks, no model is used",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: buyer acceptance is pending and nothing is captured yet",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: accepting (double click) produced exactly ONE capture of the locked price",
+      "ok": true,
+      "detail": "CREATE_ORDER:CONFIRMED,AUTHORIZE:CONFIRMED,CAPTURE:CONFIRMED captured 20"
+    },
+    {
+      "id": "truth/deal1-captured: PayPal is labelled MOCK, never Sandbox/live",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal1-captured: Buyer Agent is Rule-based, nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal1-captured: a capture is labelled MOCK (simulated)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal1-captured: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "layout/desktop/deal1-captured: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > 1366"
+    },
+    {
+      "id": "S1: a repeated 'Check settlement' after the capture does not capture again",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1/deal4: the challenge was recorded (who/why/criterion) and the delivery was re-verified against the ORIGINAL locked terms (a second verification record exists; no new terms, no amount supplied)",
+      "ok": true,
+      "detail": "challenged=true verifications=2"
+    },
+    {
+      "id": "S1/deal4: at most ONE capture, only for the locked price, only after the engine re-verified",
+      "ok": true,
+      "detail": "captures=1 amount=20"
+    },
+    {
+      "id": "truth/deal4-after-challenge: PayPal is labelled MOCK, never Sandbox/live",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal4-after-challenge: Buyer Agent is Rule-based, nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal4-after-challenge: a capture is labelled MOCK (simulated)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal4-after-challenge: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S2: a required-check failure voids the authorization; nothing is captured",
+      "ok": true,
+      "detail": "CREATE_ORDER:CONFIRMED,AUTHORIZE:CONFIRMED,VOID:CONFIRMED"
+    },
+    {
+      "id": "S2: the UI says voided / not paid, MOCK",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal2-voided: PayPal is labelled MOCK, never Sandbox/live",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal2-voided: Buyer Agent is Rule-based, nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/deal2-voided: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S3: a hidden instruction is flagged by the deterministic scanner and the deal stops for a human",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S3: no capture and no void happened by itself; there is no unrestricted reject button",
+      "ok": true,
+      "detail": "CREATE_ORDER:CONFIRMED,AUTHORIZE:CONFIRMED"
+    },
+    {
+      "id": "S1: sign out returns to the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S1: after logout the API refuses an unauthenticated request (401)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "layout/mobile/dashboard-deals: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 390 > 390"
+    },
+    {
+      "id": "mobile: every form control has a label and every button a name",
+      "ok": true,
+      "detail": "0 unlabeled, 0 unnamed"
+    },
+    {
+      "id": "truth/mobile: PayPal is labelled MOCK, never Sandbox/live",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/mobile: Buyer Agent is Rule-based, nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/mobile: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S2: opening offer at or below the target, then a seller counteroffer, a buyer concession and agreement (2 rounds)",
+      "ok": true,
+      "detail": "buyer:propose:20.00 | seller:counter:25.59 | buyer:counter:22.80 | seller:accept:-"
+    },
+    {
+      "id": "S2: the simulator labels itself on every message",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S2: agreement is inside the authorized limits (target <= price <= ceiling 50.00)",
+      "ok": true,
+      "detail": "22.8"
+    },
+    {
+      "id": "S2: a new deal was created for it",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/haggler: PayPal is labelled MOCK, never Sandbox/live",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/haggler: Buyer Agent is Rule-based, nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/haggler: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S3: the negotiation ended without a deal and the deal is BLOCKED",
+      "ok": true,
+      "detail": "BLOCKED"
+    },
+    {
+      "id": "S3: the buyer never offered above the ceiling (50.00) and never above the mandate per-deal cap",
+      "ok": true,
+      "detail": "20,50,50,0"
+    },
+    {
+      "id": "S3: no PayPal order or operation exists for a failed negotiation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S3: the UI says it ended without a deal, and this deal's PayPal card shows no order and no payment",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/greedy: PayPal is labelled MOCK, never Sandbox/live",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/greedy: Buyer Agent is Rule-based, nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/greedy: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S4: the out-of-contract seller reply blocks the deal (SELLER_PROTOCOL_VIOLATION) and no payment exists",
+      "ok": true,
+      "detail": "BLOCKED SELLER_PROTOCOL_VIOLATION"
+    },
+    {
+      "id": "S5: the buyer disclosed nothing and accepted no injected price (price within limits)",
+      "ok": true,
+      "detail": "20"
+    },
+    {
+      "id": "S5: the seller's injection text is displayed only as seller text (untrusted), never as an instruction that changed state",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/adversarial: PayPal is labelled MOCK, never Sandbox/live",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/adversarial: Buyer Agent is Rule-based, nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "truth/adversarial: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S6: with the seller unreachable the deal is BLOCKED (SELLER_ERROR) and no PayPal operation exists",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "S6: the UI explains the failure, and this deal's PayPal card shows no order and no payment",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "browser: no unexpected console errors, page errors, failed requests or HTTP errors across all scenarios (injected failures excluded)",
+      "ok": true,
+      "detail": "[]"
+    }
+  ],
+  "findings": [
+    "disposable database mandate_qa_e2e_1794306327892 created and migrated",
+    "challenge outcome: deal state CAPTURED; challenge recorded in the ledger: true; verification records: 2 (the engine clears the challenge window after a re-verification and then settles by itself: documented in tests/db/review-policy.db.test.ts, but the UI text does not say so)",
+    "disposable database mandate_qa_e2e_1794306327892 dropped"
+  ],
+  "screenshots": [
+    "01-desktop-login.png",
+    "02-desktop-login-error.png",
+    "03-desktop-dashboard-empty.png",
+    "04-desktop-mandate-validation-error.png",
+    "05-desktop-mandate-preview.png",
+    "06-desktop-mandate-created.png",
+    "07-desktop-deal-validation-error.png",
+    "08-desktop-deal1-negotiated-order-pending.png",
+    "09-desktop-deal1-mock-authorized.png",
+    "10-desktop-error-network-failure.png",
+    "11-desktop-error-server-500.png",
+    "12-desktop-loading-state-in-flight.png",
+    "13-desktop-deal1-clean-verified.png",
+    "14-desktop-deal1-accepted-captured-mock.png",
+    "15-desktop-deal4-challenge-form.png",
+    "16-desktop-deal4-after-challenge.png",
+    "17-desktop-deal2-duplicates-voided.png",
+    "18-desktop-deal3-injection-needs-human.png",
+    "19-desktop-signed-out.png",
+    "20-mobile-dashboard-deals.png",
+    "21-desktop-haggler-counteroffer-concession-agreement.png",
+    "22-desktop-seller-refuses-no-agreement-blocked.png",
+    "23-desktop-seller-tamper-protocol-violation.png",
+    "24-desktop-seller-injection-untrusted-text.png",
+    "25-desktop-seller-unreachable-blocked.png"
+  ],
+  "browserNoise": []
+}

@@ -1,0 +1,171 @@
+{
+  "generatedAt": "2026-11-06T18:08:31.785Z",
+  "note": "Each row: the same cases were run unmutated (control, must pass) and then with ONE defence weakened. SURVIVED means the Lab did not notice: a Lab blind spot or a redundant guard.",
+  "rows": [
+    {
+      "id": "M01",
+      "defence": "outbound leak guard (nothing a buyer says may contain mandate limits or secrets)",
+      "file": "src/agents/sanitize.ts",
+      "cases": "^E[1-4]$",
+      "control": "passed (4 runs)",
+      "result": "KILLED (Lab reported failures)",
+      "caughtBy": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED"
+      ]
+    },
+    {
+      "id": "M02",
+      "defence": "per-deal maximum in the policy check",
+      "file": "src/domain/policy.ts",
+      "cases": "^(T3|M3)$",
+      "control": "passed (2 runs)",
+      "result": "KILLED (Lab reported failures)",
+      "caughtBy": [
+        "M3",
+        "T3"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ]
+    },
+    {
+      "id": "M03",
+      "defence": "total-budget check in the policy check",
+      "file": "src/domain/policy.ts",
+      "cases": "^(T4|B4)$",
+      "control": "passed (2 runs)",
+      "result": "KILLED (Lab reported failures)",
+      "caughtBy": [
+        "T4"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ]
+    },
+    {
+      "id": "M04",
+      "defence": "counterparty allow-list in the policy check",
+      "file": "src/domain/policy.ts",
+      "cases": "^B5$",
+      "control": "passed (1 runs)",
+      "result": "KILLED (Lab reported failures)",
+      "caughtBy": [
+        "B5"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ]
+    },
+    {
+      "id": "M05",
+      "defence": "mandate seal verification (accept any stored mandate bytes)",
+      "file": "src/domain/mandates.ts",
+      "cases": "^(M1|M4)$",
+      "control": "passed (2 runs)",
+      "result": "KILLED (Lab reported failures)",
+      "caughtBy": [
+        "M4"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED"
+      ]
+    },
+    {
+      "id": "M06",
+      "defence": "artifact hash check at delivery intake",
+      "file": "src/verification/delivery.ts",
+      "cases": "^(V3|V5)$",
+      "control": "passed (2 runs)",
+      "result": "KILLED (Lab reported failures)",
+      "caughtBy": [
+        "V5"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ]
+    },
+    {
+      "id": "M07",
+      "defence": "step 4 only: deterministic severe-flag escalation (step 5 HIGH-flag escalation still present)",
+      "file": "src/domain/settlement.ts",
+      "cases": "^(I1|I2|I4|X1|X2|X3|V1)$",
+      "control": "passed (7 runs)",
+      "result": "SURVIVED (Lab reported nothing)",
+      "caughtBy": [],
+      "kinds": []
+    },
+    {
+      "id": "M08",
+      "defence": "step 5 only: HIGH-severity-flag escalation (step 4 severe-flag escalation still present)",
+      "file": "src/domain/settlement.ts",
+      "cases": "^(P2|E1|C1|X1|X2|X3)$",
+      "control": "passed (6 runs)",
+      "result": "KILLED (Lab reported failures)",
+      "caughtBy": [
+        "C1",
+        "P2"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ]
+    },
+    {
+      "id": "M09",
+      "defence": "steps 4 AND 5 together: every flag-based escalation",
+      "file": "src/domain/settlement.ts",
+      "cases": "^(I1|I2|I4|P2|C1|X1|X2|X3)$",
+      "control": "passed (8 runs)",
+      "result": "KILLED (Lab reported failures)",
+      "caughtBy": [
+        "C1",
+        "I4",
+        "P2"
+      ],
+      "kinds": [
+        "ATTACK_NOT_CONTAINED",
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ]
+    },
+    {
+      "id": "M10",
+      "defence": "an LLM-only required failure must go to a human (mutant: it voids instead)",
+      "file": "src/domain/settlement.ts",
+      "cases": "^A[1-4]$",
+      "control": "passed (4 runs)",
+      "result": "KILLED (Lab reported failures)",
+      "caughtBy": [
+        "A2"
+      ],
+      "kinds": [
+        "INCORRECT_SETTLEMENT",
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ]
+    },
+    {
+      "id": "M11",
+      "defence": "required deterministic failure must void (mutant: ignore it)",
+      "file": "src/domain/settlement.ts",
+      "cases": "^(L3|F1|F2|F3)$",
+      "control": "passed (4 runs)",
+      "result": "KILLED (Lab reported failures)",
+      "caughtBy": [
+        "F1",
+        "F2",
+        "F3",
+        "L3"
+      ],
+      "kinds": [
+        "OUTCOME_DIFFERS_FROM_POLICY"
+      ]
+    }
+  ]
+}

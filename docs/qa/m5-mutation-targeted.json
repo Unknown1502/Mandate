@@ -1,0 +1,48 @@
+{
+  "ranAt": "2026-11-09T16:20:23.548Z",
+  "scope": "targeted trust-boundary mutants for milestone 5 only (not the full certification)",
+  "results": [
+    {
+      "id": "M5-1 order-binding check disabled",
+      "killed": true,
+      "restored": true,
+      "detail": "     × an order whose amount or deal id no longer matches the locked deal is refused BEFORE authorization: nothing is authorized, nothing is voided 513ms |      × an order that does not match the deal"
+    },
+    {
+      "id": "M5-2 timeouts classified as definitive rejections",
+      "killed": true,
+      "restored": true,
+      "detail": "     × timeouts, aborts, network failures and unreadable responses are UNKNOWN (reconcile), never success and never 'rejected' 15ms |      × an operation that hangs is aborted after its timeout and re"
+    },
+    {
+      "id": "M5-3 Sandbox write lock bypassed",
+      "killed": true,
+      "restored": true,
+      "detail": "     × with PAYPAL_SANDBOX_WRITES not authorized, opening a deal never reaches createOrder 618ms"
+    },
+    {
+      "id": "M5-4 capture path accepted for any operation",
+      "killed": true,
+      "restored": true,
+      "detail": "     × AUTHORIZE, CAPTURE, VOID and REAUTHORIZE carry the id from the path, the request id, and (capture) the exact amount, final_capture and invoice id 15ms |      × CAPTURE /v2/checkout/orders/O1/ca"
+    },
+    {
+      "id": "M5-5 checkout offered while Sandbox writes are locked",
+      "killed": true,
+      "restored": true,
+      "detail": "     × incomplete configuration, locked writes, wrong state and missing order/price are all NOT eligible, each with its own reason 11ms"
+    },
+    {
+      "id": "M5-6 checkout offered in any deal state",
+      "killed": true,
+      "restored": true,
+      "detail": "     × incomplete configuration, locked writes, wrong state and missing order/price are all NOT eligible, each with its own reason 9ms"
+    },
+    {
+      "id": "M5-7 policy: opening above target allowed (Part B regression)",
+      "killed": true,
+      "restored": true,
+      "detail": "     × an opening above the target blocks the deal and locks nothing 182ms"
+    }
+  ]
+}

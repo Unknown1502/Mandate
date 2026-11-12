@@ -1,0 +1,329 @@
+{
+  "label": "final-release-readiness-2",
+  "ranAt": "2026-11-09T11:20:15.817Z",
+  "total": 50,
+  "failed": 0,
+  "results": [
+    {
+      "id": "G1 MANDATE_V2_ENABLED is not set to true in the current environment",
+      "ok": true,
+      "detail": {
+        "value": "(unset)"
+      }
+    },
+    {
+      "id": "G1 MANDATE_V2_RELEASE_RECORD is not set in the current environment",
+      "ok": true
+    },
+    {
+      "id": "G1 the loader, run against the real environment and tree, is CLOSED",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G2 no signed V2 release record file exists in the project tree",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "id": "G3 opt-in value undefined without a record is closed",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G3 opt-in value \"\" without a record is closed",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G3 opt-in value \"false\" without a record is closed",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G3 opt-in value \"FALSE\" without a record is closed",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G3 opt-in value \"TRUE\" without a record is closed",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G3 opt-in value \"True\" without a record is closed",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G3 opt-in value \"1\" without a record is closed",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G3 opt-in value \"yes\" without a record is closed",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G3 opt-in value \" true\" without a record is closed",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G3 opt-in value \"true \" without a record is closed",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G3 opt-in value \"on\" without a record is closed",
+      "ok": true,
+      "detail": [
+        "NOT_OPTED_IN"
+      ]
+    },
+    {
+      "id": "G3 opt-in exactly 'true' but no record: closed (opt-in alone never opens)",
+      "ok": true,
+      "detail": [
+        "NO_RECORD"
+      ]
+    },
+    {
+      "id": "G4 opt-in on + record 'missing' is closed",
+      "ok": true,
+      "detail": [
+        "NO_RECORD"
+      ]
+    },
+    {
+      "id": "G4 same with an EMPTY trust registry is closed",
+      "ok": true,
+      "detail": [
+        "NO_RECORD"
+      ]
+    },
+    {
+      "id": "G4 opt-in on + record 'empty' is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 same with an EMPTY trust registry is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 opt-in on + record 'garbage' is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 same with an EMPTY trust registry is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 opt-in on + record 'empty-object' is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 same with an EMPTY trust registry is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 opt-in on + record 'array' is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 same with an EMPTY trust registry is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 opt-in on + record 'null' is closed",
+      "ok": true,
+      "detail": [
+        "NO_RECORD"
+      ]
+    },
+    {
+      "id": "G4 same with an EMPTY trust registry is closed",
+      "ok": true,
+      "detail": [
+        "NO_RECORD"
+      ]
+    },
+    {
+      "id": "G4 opt-in on + record 'unsigned' is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 same with an EMPTY trust registry is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 opt-in on + record 'bad-signature' is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 same with an EMPTY trust registry is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 opt-in on + record 'extra-field' is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 same with an EMPTY trust registry is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 opt-in on + record 'duplicate-keys' is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 same with an EMPTY trust registry is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 opt-in on + record 'huge' is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G4 same with an EMPTY trust registry is closed",
+      "ok": true,
+      "detail": [
+        "RECORD_MALFORMED"
+      ]
+    },
+    {
+      "id": "G5 a root without a source tree has no digest (null)",
+      "ok": true
+    },
+    {
+      "id": "G5 opt-in on + unknown source tree is closed",
+      "ok": true,
+      "detail": [
+        "NO_RECORD"
+      ]
+    },
+    {
+      "id": "G6 approveMandateV2 with no gate: refused with V2DisabledError, database untouched",
+      "ok": true,
+      "detail": "V2 is disabled: the release gate is not open"
+    },
+    {
+      "id": "G6 approveMandateV2 with empty object posing as a gate: refused with V2DisabledError, database untouched",
+      "ok": true,
+      "detail": "V2 is disabled: the release gate is not open"
+    },
+    {
+      "id": "G6 approveMandateV2 with object with a future expiry posing as a gate: refused with V2DisabledError, database untouched",
+      "ok": true,
+      "detail": "V2 is disabled: the release gate is not open"
+    },
+    {
+      "id": "G6 approveMandateV2 with JSON-cloned gate-looking object: refused with V2DisabledError, database untouched",
+      "ok": true,
+      "detail": "V2 is disabled: the release gate is not open"
+    },
+    {
+      "id": "G7 openMandateRow(V2 row) without a gate returns null",
+      "ok": true
+    },
+    {
+      "id": "G7 openMandateRow(V2 row) with a gate-shaped forged object returns null",
+      "ok": true
+    },
+    {
+      "id": "G8 shipped detector is 1.1.0",
+      "ok": true,
+      "detail": {
+        "id": "mandate-lexical-detector",
+        "version": "1.1.0",
+        "vocabularyHash": "sha256:9d4511bf447ce787db33ccdcc5f249d1f3f8c54c591cc5ca96d6ebd717754fc9"
+      }
+    },
+    {
+      "id": "G8 NEW_PIN of the shipped detector is refused with no release",
+      "ok": true
+    },
+    {
+      "id": "G8 EXISTING_PIN of the shipped detector is also refused with no release",
+      "ok": true
+    },
+    {
+      "id": "G8 a different detector triple is refused",
+      "ok": true
+    }
+  ]
+}

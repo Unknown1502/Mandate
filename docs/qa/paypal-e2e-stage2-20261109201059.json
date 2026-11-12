@@ -1,0 +1,72 @@
+{
+  "stage": "2 of the PayPal Sandbox E2E: buyer approval, verified by one read",
+  "ranAt": "2026-11-09T20:10:59.041Z",
+  "environment": {
+    "paypalMode": "sandbox (process-level)",
+    "writesLock": "CLOSED (PAYPAL_SANDBOX_WRITES not set; gateway wrapped in the closed lock)",
+    "database": "mandate_e2e"
+  },
+  "outboundRequests": {
+    "permitted": 2,
+    "allowedAndSent": [
+      {
+        "rule": "1-oauth-token",
+        "method": "POST",
+        "host": "api-m.sandbox.paypal.com",
+        "path": "/v1/oauth2/token"
+      },
+      {
+        "rule": "2-read-order",
+        "method": "GET",
+        "host": "api-m.sandbox.paypal.com",
+        "path": "/v2/checkout/orders/{orderId}"
+      }
+    ],
+    "refusedByGuard": []
+  },
+  "read": {
+    "outcome": "ok",
+    "httpStatus": 200,
+    "debugId": "f575074856704"
+  },
+  "order": {
+    "id": "4YJ97804H20584006",
+    "status": "APPROVED",
+    "intent": "AUTHORIZE",
+    "amount": "20.00",
+    "currency": "USD",
+    "createTime": "2026-11-09T20:04:38Z",
+    "authorizationsOnOrder": 0,
+    "capturesOnOrder": 0
+  },
+  "verification": {
+    "orderIdMatches": true,
+    "statusIsApproved": true,
+    "intentIsAuthorize": true,
+    "amountIs20USD": true,
+    "stillBoundToTheDeal": true,
+    "payeeIsExpectedBusiness": true,
+    "payerIsExpectedBuyer": true,
+    "payer": {
+      "email_address": "<sandbox-buyer-email>",
+      "payer_id": "<sandbox-payer-id>"
+    },
+    "noAuthorizationOrCaptureExists": true
+  },
+  "localDealUnchanged": {
+    "id": "cmw9owm800004vfoshymk7yir",
+    "state": "AWAITING_BUYER_APPROVAL",
+    "paypalOrderId": "4YJ97804H20584006",
+    "paypalAuthId": null,
+    "lockedPrice": "20"
+  },
+  "notDone": [
+    "server-side authorization",
+    "capture",
+    "void",
+    "refund",
+    "another order",
+    "any read of the four spike orders",
+    "any database write"
+  ]
+}

@@ -1,0 +1,495 @@
+{
+  "ranAt": "2026-11-09T13:03:29.523Z",
+  "base": "http://localhost:3000",
+  "browser": "156.0.8078.80",
+  "viewports": {
+    "desktop": {
+      "console": [
+        "error: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "error: Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [
+        "401 GET /api/auth/session",
+        "401 POST /api/auth/login"
+      ]
+    },
+    "mobile": {
+      "console": [
+        "error: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "error: Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [
+        "401 GET /api/auth/session",
+        "401 POST /api/auth/login"
+      ]
+    },
+    "desktop-stubbed": {
+      "console": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": []
+    }
+  },
+  "findings": [],
+  "checks": [
+    {
+      "id": "desktop/login: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > innerWidth 1366"
+    },
+    {
+      "id": "desktop/login: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/login: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop: wrong credentials show an error and stay on the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: empty states are shown (no mandate, no deals, no deal selected)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: PayPal chip says MOCK",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: Buyer Agent chip says Rule-based and nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: Seller chip says Local simulator",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/dashboard-empty: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > innerWidth 1366"
+    },
+    {
+      "id": "desktop/dashboard-empty: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/dashboard-empty: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop: mandate appears with a verified seal",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: transcript shows rule-based buyer and local-simulator seller",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: \"no AI model was called\" note is shown",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: PayPal card is labelled MOCK and shows no capture",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: no \"Paid\" success is shown before any capture",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/negotiation: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > innerWidth 1366"
+    },
+    {
+      "id": "desktop/negotiation: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/negotiation: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop: flagged delivery shows scanner flags and asks for a human decision",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: flagged delivery shows no capture and no \"Paid\"",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: no reject button exists (policy: no unrestricted reject)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/flagged: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > innerWidth 1366"
+    },
+    {
+      "id": "desktop/flagged: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/flagged: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop: duplicate-row delivery shows a failed verification and is not paid",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: clean delivery verified, still not paid while the challenge window is open",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/decision: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > innerWidth 1366"
+    },
+    {
+      "id": "desktop/decision: every form control has a label",
+      "ok": false,
+      "detail": "<input class=\"rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-9"
+    },
+    {
+      "id": "desktop/decision: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop: settlement shows full capture, and the PayPal card still says MOCK",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: audit history is listed",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/settled: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 1366 > innerWidth 1366"
+    },
+    {
+      "id": "desktop/settled: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop/settled: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "desktop: selecting another deal switches the detail view",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "id": "desktop: sign out returns to the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/login: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 390 > innerWidth 390"
+    },
+    {
+      "id": "mobile/login: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/login: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "mobile: wrong credentials show an error and stay on the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: empty states are shown (no mandate, no deals, no deal selected)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: PayPal chip says MOCK",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: Buyer Agent chip says Rule-based and nothing claims Live AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: Seller chip says Local simulator",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: V2 shown as Disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/dashboard-empty: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 390 > innerWidth 390"
+    },
+    {
+      "id": "mobile/dashboard-empty: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/dashboard-empty: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "mobile: mandate appears with a verified seal",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: transcript shows rule-based buyer and local-simulator seller",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: \"no AI model was called\" note is shown",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: PayPal card is labelled MOCK and shows no capture",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: no \"Paid\" success is shown before any capture",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/negotiation: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 436 > innerWidth 436"
+    },
+    {
+      "id": "mobile/negotiation: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/negotiation: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "mobile: flagged delivery shows scanner flags and asks for a human decision",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: flagged delivery shows no capture and no \"Paid\"",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: no reject button exists (policy: no unrestricted reject)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/flagged: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 436 > innerWidth 436"
+    },
+    {
+      "id": "mobile/flagged: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/flagged: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "mobile: duplicate-row delivery shows a failed verification and is not paid",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: clean delivery verified, still not paid while the challenge window is open",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/decision: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 436 > innerWidth 436"
+    },
+    {
+      "id": "mobile/decision: every form control has a label",
+      "ok": false,
+      "detail": "<input class=\"rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-9"
+    },
+    {
+      "id": "mobile/decision: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "mobile: settlement shows full capture, and the PayPal card still says MOCK",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: audit history is listed",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/settled: no horizontal page scroll",
+      "ok": true,
+      "detail": "scrollWidth 436 > innerWidth 436"
+    },
+    {
+      "id": "mobile/settled: every form control has a label",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile/settled: every button and link has a name",
+      "ok": true,
+      "detail": "0 unnamed"
+    },
+    {
+      "id": "mobile: selecting another deal switches the detail view",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "id": "mobile: sign out returns to the login screen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: configured Gemini shows \"Live AI · gemini · model\" in the chip",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: a Gemini failure is shown as a failure with its reason and \"no fallback\"",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: a failed call never labels the buyer as AI or rule-based success",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: a recorded successful call labels that deal's buyer messages with the provider and model",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop [STUBBED API]: incomplete Gemini configuration is shown as \"Rule-based (AI NOT configured)\", never as AI",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: no browser console errors or page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: no failed network requests",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop: no unexpected HTTP error responses",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: no browser console errors or page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: no failed network requests",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "mobile: no unexpected HTTP error responses",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop-stubbed: no browser console errors or page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop-stubbed: no failed network requests",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "desktop-stubbed: no unexpected HTTP error responses",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "summary": {
+    "passed": 86,
+    "failed": 4,
+    "findings": 0
+  }
+}

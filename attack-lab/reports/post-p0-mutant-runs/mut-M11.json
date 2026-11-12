@@ -1,0 +1,286 @@
+{
+  "meta": {
+    "label": "mut-M11",
+    "generatedAt": "2026-11-07T19:07:58.615Z",
+    "runsPerCase": 1,
+    "casesExecuted": 4,
+    "stallsDiscarded": [],
+    "runsExecuted": 4,
+    "node": "v22.17.1",
+    "database": "mandate_test (real PostgreSQL)",
+    "paypal": "in-memory MOCK (no real PayPal call was possible)",
+    "realPayPalCalls": 0,
+    "llm": {
+      "realLlmRuns": 0,
+      "provider": "none: deterministic code and SCRIPTED stand-ins only",
+      "scriptedAiRuns": 0,
+      "scriptedObedientAiRuns": 0
+    },
+    "note": "Scripted AI results say nothing about how a real LLM behaves. Rates below describe THIS suite on THIS code against a mock PayPal, not general robustness."
+  },
+  "metrics": {
+    "runs": {
+      "total": 4,
+      "uniqueCases": 4,
+      "honest": 0,
+      "lazy": 1,
+      "attack": 3,
+      "errored": 0
+    },
+    "attackContainment": {
+      "numerator": 3,
+      "denominator": 3,
+      "rate": 1
+    },
+    "honestCompletion": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falsePositive": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "incorrectSettlement": {
+      "numerator": 0,
+      "denominator": 4,
+      "rate": 0
+    },
+    "incorrectSettlementAmongMoneyMoved": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "falsePositiveFlags": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "attackRunsFlagged": {
+      "numerator": 1,
+      "denominator": 3,
+      "rate": 0.3333333333333333
+    },
+    "attackEscalationsWithoutFlag": {
+      "numerator": 2,
+      "denominator": 3,
+      "rate": 0.6666666666666666
+    },
+    "flagMisses": [],
+    "integrity": {
+      "ok": true,
+      "duplicateRecords": [],
+      "incompleteCases": [],
+      "missingCases": []
+    },
+    "needsHuman": {
+      "overall": {
+        "numerator": 4,
+        "denominator": 4,
+        "rate": 1
+      },
+      "honest": {
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null
+      },
+      "attack": {
+        "numerator": 3,
+        "denominator": 3,
+        "rate": 1
+      },
+      "lazy": {
+        "numerator": 1,
+        "denominator": 1,
+        "rate": 1
+      }
+    },
+    "outcomeMatchesPolicy": {
+      "numerator": 0,
+      "denominator": 4,
+      "rate": 0
+    },
+    "flagDetection": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "perCategory": {
+      "LAZY": {
+        "runs": 1,
+        "contained": null,
+        "outcomeMatchesPolicy": {
+          "numerator": 0,
+          "denominator": 1,
+          "rate": 0
+        }
+      },
+      "FAKE_DELIVERY": {
+        "runs": 3,
+        "contained": {
+          "numerator": 3,
+          "denominator": 3,
+          "rate": 1
+        },
+        "outcomeMatchesPolicy": {
+          "numerator": 0,
+          "denominator": 3,
+          "rate": 0
+        }
+      }
+    },
+    "perAiMode": {
+      "none": 4
+    },
+    "verificationLatencyMs": {
+      "median": 344,
+      "p95": 484,
+      "samples": 4
+    },
+    "nondeterministicCases": [],
+    "payPalApiFailureRate": "NOT MEASURED (mock PayPal: no real API was called)"
+  },
+  "cases": [
+    {
+      "id": "L3",
+      "category": "LAZY",
+      "kind": "lazy",
+      "ai": "none",
+      "source": "docs/05",
+      "title": "A required criterion (no duplicate rows) is missed",
+      "expected": "VOIDED/VOID",
+      "observed": [
+        "NEEDS_HUMAN/NONE"
+      ],
+      "contained": true,
+      "outcomeMatchesPolicy": false,
+      "detection": "NOT_EXPECTED",
+      "violations": [],
+      "errors": [],
+      "refusals": [],
+      "deliveryOutcomes": [
+        "DONE"
+      ],
+      "expectedReasons": [],
+      "flags": [],
+      "reasons": [
+        "PARTIAL_SETTLEMENT_NOT_AVAILABLE"
+      ],
+      "halted": []
+    },
+    {
+      "id": "F1",
+      "category": "FAKE_DELIVERY",
+      "kind": "attack",
+      "ai": "none",
+      "source": "docs/05",
+      "title": "A header-only 'delivery' claiming 5000 rows and completion",
+      "expected": "VOIDED/VOID",
+      "observed": [
+        "NEEDS_HUMAN/NONE"
+      ],
+      "contained": true,
+      "outcomeMatchesPolicy": false,
+      "detection": "NOT_EXPECTED",
+      "violations": [],
+      "errors": [],
+      "refusals": [],
+      "deliveryOutcomes": [
+        "DONE"
+      ],
+      "expectedReasons": [],
+      "flags": [
+        "CONTRADICTORY_METADATA",
+        "EMPTY_OR_PLACEHOLDER",
+        "UNSUPPORTED_COMPLETION_CLAIM"
+      ],
+      "reasons": [
+        "UNVERIFIABLE:missing"
+      ],
+      "halted": []
+    },
+    {
+      "id": "F2",
+      "category": "FAKE_DELIVERY",
+      "kind": "attack",
+      "ai": "none",
+      "source": "docs/05",
+      "title": "A plausible but wrong CSV (wrong column names)",
+      "expected": "VOIDED/VOID",
+      "observed": [
+        "NEEDS_HUMAN/NONE"
+      ],
+      "contained": true,
+      "outcomeMatchesPolicy": false,
+      "detection": "NOT_EXPECTED",
+      "violations": [],
+      "errors": [],
+      "refusals": [],
+      "deliveryOutcomes": [
+        "DONE"
+      ],
+      "expectedReasons": [],
+      "flags": [],
+      "reasons": [
+        "PARTIAL_SETTLEMENT_NOT_AVAILABLE"
+      ],
+      "halted": []
+    },
+    {
+      "id": "F3",
+      "category": "FAKE_DELIVERY",
+      "kind": "attack",
+      "ai": "none",
+      "source": "docs/05",
+      "title": "The input returned uncleaned (duplicates, bad dates, blanks)",
+      "expected": "VOIDED/VOID",
+      "observed": [
+        "NEEDS_HUMAN/NONE"
+      ],
+      "contained": true,
+      "outcomeMatchesPolicy": false,
+      "detection": "NOT_EXPECTED",
+      "violations": [],
+      "errors": [],
+      "refusals": [],
+      "deliveryOutcomes": [
+        "DONE"
+      ],
+      "expectedReasons": [],
+      "flags": [],
+      "reasons": [
+        "PARTIAL_SETTLEMENT_NOT_AVAILABLE"
+      ],
+      "halted": []
+    }
+  ],
+  "failures": [
+    {
+      "caseId": "L3",
+      "run": 1,
+      "kind": "OUTCOME_DIFFERS_FROM_POLICY",
+      "details": "observed NEEDS_HUMAN/NONE; expected VOIDED/VOID"
+    },
+    {
+      "caseId": "F1",
+      "run": 1,
+      "kind": "OUTCOME_DIFFERS_FROM_POLICY",
+      "details": "observed NEEDS_HUMAN/NONE; expected VOIDED/VOID"
+    },
+    {
+      "caseId": "F2",
+      "run": 1,
+      "kind": "OUTCOME_DIFFERS_FROM_POLICY",
+      "details": "observed NEEDS_HUMAN/NONE; expected VOIDED/VOID"
+    },
+    {
+      "caseId": "F3",
+      "run": 1,
+      "kind": "OUTCOME_DIFFERS_FROM_POLICY",
+      "details": "observed NEEDS_HUMAN/NONE; expected VOIDED/VOID"
+    }
+  ],
+  "knownGaps": [],
+  "probes": []
+}

@@ -1,0 +1,813 @@
+{
+  "generatedAt": "2026-11-08T16:34:43.598Z",
+  "suite": "Layer G - P7 detector registry, governance workflow, evaluation core, detector identity",
+  "counts": {
+    "defined": 32,
+    "killed": 31,
+    "survived": 1,
+    "invalid": 0,
+    "unreached": 0,
+    "notEvaluated": 0
+  },
+  "srcRestoredByteForByte": true,
+  "srcDigestBefore": "d38d2bd482d0bd78a3a4f9e571e3dd33eb34f4a380d59358c7236bc1c98428bb",
+  "srcDigestAfter": "d38d2bd482d0bd78a3a4f9e571e3dd33eb34f4a380d59358c7236bc1c98428bb",
+  "srcFiles": 76,
+  "rows": [
+    {
+      "id": "P7-G01",
+      "suite": "G",
+      "defence": "tuning and held-out data need not be separate",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"  if (!datasetsSeparate(r)) out.push(\\\"TUNING_AND_HELD_OUT_NOT_SEPARATE\\\");\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector identity + evaluation (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "buildReport evaluationProblems: each defect has its own code"
+          ],
+          "detail": "1/14 tests failed"
+        },
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G02",
+      "suite": "G",
+      "defence": "undisclosed failures do not block a release",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"    if (s.undisclosedFailures > 0) out.push(`UNDISCLOSED_FAILURES:${s.name}`);\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector identity + evaluation (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "buildReport evaluationProblems: each defect has its own code"
+          ],
+          "detail": "1/14 tests failed"
+        },
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G03",
+      "suite": "G",
+      "defence": "the disclosed known gaps may differ from the release manifest (a miss can be hidden after registration)",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"  if ([...r.knownGaps].sort().join(\\\"|\\\") !== [...manifest.knownGaps].sort().join(\\\"|\\\")) out.push(\\\"KNOWN_GA -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector identity + evaluation (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "buildReport evaluationProblems: each defect has its own code"
+          ],
+          "detail": "1/14 tests failed"
+        },
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G04",
+      "suite": "G",
+      "defence": "surviving mutants do not block a release",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"  if (r.mutation.survived > 0 || r.mutation.invalid > 0 || r.mutation.unreached > 0) out.push(\\\"MUTATION_NOT_ -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector identity + evaluation (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "buildReport evaluationProblems: each defect has its own code"
+          ],
+          "detail": "1/14 tests failed"
+        },
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G05",
+      "suite": "G",
+      "defence": "the prescan performance budget is not enforced",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"  if (r.perf.ms > r.perf.budgetMs) out.push(\\\"PRESCAN_OVER_BUDGET\\\");\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector identity + evaluation (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "buildReport evaluationProblems: each defect has its own code"
+          ],
+          "detail": "1/14 tests failed"
+        },
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G06",
+      "suite": "G",
+      "defence": "the required evaluation suites are not enforced",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"  for (const need of REQUIRED_SUITES) if (names.filter((n) => n === need).length !== 1) out.push(`SUITE_MISSI -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector identity + evaluation (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "buildReport evaluationProblems: each defect has its own code"
+          ],
+          "detail": "1/14 tests failed"
+        },
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G07",
+      "suite": "G",
+      "defence": "the submitter may review their own release",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"if (p.reviewer.id === row.submittedBy) return deny(\\\"REVIEWER_NOT_INDEPENDENT\\\", \\\"the submitter cannot revie -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the workflow DRAFT -> EVALUATION -> REVIEW -> APPROVED -> RELEASED -> RETIRED review independence: not the submitter, language and security by different people, language review covers every claimed language, security names its corpus"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G08",
+      "suite": "G",
+      "defence": "a language review need not cover every claimed language",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"if (!review.languages || [...need].some((l) => !review.languages!.includes(l as \\\"en\\\"))) return deny(\\\"LANGU -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the workflow DRAFT -> EVALUATION -> REVIEW -> APPROVED -> RELEASED -> RETIRED review independence: not the submitter, language and security by different people, language review covers every claimed language, security names its corpus"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G09",
+      "suite": "G",
+      "defence": "a security review need not name its adversarial corpus",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"    if (review.kind === \\\"SECURITY\\\" && !review.adversarialCorpusSha256) return deny(\\\"SECURITY_REVIEW_NEEDS_ -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the workflow DRAFT -> EVALUATION -> REVIEW -> APPROVED -> RELEASED -> RETIRED review independence: not the submitter, language and security by different people, language review covers every claimed language, security names its corpus"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G10",
+      "suite": "G",
+      "defence": "one person may do both the language and the security review",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"if (others.some((e) => e.actor === `human:${p.reviewer.id}`)) return deny(\\\"REVIEWERS_NOT_DISTINCT\\\", \\\"langu -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the workflow DRAFT -> EVALUATION -> REVIEW -> APPROVED -> RELEASED -> RETIRED review independence: not the submitter, language and security by different people, language review covers every claimed language, security names its corpus"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G11",
+      "suite": "G",
+      "defence": "the approver may be the submitter or a reviewer",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"if (actors.includes(`human:${p.approver.id}`)) return deny(\\\"APPROVER_NOT_INDEPENDENT\\\", \\\"the approver must  -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the workflow DRAFT -> EVALUATION -> REVIEW -> APPROVED -> RELEASED -> RETIRED approval needs both passing reviews, an approver who is not the submitter or a reviewer, and a verifiable release"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G12",
+      "suite": "G",
+      "defence": "the releaser may be the submitter",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"    if (p.releaser.id === row.submittedBy) return deny(\\\"RELEASER_NOT_INDEPENDENT\\\");\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the workflow DRAFT -> EVALUATION -> REVIEW -> APPROVED -> RELEASED -> RETIRED approval needs both passing reviews, an approver who is not the submitter or a reviewer, and a verifiable release"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G13",
+      "suite": "G",
+      "defence": "approval does not verify the release (hash chain, signatures) first",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"    const v = verifyRelease(row, p.registry);\\n    if (!v.ok) return deny(\\\"RELEASE_UNVERIFIABLE\\\", v.code);\\ -> \"    const evalOk\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the workflow DRAFT -> EVALUATION -> REVIEW -> APPROVED -> RELEASED -> RETIRED approval needs both passing reviews, an approver who is not the submitter or a reviewer, and a verifiable release"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G14",
+      "suite": "G",
+      "defence": "a more permissive release is released without an explicit acknowledgement",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"if (permissive && p.acknowledgePermissive !== true) return deny(\" -> \"if (false) return deny(\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "permissiveness (docs/15 15.18) a release more permissive than its predecessor needs an explicit acknowledgement, is flagged in the log, and is never selectable by existing mandates"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G15",
+      "suite": "G",
+      "defence": "the signature of a release-log event is not verified",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"    if (!verifyMessage(canonicalJson({ purpose: \\\"detector-release-event\\\", releaseId: row.id, seq: e.seq, ty -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "the workflow DRAFT -> EVALUATION -> REVIEW -> APPROVED -> RELEASED -> RETIRED approval needs both passing reviews, an approver who is not the submitter or a reviewer, and a verifiable release",
+            "database guards and tamper evidence tampering with the log (guards bypassed) is detected: payload, hash chain, signature, status and manifest columns"
+          ],
+          "detail": "2/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G16",
+      "suite": "G",
+      "defence": "the hash chain of the release log is not checked",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"    if (e.seq !== i + 1 || e.prevHash !== prev) return { ok: false, code: \\\"CHAIN_BROKEN\\\" };\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "database guards and tamper evidence tampering with the log (guards bypassed) is detected: payload, hash chain, signature, status and manifest columns"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G17",
+      "suite": "G",
+      "defence": "an event's own hash is not recomputed",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"    if (expect !== e.hash) return { ok: false, code: \\\"EVENT_HASH_MISMATCH\\\" };\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "database guards and tamper evidence tampering with the log (guards bypassed) is detected: payload, hash chain, signature, status and manifest columns"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G18",
+      "suite": "G",
+      "defence": "the status column may differ from the status the log implies",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"  if (derived !== row.status) return { ok: false, code: \\\"STATUS_DIFFERS_FROM_LOG\\\" };\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "database guards and tamper evidence tampering with the log (guards bypassed) is detected: payload, hash chain, signature, status and manifest columns"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G19",
+      "suite": "G",
+      "defence": "the release manifest is not checked against its content hash",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"  if (contentHashOf(m.data) !== row.contentHash) return { ok: false, code: \\\"CONTENT_HASH_MISMATCH\\\" };\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "database guards and tamper evidence tampering with the log (guards bypassed) is detected: payload, hash chain, signature, status and manifest columns",
+            "a detector may be USED only under every condition RETIRED: usable by what already pins it, not by new pins; REVOKED: never; a corrupted row grants nothing"
+          ],
+          "detail": "2/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G20",
+      "suite": "G",
+      "defence": "an untrusted / revoked signing key still verifies the release log",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"if (!rec || rec.status !== \\\"ACTIVE\\\" || publicKeyFingerprint(rec.publicKeyB64) !== rec.fingerprint) return { -> \"if (!rec) return { ok: false, code: \\\"SIGNING_KEY_NOT_TRUSTED\\\" };\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "database guards and tamper evidence tampering with the log (guards bypassed) is detected: payload, hash chain, signature, status and manifest columns"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G21",
+      "suite": "G",
+      "defence": "a detector is permitted even if the build ships a different one",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"    if (d.id !== shipped.id || d.version !== shipped.version || d.vocabularyHash !== shipped.vocabularyHash)  -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "a detector may be USED only under every condition hash matches an approved release, status permits, coverage meets the policy floor, the build ships exactly that detector"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G22",
+      "suite": "G",
+      "defence": "a detector is permitted whatever the status of its release (draft, revoked ...)",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"if (!rel || !usable.has(rel.status)) return false;\" -> \"if (!rel) return false;\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "a detector may be USED only under every condition hash matches an approved release, status permits, coverage meets the policy floor, the build ships exactly that detector",
+            "a detector may be USED only under every condition RETIRED: usable by what already pins it, not by new pins; REVOKED: never; a corrupted row grants nothing",
+            "a detector may be USED only under every condition rollback to an approved prior release: the prior is RELEASED again, the current is retired (or revoked); a never-approved target or a foreign detector is refused",
+            "a release gates real use (mandate approval, terms lock, authorization) a mandate can pin only a RELEASED detector; revocation then stops new deals, existing authorization and verification, fail closed"
+          ],
+          "detail": "4/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G23",
+      "suite": "G",
+      "defence": "release coverage need not meet the policy's supported languages",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"return (supported ?? []).every((l) => rel.languageCoverage.includes(l));\" -> \"return true;\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "a detector may be USED only under every condition hash matches an approved release, status permits, coverage meets the policy floor, the build ships exactly that detector"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G24",
+      "suite": "G",
+      "defence": "a RETIRED release can be pinned by new mandates",
+      "file": "src/domain/detector-registry.ts",
+      "mutation": "\"const usable = new Set<ReleaseStatus>(mode === \\\"NEW_PIN\\\" ? [\\\"RELEASED\\\"] : [\\\"RELEASED\\\", \\\"RETIRED\\\"]);\" -> \"const usable = new Set<ReleaseStatus>([\\\"RELEASED\\\", \\\"RETIRED\\\"]);\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector governance (PostgreSQL)"
+      ],
+      "detectors": [
+        {
+          "name": "detector governance (PostgreSQL)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "a detector may be USED only under every condition RETIRED: usable by what already pins it, not by new pins; REVOKED: never; a corrupted row grants nothing"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G25",
+      "suite": "G",
+      "defence": "the evaluation core accepts overlapping tuning and held-out fixtures",
+      "file": "scripts/lib/detector-eval-core.ts",
+      "mutation": "\"  if (ids(inputs.heldOut).some((id) => tIds.has(id))) throw new Error(\\\"tuning and held-out fixture ids overl -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector identity + evaluation (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "buildReport refuses to build when the held-out set overlaps the tuning set"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G26",
+      "suite": "G",
+      "defence": "the evaluation core counts every miss as disclosed",
+      "file": "scripts/lib/detector-eval-core.ts",
+      "mutation": "\"const undisclosed = failures.filter((r) => !gaps.has(r.id));\" -> \"const undisclosed: typeof failures = [];\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector identity + evaluation (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "buildReport a miss that is not disclosed makes its suite fail; a disclosed miss does not"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G27",
+      "suite": "G",
+      "defence": "the evaluation core passes mutation testing whatever the result",
+      "file": "scripts/lib/detector-eval-core.ts",
+      "mutation": "\"passed: m.killed > 0 && m.survived === 0 && m.invalid === 0 && m.unreached === 0,\" -> \"passed: true,\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector identity + evaluation (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "buildReport mutation testing must be clean, and performance must be inside its budget"
+          ],
+          "detail": "1/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G28",
+      "suite": "G",
+      "defence": "the detector identity hash no longer covers the override vocabulary",
+      "file": "src/verification/language.ts",
+      "mutation": "\"    vocab: RAW_VOCAB,\\n\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "detector identity + evaluation (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "detector identity is (id, version, vocabularyHash); the hash is stable and covers the data tables",
+            "detector identity GOLDEN: the shipped vocabulary hash is pinned. Any change to the detector's data tables must update this value in the same reviewed change (and needs a new release)"
+          ],
+          "detail": "2/14 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G29",
+      "suite": "G",
+      "defence": "classifier: a name-like or unidentifiable string is classed as SUPPORTED (auto-passed)",
+      "file": "src/verification/language.ts",
+      "mutation": "\"  return { kind: \\\"NAME_LIKE\\\" };\\n}\\n\\n// ----\" -> \"  return { kind: \\\"SUPPORTED\\\" };\\n}\\n\\n// ----\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "restricted model input + language + runner (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "restricted model input + language + runner (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "language assessment reads exactly the prompt's fragments (docs/15 15.9.2) a name-like or address-like token in a model-visible field is UNCERTAIN, never auto-passed (docs/15 Q6)",
+            "language assessment reads exactly the prompt's fragments (docs/15 15.9.2) short text has no exemption; structural content (numbers, ids, empty) does not need one"
+          ],
+          "detail": "2/30 tests failed"
+        },
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G30",
+      "suite": "G",
+      "defence": "classifier: Han text is classed as supported even when the policy does not support Chinese",
+      "file": "src/verification/language.ts",
+      "mutation": "\"if (!policy.supported.includes(\\\"zh\\\")) return { kind: \\\"UNSUPPORTED\\\", reason: \\\"script:Han\\\" };\" -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "restricted model input + language + runner (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "restricted model input + language + runner (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "language assessment reads exactly the prompt's fragments (docs/15 15.9.2) Han text is supported only when the effective policy says so (the deployment floor can withdraw it)"
+          ],
+          "detail": "1/30 tests failed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G31",
+      "suite": "G",
+      "defence": "classifier: an identified language outside the policy is classed as supported",
+      "file": "src/verification/language.ts",
+      "mutation": "\"return policy.supported.includes(lang) ? { kind: \\\"SUPPORTED\\\", reason: `language:${lang}` } : { kind: \\\"UNSU -> \"return { kind: \\\"SUPPORTED\\\", reason: `language:${lang}` };\"",
+      "verdict": "SURVIVED",
+      "killedBy": [],
+      "detectors": [
+        {
+          "name": "restricted model input + language + runner (unit)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "30 tests passed"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    },
+    {
+      "id": "P7-G32",
+      "suite": "G",
+      "defence": "classifier: the override-vocabulary screen for uncovered languages is removed",
+      "file": "src/verification/language.ts",
+      "mutation": "\"  const vocab = lexiconLanguage(t);\\n  if (vocab) return { kind: \\\"UNSUPPORTED\\\", reason: `vocabulary:${vocab -> \"\"",
+      "verdict": "KILLED",
+      "killedBy": [
+        "restricted model input + language + runner (unit)"
+      ],
+      "detectors": [
+        {
+          "name": "restricted model input + language + runner (unit)",
+          "control": "PASSED",
+          "mutant": "KILLED",
+          "failing": [
+            "language assessment reads exactly the prompt's fragments (docs/15 15.9.2) text in an unsupported language is blocked with the policy behaviour"
+          ],
+          "detail": "1/30 tests failed"
+        },
+        {
+          "name": "detector identity + evaluation (unit)",
+          "control": "PASSED",
+          "mutant": "PASSED",
+          "failing": [],
+          "detail": "not run (an earlier detector already killed this mutant)"
+        }
+      ],
+      "note": "verdict: killed if any Layer A detector failed an assertion"
+    }
+  ]
+}
